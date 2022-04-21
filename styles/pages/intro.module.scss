@@ -1,0 +1,34 @@
+@import "abstracts/variables.module.scss";
+@import "abstracts/mixins.module.scss";
+
+.wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-top: 15vh;
+  //justify-content: center;
+  align-items: center;
+  button {
+    height: 6vh;
+    width: 90vw;
+  }
+  .btns {
+    position: fixed;
+    bottom: 10vh;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .loginBtn {
+      font-family: $font-familly--medium;
+      font-size: $font-regular;
+      background-color: $primary-color;
+    }
+    .signupBtn {
+      @include font-title;
+      font-family: $font-familly--medium;
+      font-size: $font-regular;
+      background-color: $main-black-color;
+      color: $white;
+    }
+  }
+}

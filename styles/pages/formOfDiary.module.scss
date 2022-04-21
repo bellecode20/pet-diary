@@ -1,0 +1,51 @@
+@import "abstracts/variables.module.scss";
+@import "abstracts/mixins.module.scss";
+.wrapper {
+  padding-top: $nav--upload;
+  .mainContainer {
+    height: 100vh;
+    max-height: calc(100vh - $nav--upload);
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    .dateForm {
+      padding-top: $nav--upload;
+      padding-left: $diary__timeLine-padding--left;
+      input {
+        //display: inline-block;
+        border: 0;
+        height: 4.7vh;
+      }
+    }
+    .photoForm {
+      padding-left: $diary__timeLine-padding--left;
+      label {
+        display: inline-block;
+        border: 1px solid black;
+        height: 35vh;
+        width: 35vh;
+      }
+    }
+    .textContainer {
+      padding-top: 5vh;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      #diary__form__title {
+        width: 100vw;
+        height: 5vh;
+        border-top: 1px solid $gray-color;
+        border-bottom: 1px solid $gray-color;
+        padding-left: $diary__timeLine-padding--left;
+        padding-right: $diary__timeLine-padding--left;
+      }
+      #diary__form__content {
+        width: 100vw;
+        flex-grow: 1;
+        padding-left: $diary__timeLine-padding--left;
+        padding-right: $diary__timeLine-padding--left;
+        // background-color: $primary-color;
+      }
+    }
+  }
+}

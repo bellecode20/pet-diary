@@ -1,0 +1,7 @@
+@import "abstracts/variables.module.scss";
+@import "abstracts/mixins.module.scss";
+@mixin nav__button--bold {
+  @include font-menu;
+  background-color: transparent;
+  outline: 0;
+}

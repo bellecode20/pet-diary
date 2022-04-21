@@ -1,0 +1,11 @@
+@import "../abstracts/variables.module.scss";
+.tabBar {
+  height: $tab-bar-height;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $main-black-color;
+  border-radius: 20px 20px 0 0;
+  color: $white;
+}

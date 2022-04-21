@@ -1,0 +1,22 @@
+@import "abstracts/variables.module.scss";
+@import "abstracts/mixins.module.scss";
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  .title {
+    @include font-title;
+    padding-top: 55vh;
+    padding-left: 10vw;
+  }
+  .logo {
+    align-self: flex-end;
+  }
+  .content {
+    padding-left: 10vw;
+  }
+  button {
+    margin-top: 4vw;
+    background-color: #ffe100;
+  }
+}

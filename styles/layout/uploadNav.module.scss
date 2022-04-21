@@ -1,0 +1,17 @@
+@import "abstracts/variables.module.scss";
+@import "abstracts/mixins.module.scss";
+@import "../components/buttons.module.scss";
+.headerNav {
+  position: fixed;
+  height: $nav--upload;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: $main-black-color;
+  display: flex;
+  justify-content: space-between;
+  button {
+    @include nav__button--bold;
+    flex-basis: 15vw;
+  }
+}

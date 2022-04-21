@@ -1,0 +1,50 @@
+@import "abstracts/variables.module.scss";
+@import "abstracts/mixins.module.scss";
+
+.wrapper {
+  padding-top: calc($nav--upload + 4vh);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  .mainContainer {
+    flex-grow: 1;
+    overflow-y: auto;
+    .comment {
+      padding: 3vw 4vw;
+      display: grid;
+      grid-template-columns: 9vw auto;
+      grid-template-rows: 4vw auto;
+      column-gap: 3vw;
+      row-gap: 1vw;
+      border-bottom: 1px solid $gray-color;
+
+      .profileImg {
+        width: 9vw;
+        height: 9vw;
+        border-radius: 50%;
+      }
+      .profileName {
+        font-family: $font-familly--semiBold;
+        font-size: $font-regular--small;
+      }
+      .commentText {
+        grid-column: 2 / 3;
+        grid-row: 2 / 3;
+      }
+    }
+  }
+  .commentInputBar {
+    border-top: 1px solid $gray-color;
+    flex-basis: 6vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .commentInput {
+      width: 95%;
+      height: 80%;
+      border-radius: 1.5rem;
+      background-color: $main-black-color;
+      color: $white;
+    }
+  }
+}

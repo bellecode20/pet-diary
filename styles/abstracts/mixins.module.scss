@@ -1,0 +1,15 @@
+@import "../base/typography.module.scss";
+
+@mixin font-title {
+  font-family: $font-familly--bold;
+  font-size: $font-regular--large;
+}
+@mixin font-menu {
+  font-family: $font-familly--bold;
+  font-size: $font-regular--small;
+  color: $white;
+}
+@mixin font-content {
+  font-family: $font-familly--regular;
+  font-size: $font-regular--small;
+}
