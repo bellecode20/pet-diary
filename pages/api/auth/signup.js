@@ -1,3 +1,4 @@
+import { hashPassword } from "../../../lib/auth";
 import { MongoClient } from "mongodb";
 async function handler(req, res) {
   if (req.method !== "POST") {
@@ -18,14 +19,18 @@ async function handler(req, res) {
   const db = client.db();
   const usersCollection = db.collection("users");
   const existingUser = await usersCollection.findOne({ id: id });
+  const hashedPassword = await hashPassword(pw); //비밀번호를 해쉬화한다.
   if (existingUser) {
     res.status(422).json({ message: "User exists already!" });
     client.close();
     return;
   }
-  const result = await usersCollection.insertOne(data);
+  const result = await usersCollection.insertOne({
+    id: id,
+    pw: hashedPassword,
+  });
   console.log(result);
+  res.status(201).json({ message: "Created user!" });
   client.close();
-  res.status(201).json({ message: "Meetup inserted!" });
 }
 export default handler;
