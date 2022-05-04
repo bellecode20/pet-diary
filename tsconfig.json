@@ -19,7 +19,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "pages/signUp copy.jsx",
+    "pages/signup copy.tsx",
     "pages/api/auth/signup copy.js"
   ],
   "exclude": ["node_modules"]

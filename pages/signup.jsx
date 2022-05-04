@@ -1,12 +1,12 @@
 import sign from "../styles/pages/signUp.module.scss";
 import { useRef, useState } from "react";
+import { signIn } from "next-auth/react";
 const Intro = () => {
   const [isLogin, setIsLogin] = useState(true);
   const idRef = useRef();
   const pwRef = useRef();
   const switchAuthMode = () => {
     setIsLogin((prevState) => !prevState);
-    console.log(isLogin);
   };
   async function createUser(enteredId, enteredPw) {
     let userInfo = {
@@ -30,6 +30,12 @@ const Intro = () => {
     const enteredPw = pwRef.current.value;
     if (isLogin) {
       //로그인을 하는 경우이다.
+      const result = await signIn("credentials", {
+        redirect: false,
+        id: enteredId,
+        pw: enteredPw,
+      });
+      console.log(result);
     } else {
       //회원가입을 하는 경우이다.
       try {
