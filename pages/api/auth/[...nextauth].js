@@ -12,12 +12,11 @@ export default NextAuth({
         const client = await connectToDatabase();
         const usersCollection = client.db().collection("users");
         const user = await usersCollection.findOne({ id: credentials.id }); //유저가 입력한 아이디와 일치하는 아이디가 있는지 찾는다.
+        const isValid = await verifyPassword(credentials.pw, user.pw);
         if (!user) {
           client.close();
           throw new Error("No user found!");
-        }
-        const isValid = await verifyPassword(credentials.pw, user.pw);
-        if (!isValid) {
+        } else if (!isValid) {
           client.close();
           throw new Error("Could not log you in!");
         }

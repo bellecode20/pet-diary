@@ -1,10 +1,14 @@
 import sign from "../styles/pages/signUp.module.scss";
 import { useRef, useState } from "react";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 const Intro = () => {
   const [isLogin, setIsLogin] = useState(true);
   const idRef = useRef();
   const pwRef = useRef();
+  const router = useRouter();
+
+  const { data: session, status } = useSession();
   const switchAuthMode = () => {
     setIsLogin((prevState) => !prevState);
   };
@@ -32,9 +36,13 @@ const Intro = () => {
       //로그인을 하는 경우이다.
       const result = await signIn("credentials", {
         redirect: false,
+        //callbackUrl: `${window.location.origin}/`,
         id: enteredId,
         pw: enteredPw,
       });
+      if (result.error === null) {
+        router.push("/");
+      }
       console.log(result);
     } else {
       //회원가입을 하는 경우이다.
@@ -77,6 +85,7 @@ const Intro = () => {
       <button className="switchBtn" onClick={switchAuthMode}>
         {!isLogin ? "로그인하기" : "계정만들기"}
       </button>
+      <p>{status === "authenticated" ? "인증됨" : "안됨"}</p>
     </div>
   );
 };
