@@ -1,10 +1,9 @@
-import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.scss";
-import navi from "../styles/layout/navigations.module.scss";
 import header from "../styles/layout/header.module.scss";
-const Home: NextPage = () => {
+import MainNav from "./layout/mainNav";
+const Home = () => {
   return (
     <div className={styles.wrapper}>
       <div className={header.header}>Diary</div>
@@ -32,7 +31,7 @@ const Home: NextPage = () => {
         </div>
       </div>
       <div className={styles.addBtn}>+</div>
-      <div className={navi.tabBar}>하단바</div>
+      <MainNav></MainNav>
     </div>
   );
 };

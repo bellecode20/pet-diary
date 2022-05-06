@@ -1,0 +1,37 @@
+@import "abstracts/variables.module.scss";
+@import "abstracts/mixins.module.scss";
+.wrapper {
+  padding-top: $header-height;
+  padding-bottom: $tab-bar-height;
+  .mainContainer {
+    height: 100vh;
+    max-height: calc(100vh - $header-height - $tab-bar-height);
+    overflow-y: auto;
+    padding-top: 2rem;
+    padding: 2rem $diary__timeLine-padding--left;
+    .profile {
+      display: flex;
+    }
+    .history {
+      display: flex;
+      justify-content: center;
+      padding-top: 3rem;
+    }
+    .account {
+      padding-top: 5rem;
+      display: flex;
+      flex-direction: column;
+      .menuTitle {
+        font-family: $font-familly--semiBold;
+        font-size: $font-regular;
+      }
+      .accountList {
+        display: flex;
+        flex-direction: column;
+        .accountItem {
+          display: flex;
+        }
+      }
+    }
+  }
+}

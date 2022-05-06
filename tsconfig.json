@@ -20,7 +20,8 @@
     "**/*.ts",
     "**/*.tsx",
     "pages/signup copy.tsx",
-    "pages/api/auth/signup copy.js"
+    "pages/api/auth/signup copy.js",
+    "pages/index copy.jsx"
   ],
   "exclude": ["node_modules"]
 }
