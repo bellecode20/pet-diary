@@ -14,8 +14,8 @@ const Intro = () => {
   };
   async function createUser(enteredId, enteredPw) {
     let userInfo = {
-      id: enteredId,
-      pw: enteredPw,
+      userId: enteredId,
+      userPw: enteredPw,
     };
     const response = await fetch("/api/auth/signup", {
       method: "POST",
@@ -36,10 +36,10 @@ const Intro = () => {
       //로그인을 하는 경우이다.
       const result = await signIn("credentials", {
         redirect: false,
-        //callbackUrl: `${window.location.origin}/`,
-        id: enteredId,
-        pw: enteredPw,
+        userId: enteredId,
+        userPw: enteredPw,
       });
+      //로그인에 성공하면
       if (result.error === null) {
         router.push("/");
       }

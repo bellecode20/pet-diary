@@ -5,8 +5,13 @@ async function handler(req, res) {
     return;
   }
   const data = req.body;
-  const { id, pw } = data; // 요청에서 담은 유저 정보를 destructure한다.
-  if (!id || !pw || id.trim().length < 7 || pw.trim().length < 7) {
+  const { userId, userPw } = data; // 요청에서 담은 유저 정보를 destructure한다.
+  if (
+    !userId ||
+    !userPw ||
+    userId.trim().length < 7 ||
+    userPw.trim().length < 7
+  ) {
     res.status(422).json({
       message:
         "Invalid input - id and pw should also be at least 7 characters long.",
@@ -18,16 +23,16 @@ async function handler(req, res) {
   );
   const db = client.db();
   const usersCollection = db.collection("users");
-  const existingUser = await usersCollection.findOne({ id: id });
-  const hashedPassword = await hashPassword(pw); //비밀번호를 해쉬화한다.
+  const existingUser = await usersCollection.findOne({ userId: userId });
+  const hashedPassword = await hashPassword(userPw); //비밀번호를 해쉬화한다.
   if (existingUser) {
     res.status(422).json({ message: "User exists already!" });
     client.close();
     return;
   }
   const result = await usersCollection.insertOne({
-    id: id,
-    pw: hashedPassword,
+    userId: userId,
+    userPw: hashedPassword,
   });
   console.log(result);
   res.status(201).json({ message: "Created user!" });
