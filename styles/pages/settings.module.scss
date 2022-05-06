@@ -9,6 +9,7 @@
     overflow-y: auto;
     padding-top: 2rem;
     padding: 2rem $diary__timeLine-padding--left;
+
     .profile {
       display: flex;
     }
@@ -26,6 +27,10 @@
         font-size: $font-regular;
       }
       .accountList {
+        :hover {
+          cursor: pointer;
+          background-color: $gray-color;
+        }
         display: flex;
         flex-direction: column;
         .accountItem {

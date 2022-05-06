@@ -5,8 +5,12 @@ import header from "../styles/layout/header.module.scss";
 import settings from "../styles/pages/settings.module.scss";
 import Post from "./layout/post";
 import MainNav from "./layout/mainNav";
-
+import { signOut } from "next-auth/react";
 const Settings = () => {
+  const logoutHandler = () => {
+    signOut();
+    console.log("signOut");
+  };
   return (
     <div className={settings.wrapper}>
       <div className={header.header}>Setting</div>
@@ -32,7 +36,7 @@ const Settings = () => {
         <div className={settings.account}>
           <p className={settings.menuTitle}>계정 관리</p>
           <div className={settings.accountList}>
-            <div className={settings.accountItem}>
+            <div className={settings.accountItem} onClick={logoutHandler}>
               <img src="/logo.png" height="20px"></img>
               <p>로그아웃</p>
             </div>
