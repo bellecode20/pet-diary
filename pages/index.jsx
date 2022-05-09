@@ -1,12 +1,19 @@
+import { getSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.scss";
 import header from "../styles/layout/header.module.scss";
 import MainNav from "./layout/mainNav";
-const Home = () => {
+const Home = (props) => {
+  console.log(props);
+  console.log(props.user);
+  const { data: session, status } = useSession();
+  // console.log(session);
+  // console.log(session.user.userId);
   return (
     <div className={styles.wrapper}>
-      <div className={header.header}>Diary</div>
+      <div className={header.header}>{session.user.userId}의 Diary</div>
       <div className={styles.mainContainer}>
         <div className={styles.dayContainer}>
           <div className={styles.timeLineStart}></div>
@@ -36,4 +43,24 @@ const Home = () => {
   );
 };
 
+export const getServerSideProps = async (context) => {
+  //context로 받아온 것을 getSession으로 꺼내준다. 만약 유저가 인증되었다면 쿠키가 존재한다.
+  const session = await getSession({ req: context.req });
+  if (!session) {
+    return {
+      // props도 추가할 수 있다.
+      // 404페이지를 보여줄 수 있다.
+      // notFount: true,
+      redirect: {
+        destination: "/signup",
+        permanent: false,
+      },
+    };
+  }
+  console.log(`session`);
+  console.log(session);
+  return {
+    props: { session },
+  };
+};
 export default Home;

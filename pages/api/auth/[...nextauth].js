@@ -6,7 +6,7 @@ export default NextAuth({
   providers: [
     CredentialsProvider({
       sessions: {
-        jwt: true,
+        strategy: "jwt",
       },
       async authorize(credentials) {
         const client = await connectToDatabase();
@@ -22,11 +22,25 @@ export default NextAuth({
           client.close();
           throw new Error("Could not log you in!");
         }
-        client.close(); //리턴 하기 전 client는 종료한다.
+        console.log(`[...nextauth]`);
+        console.log(`user.userId`);
         console.log(user.userId);
+        console.log(`credentials`);
+        console.log(credentials);
+        client.close(); //리턴 하기 전 client는 종료한다.
         return { userId: user.userId }; //리턴 값은 JSON 웹토큰으로 인코딩된다.
       },
     }),
   ],
+  callbacks: {
+    jwt: async ({ token, user }) => {
+      if (user) token.user = user;
+      return token;
+    },
+    session: async ({ session, token }) => {
+      session.user = token.user;
+      return session;
+    },
+  },
   secret: process.env.SECRET,
 });

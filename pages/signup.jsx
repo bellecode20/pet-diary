@@ -25,7 +25,7 @@ const Intro = () => {
       },
     });
     const data = await response.json();
-    console.log(userInfo);
+    console.log(`data`);
     console.log(data);
   }
   async function submitHandler(e) {
@@ -43,6 +43,7 @@ const Intro = () => {
       if (result.error === null) {
         router.push("/");
       }
+      console.log(`result`);
       console.log(result);
     } else {
       //회원가입을 하는 경우이다.
