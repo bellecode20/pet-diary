@@ -5,12 +5,9 @@ import Image from "next/image";
 import styles from "../styles/Home.module.scss";
 import header from "../styles/layout/header.module.scss";
 import MainNav from "./layout/mainNav";
-const Home = (props) => {
-  console.log(props);
-  console.log(props.user);
+const Home = () => {
   const { data: session, status } = useSession();
-  // console.log(session);
-  // console.log(session.user.userId);
+  console.log(session);
   return (
     <div className={styles.wrapper}>
       <div className={header.header}>{session.user.userId}의 Diary</div>
@@ -48,16 +45,13 @@ export const getServerSideProps = async (context) => {
   const session = await getSession({ req: context.req });
   if (!session) {
     return {
-      // props도 추가할 수 있다.
-      // 404페이지를 보여줄 수 있다.
-      // notFount: true,
       redirect: {
         destination: "/signup",
         permanent: false,
       },
     };
   }
-  console.log(`session`);
+  console.log(`session index.jsx`);
   console.log(session);
   return {
     props: { session },

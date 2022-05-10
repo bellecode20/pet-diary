@@ -6,6 +6,7 @@ import settings from "../styles/pages/settings.module.scss";
 import Post from "./layout/post";
 import MainNav from "./layout/mainNav";
 import { signOut } from "next-auth/react";
+import Link from "next/link";
 const Settings = () => {
   const logoutHandler = () => {
     signOut();
@@ -40,10 +41,12 @@ const Settings = () => {
               <img src="/logo.png" height="20px"></img>
               <p>로그아웃</p>
             </div>
-            <div className={settings.accountItem}>
-              <img src="/logo.png" height="20px"></img>
-              <p>비밀번호 변경</p>
-            </div>
+            <Link href="/changePwForm" passHref>
+              <a className={settings.accountItem}>
+                <img src="/logo.png" height="20px"></img>
+                <p>비밀번호 변경</p>
+              </a>
+            </Link>
             <div className={settings.accountItem}>
               <img src="/logo.png" height="20px"></img>
               <p>탈퇴하기</p>

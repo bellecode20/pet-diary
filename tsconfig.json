@@ -21,7 +21,8 @@
     "**/*.tsx",
     "pages/signup copy.tsx",
     "pages/api/auth/signup copy.js",
-    "pages/index copy.jsx"
+    "pages/index copy.jsx",
+    "pages/postingForm.jsx"
   ],
   "exclude": ["node_modules"]
 }
