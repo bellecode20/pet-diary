@@ -5,6 +5,8 @@ import Image from "next/image";
 import styles from "../styles/Home.module.scss";
 import header from "../styles/layout/header.module.scss";
 import MainNav from "./layout/mainNav";
+import Link from "next/link";
+
 const Home = () => {
   const { data: session, status } = useSession();
   console.log(session);
@@ -34,7 +36,9 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className={styles.addBtn}>+</div>
+      <Link href="/postingForm" passHref>
+        <a className={styles.addBtn}>+</a>
+      </Link>
       <MainNav></MainNav>
     </div>
   );
