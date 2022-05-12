@@ -22,6 +22,12 @@ const postingForm = () => {
         body: formData,
       }
     ).then((res) => res.json());
+
+    const postResult = await fetch("/api/form/postDiary", {
+      method: "POST",
+      body: data.url,
+      //headers
+    }).then((res) => res.json());
     console.log("data", data);
   };
   return (
