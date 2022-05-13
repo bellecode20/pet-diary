@@ -3,37 +3,53 @@ import Image from "next/image";
 import navi from "../styles/layout/navigations.module.scss";
 import UploadNav from "./layout/uploadNav";
 import form from "../styles/pages/formOfDiary.module.scss";
+import { makeId } from "../components/makeId";
 const postingForm = () => {
   const postDiary = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
     const fileInput = Array.from(form.elements).find(
-      ({ name }) => name === "photo"
+      ({ name }) => name === "photo[]"
     );
     const formData = new FormData();
-    for (const file of fileInput.files) {
+    const diaryPostId = makeId();
+    //FormData를 만들고 cloudinary에 보낸다. 이렇게 cloudinary에 사진 원본을 저장한다.
+    //올리는 파일 수 만큼 cloudinary에 보내고 mongodb에 저장하는 걸 반복한다.
+    for (let file of fileInput.files) {
       formData.append("file", file);
-    }
-    formData.append("upload_preset", "diary-uploads");
-    const data = await fetch(
-      "https://api.cloudinary.com/v1_1/diarycloud/image/upload",
-      {
+      formData.append("upload_preset", "diary-uploads");
+      const data = await fetch(
+        "https://api.cloudinary.com/v1_1/diarycloud/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      ).then((res) => res.json());
+      //mongodb에 사진url과, 작성한 글의 id, form의 텍스트 내용들을 함께 보낸다.
+      let postContent = {
+        postId: diaryPostId,
+        photoUrl: data.url,
+      };
+      const postResult = await fetch("/api/form/postDiary", {
         method: "POST",
-        body: formData,
-      }
-    ).then((res) => res.json());
-
-    const postResult = await fetch("/api/form/postDiary", {
-      method: "POST",
-      body: data.url,
-      //headers
-    }).then((res) => res.json());
-    console.log("data", data);
+        body: JSON.stringify(postContent),
+        //headers
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((res) => res.json());
+      console.log("data", data);
+    }
   };
   return (
     <div className={form.wrapper}>
       <UploadNav></UploadNav>
-      <form className={form.mainContainer} id="posting" onSubmit={postDiary}>
+      <form
+        className={form.mainContainer}
+        encType="multipart/form-data"
+        id="posting"
+        onSubmit={postDiary}
+      >
         <div className={form.dateForm}>
           <label htmlFor="diary__form__date">날짜</label>
           <input id="diary__form__date" type="date" />
@@ -42,10 +58,11 @@ const postingForm = () => {
           <label htmlFor="diary__form__photo">사진추가버튼</label>
           <input
             type="file"
+            multiple
             id="diary__form__photo"
             accept="image/png, image/jpeg"
             style={{ display: "none" }}
-            name="photo"
+            name="photo[]"
           />
         </div>
         <div className={form.textContainer}>
