@@ -3,8 +3,14 @@ import Image from "next/image";
 import navi from "../styles/layout/navigations.module.scss";
 import UploadNav from "./layout/uploadNav";
 import form from "../styles/pages/formOfDiary.module.scss";
+import IsUploading from "./IsUploading";
 import { makeId } from "../components/makeId";
-const postingForm = () => {
+import { useRef, useState } from "react";
+const postingForm = (props) => {
+  const date = useRef();
+  const title = useRef();
+  const content = useRef();
+  const [isLoading, setIsLoading] = useState(false);
   const postDiary = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -13,6 +19,10 @@ const postingForm = () => {
     );
     const formData = new FormData();
     const diaryPostId = makeId();
+    const enteredDate = date.current.value;
+    const enteredTitle = title.current.value;
+    const enteredContent = content.current.value;
+    props.setIsLoading(true);
     //FormData를 만들고 cloudinary에 보낸다. 이렇게 cloudinary에 사진 원본을 저장한다.
     //올리는 파일 수 만큼 cloudinary에 보내고 mongodb에 저장하는 걸 반복한다.
     for (let file of fileInput.files) {
@@ -29,6 +39,9 @@ const postingForm = () => {
       let postContent = {
         postId: diaryPostId,
         photoUrl: data.url,
+        postingDate: enteredDate,
+        title: enteredTitle,
+        content: enteredContent,
       };
       const postResult = await fetch("/api/form/postDiary", {
         method: "POST",
@@ -40,10 +53,12 @@ const postingForm = () => {
       }).then((res) => res.json());
       console.log("data", data);
     }
+    props.setIsLoading(false);
   };
   return (
     <div className={form.wrapper}>
       <UploadNav></UploadNav>
+      {isLoading && <IsUploading></IsUploading>}
       <form
         className={form.mainContainer}
         encType="multipart/form-data"
@@ -52,7 +67,7 @@ const postingForm = () => {
       >
         <div className={form.dateForm}>
           <label htmlFor="diary__form__date">날짜</label>
-          <input id="diary__form__date" type="date" />
+          <input id="diary__form__date" type="date" ref={date} />
         </div>
         <div className={form.photoForm}>
           <label htmlFor="diary__form__photo">사진추가버튼</label>
@@ -70,10 +85,12 @@ const postingForm = () => {
             type="text"
             id={form.diary__form__title}
             placeholder="스프와의 첫 만남"
+            ref={title}
           />
           <textarea
             id={form.diary__form__content}
             placeholder="텍스트 많이 치면 스크롤 생기는 거 대신, 높이 늘어나게 하기https://velog.io/@hwanieee/textarea-%EC%9E%90%EB%8F%99-%EB%86%92%EC%9D%B4-%EC%A1%B0%EC%A0%88"
+            ref={content}
           ></textarea>
         </div>
       </form>

@@ -2,7 +2,7 @@ import { connectToDatabase } from "../../../lib/db";
 import { getSession } from "next-auth/react";
 const handler = async (req, res) => {
   const client = await connectToDatabase();
-  const { postId, photoUrl } = req.body;
+  const { postId, photoUrl, postingDate, title, content } = req.body;
   console.log("postID", postId);
   console.log("photoUrl", photoUrl);
   const session = await getSession({ req });
@@ -23,6 +23,9 @@ const handler = async (req, res) => {
     userId: idOfSession,
     photo: [photoUrl],
     postId: postId,
+    postingDate: postingDate,
+    title: title,
+    content: content,
   });
   res.status(201).json({ message: "Saved to MongoDB!" });
   client.close();
