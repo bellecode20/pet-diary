@@ -1,4 +1,4 @@
-import form from "../styles/pages/formOfDiary.module.scss";
+import loading from "../styles/pages/isUploading.module.scss";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 const IsUploading = ({ uploaded, setUploaded, showModal, setShowModal }) => {
@@ -13,12 +13,17 @@ const IsUploading = ({ uploaded, setUploaded, showModal, setShowModal }) => {
     setUploadedState(uploaded);
   }, [uploaded]);
   return (
-    <div>
-      {uploadedState ? <p>업로드 완료</p> : <p>진행중</p>}
+    <div className={loading.wrapper}>
       {uploadedState ? (
-        <button onClick={handler}>끝! 홈으로</button>
+        <div className={loading.modal}>
+          <img src="/logo.png" height="100px"></img>
+          <p className={loading.title}>작성 완료!</p>
+          <button className={loading.button} onClick={handler}>
+            홈으로
+          </button>
+        </div>
       ) : (
-        <button>로딩 중이에여</button>
+        <p className={loading.loadingState}>업로드 중...</p>
       )}
     </div>
   );

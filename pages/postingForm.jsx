@@ -60,7 +60,52 @@ const postingForm = () => {
   };
   return (
     <div className={form.wrapper}>
-      <UploadNav></UploadNav>
+      <div>
+        <UploadNav></UploadNav>
+        {/* {showModal && (
+        <IsUploading
+          uploaded={uploaded}
+          setUploaded={setUploaded}
+          showModal={showModal}
+          setShowModal={setShowModal}
+        ></IsUploading>
+      )} */}
+        <form
+          className={form.mainContainer}
+          encType="multipart/form-data"
+          id="posting"
+          onSubmit={postDiary}
+        >
+          <div className={form.dateForm}>
+            <label htmlFor="diary__form__date">날짜</label>
+            <input id="diary__form__date" type="date" ref={date} />
+          </div>
+          <div className={form.photoForm}>
+            <label htmlFor="diary__form__photo">사진추가버튼</label>
+            <input
+              type="file"
+              multiple
+              id="diary__form__photo"
+              accept="image/png, image/jpeg"
+              style={{ display: "none" }}
+              name="photo[]"
+            />
+          </div>
+          <div className={form.textContainer}>
+            <input
+              type="text"
+              id={form.diary__form__title}
+              placeholder="스프와의 첫 만남"
+              ref={title}
+            />
+            <textarea
+              id={form.diary__form__content}
+              placeholder="텍스트 많이 치면 스크롤 생기는 거 대신, 높이 늘어나게 하기https://velog.io/@hwanieee/textarea-%EC%9E%90%EB%8F%99-%EB%86%92%EC%9D%B4-%EC%A1%B0%EC%A0%88"
+              ref={content}
+            ></textarea>
+          </div>
+        </form>
+      </div>
       {showModal && (
         <IsUploading
           uploaded={uploaded}
@@ -69,41 +114,6 @@ const postingForm = () => {
           setShowModal={setShowModal}
         ></IsUploading>
       )}
-      <form
-        className={form.mainContainer}
-        encType="multipart/form-data"
-        id="posting"
-        onSubmit={postDiary}
-      >
-        <div className={form.dateForm}>
-          <label htmlFor="diary__form__date">날짜</label>
-          <input id="diary__form__date" type="date" ref={date} />
-        </div>
-        <div className={form.photoForm}>
-          <label htmlFor="diary__form__photo">사진추가버튼</label>
-          <input
-            type="file"
-            multiple
-            id="diary__form__photo"
-            accept="image/png, image/jpeg"
-            style={{ display: "none" }}
-            name="photo[]"
-          />
-        </div>
-        <div className={form.textContainer}>
-          <input
-            type="text"
-            id={form.diary__form__title}
-            placeholder="스프와의 첫 만남"
-            ref={title}
-          />
-          <textarea
-            id={form.diary__form__content}
-            placeholder="텍스트 많이 치면 스크롤 생기는 거 대신, 높이 늘어나게 하기https://velog.io/@hwanieee/textarea-%EC%9E%90%EB%8F%99-%EB%86%92%EC%9D%B4-%EC%A1%B0%EC%A0%88"
-            ref={content}
-          ></textarea>
-        </div>
-      </form>
     </div>
   );
 };
