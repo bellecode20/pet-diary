@@ -6,11 +6,12 @@ import form from "../styles/pages/formOfDiary.module.scss";
 import IsUploading from "./IsUploading";
 import { makeId } from "../components/makeId";
 import { useRef, useState } from "react";
-const postingForm = (props) => {
+const postingForm = () => {
   const date = useRef();
   const title = useRef();
   const content = useRef();
-  const [isLoading, setIsLoading] = useState(false);
+  const [uploaded, setUploaded] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const postDiary = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -22,7 +23,8 @@ const postingForm = (props) => {
     const enteredDate = date.current.value;
     const enteredTitle = title.current.value;
     const enteredContent = content.current.value;
-    props.setIsLoading(true);
+    setShowModal(true);
+    console.log(showModal);
     //FormData를 만들고 cloudinary에 보낸다. 이렇게 cloudinary에 사진 원본을 저장한다.
     //올리는 파일 수 만큼 cloudinary에 보내고 mongodb에 저장하는 걸 반복한다.
     for (let file of fileInput.files) {
@@ -53,12 +55,20 @@ const postingForm = (props) => {
       }).then((res) => res.json());
       console.log("data", data);
     }
-    props.setIsLoading(false);
+    setUploaded(true);
+    //setShowModal(false);
   };
   return (
     <div className={form.wrapper}>
       <UploadNav></UploadNav>
-      {isLoading && <IsUploading></IsUploading>}
+      {showModal && (
+        <IsUploading
+          uploaded={uploaded}
+          setUploaded={setUploaded}
+          showModal={showModal}
+          setShowModal={setShowModal}
+        ></IsUploading>
+      )}
       <form
         className={form.mainContainer}
         encType="multipart/form-data"
