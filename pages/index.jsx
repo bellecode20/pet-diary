@@ -6,35 +6,31 @@ import styles from "../styles/Home.module.scss";
 import header from "../styles/layout/header.module.scss";
 import MainNav from "./layout/mainNav";
 import Link from "next/link";
+import { connectToDatabase } from "../lib/db";
 
-const Home = () => {
+const Home = ({ textedDiaries }) => {
   const { data: session, status } = useSession();
   console.log(session);
+  const diaryies = JSON.parse(textedDiaries);
   return (
     <div className={styles.wrapper}>
       <div className={header.header}>{session.user.userId}의 Diary</div>
       <div className={styles.mainContainer}>
-        <div className={styles.dayContainer}>
-          <div className={styles.timeLineStart}></div>
-          <div className={styles.timeLineCircle}></div>
-          <div className={styles.timeLine}></div>
-          <div className={styles.dateOfDiary}>2022. 04. 01</div>
-          <div className={styles.diary}>
-            <div>스프와의 첫 만남</div>
-            <div></div>
-            <Image src="/diary_cat_01.jpg" width="500px" height="500px"></Image>
-            <div className={styles.diaryContent}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac
-              tellus consectetur, imperdiet mauris ac, elementum tellus. Sed
-              commodo, lorem a vulputate semper, elit mi tincidunt sapien, non
-              convallis ex erat ac odio. In est Lorem ipsum dolor sit amet,
-              consectetur adipiscing elit. Sed ac tellus consectetur, imperdiet
-              mauris ac, elementum tellus. Sed commodo, lorem a vulputate
-              semper, elit mi tincidunt sapien, non convallis ex erat ac odio.
-              In est
+        {diaryies.map((diary) => (
+          <div className={styles.dayContainer}>
+            <div className={styles.timeLineStart}></div>
+            <div className={styles.timeLineCircle}></div>
+            <div className={styles.timeLine}></div>
+            <div className={styles.dateOfDiary}>{diary.postingDate}</div>
+            <div className={styles.diary}>
+              <div>{diary.title}</div>
+              {diary.photo.map((img) => (
+                <Image src={img} width="500px" height="500px"></Image>
+              ))}
+              <div className={styles.diaryContent}>{diary.content}</div>
             </div>
           </div>
-        </div>
+        ))}
       </div>
       <Link href="/postingForm" passHref>
         <a className={styles.addBtn}>+</a>
@@ -57,8 +53,19 @@ export const getServerSideProps = async (context) => {
   }
   console.log(`session index.jsx`);
   console.log(session);
+  console.log(session.user.userId);
+  //
+  const client = await connectToDatabase();
+  const diaryCollection = client.db().collection("privateDiary");
+  const diaries = await diaryCollection
+    .find({
+      userId: session.user.userId,
+    })
+    .toArray();
+  const textedDiaries = JSON.stringify(diaries);
   return {
-    props: { session },
+    //props로 몽고디비데이터도 전달
+    props: { session, textedDiaries },
   };
 };
 export default Home;

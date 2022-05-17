@@ -19,11 +19,26 @@
     }
     .photoForm {
       padding-left: $diary__timeLine-padding--left;
+      .border {
+        border: 1px solid black;
+      }
       label {
         display: inline-block;
-        border: 1px solid black;
+        position: relative; //썸네일이미지의 컨테이너로 쓰기 위함
         height: 35vh;
         width: 35vh;
+        overflow: hidden;
+        .thumbnail {
+          position: absolute;
+          top: 50%;
+          left: 0;
+          // width: 100%;
+          // max-height: 100%;
+          width: 100%;
+          max-height: 100%;
+          object-fit: cover;
+          transform: translate(0, -50%);
+        }
       }
     }
     .textContainer {
