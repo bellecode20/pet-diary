@@ -11,7 +11,7 @@
     .dateForm {
       padding-top: $nav--upload;
       padding-left: $diary__timeLine-padding--left;
-      input {
+      .date {
         //display: inline-block;
         border: 0;
         height: 4.7vh;
@@ -46,7 +46,7 @@
       flex-grow: 1;
       display: flex;
       flex-direction: column;
-      #diary__form__title {
+      .title {
         width: 100vw;
         height: 5vh;
         border-top: 1px solid $gray-color;
@@ -54,7 +54,7 @@
         padding-left: $diary__timeLine-padding--left;
         padding-right: $diary__timeLine-padding--left;
       }
-      #diary__form__content {
+      .content {
         width: 100vw;
         flex-grow: 1;
         padding-left: $diary__timeLine-padding--left;

@@ -17,19 +17,21 @@ const Home = ({ textedDiaries }) => {
       <div className={header.header}>{session.user.userId}의 Diary</div>
       <div className={styles.mainContainer}>
         {diaryies.map((diary) => (
-          <div className={styles.dayContainer}>
-            <div className={styles.timeLineStart}></div>
-            <div className={styles.timeLineCircle}></div>
-            <div className={styles.timeLine}></div>
-            <div className={styles.dateOfDiary}>{diary.postingDate}</div>
-            <div className={styles.diary}>
-              <div>{diary.title}</div>
-              {diary.photo.map((img) => (
-                <Image src={img} width="500px" height="500px"></Image>
-              ))}
-              <div className={styles.diaryContent}>{diary.content}</div>
-            </div>
-          </div>
+          <Link href={`/privatediary/${diary.postId}`}>
+            <a className={styles.dayContainer} custom-attribute={diary.postId}>
+              <div className={styles.timeLineStart}></div>
+              <div className={styles.timeLineCircle}></div>
+              <div className={styles.timeLine}></div>
+              <div className={styles.dateOfDiary}>{diary.postingDate}</div>
+              <div className={styles.diary}>
+                <div>{diary.title}</div>
+                {diary.photo.map((img) => (
+                  <Image src={img} width="500px" height="500px"></Image>
+                ))}
+                <div className={styles.diaryContent}>{diary.content}</div>
+              </div>
+            </a>
+          </Link>
         ))}
       </div>
       <Link href="/postingForm" passHref>
@@ -54,7 +56,7 @@ export const getServerSideProps = async (context) => {
   console.log(`session index.jsx`);
   console.log(session);
   console.log(session.user.userId);
-  //
+  //작성한 전체 글 보기
   const client = await connectToDatabase();
   const diaryCollection = client.db().collection("privateDiary");
   const diaries = await diaryCollection

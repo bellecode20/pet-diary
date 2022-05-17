@@ -89,7 +89,12 @@ const postingForm = () => {
         >
           <div className={form.dateForm}>
             <label htmlFor="diary__form__date"></label>
-            <input id="diary__form__date" type="date" ref={date} />
+            <input
+              id="diary__form__date"
+              type="date"
+              ref={date}
+              className={form.date}
+            />
           </div>
           <div className={form.photoForm}>
             <label
@@ -119,11 +124,13 @@ const postingForm = () => {
             <input
               type="text"
               id={form.diary__form__title}
+              className={form.title}
               placeholder="스프와의 첫 만남"
               ref={title}
             />
             <textarea
               id={form.diary__form__content}
+              className={form.content}
               placeholder="오늘은 스프가 집에 처음 왔다."
               ref={content}
             ></textarea>
