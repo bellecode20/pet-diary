@@ -5,46 +5,42 @@ import { getSession } from "next-auth/react";
 import { connectToDatabase } from "../../lib/db";
 import UploadNav from "../layout/uploadNav";
 import form from "../../styles/pages/formOfDiary.module.scss";
-
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 const Post = ({ textedDiary }) => {
   const router = useRouter();
   const privateDiary = JSON.parse(textedDiary);
+  //캐러셀 라이브러리 설정코드다.
+  const settings = {
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    adaptiveHeight: true,
+  };
   return (
     <div className={form.wrapper}>
-      <div>
-        <UploadNav></UploadNav>
-        <div className={form.mainContainer}>
-          <div className={form.dateForm}>
-            <p className={form.date}>{privateDiary.postingDate}</p>
-          </div>
-          <div className={form.photoForm}>
-            {/* <label
-              htmlFor="diary__form__photo"
-              className={image ? null : form.border} //사진 선택하면 테두리 없어진다.
-            > */}
-            {privateDiary.photo.map((img) => (
-              <Image
-                src={img}
-                width="500px"
-                height="500px"
-                className={form.thumbnail}
-              ></Image>
-            ))}
-          </div>
-          <div className={form.textContainer}>
-            <p className={form.title}>{privateDiary.title}</p>
-            <p className={form.content}>{privateDiary.content}</p>
+      <UploadNav></UploadNav>
+      <div className={form.mainContainer}>
+        <div className={form.dateForm}>
+          <p className={form.date}>{privateDiary.postingDate}</p>
+        </div>
+        <div className={form.photoForm}>
+          <div className={form.whenPhoto}>
+            <Slider {...settings}>
+              {privateDiary.photo.map((img) => (
+                <img src={img}></img>
+              ))}
+            </Slider>
           </div>
         </div>
+        <div className={form.textContainer}>
+          <p className={form.title}>{privateDiary.title}</p>
+          <p className={form.content}>{privateDiary.content}</p>
+        </div>
       </div>
-      {/* {showModal && (
-        <IsUploading
-          uploaded={uploaded}
-          setUploaded={setUploaded}
-          showModal={showModal}
-          setShowModal={setShowModal}
-        ></IsUploading>
-      )} */}
     </div>
   );
 };

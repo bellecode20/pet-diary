@@ -99,7 +99,7 @@ const postingForm = () => {
           <div className={form.photoForm}>
             <label
               htmlFor="diary__form__photo"
-              className={image ? null : form.border} //사진 선택하면 테두리 없어진다.
+              className={image ? form.whenPhoto : form.border} //사진 선택하면 테두리 없어진다.
             >
               <img
                 src={preview}
