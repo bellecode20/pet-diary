@@ -1,5 +1,6 @@
 @import "../base/typography.module.scss";
 
+//font
 @mixin font-title {
   font-family: $font-familly--bold;
   font-size: $font-regular--large;
@@ -12,4 +13,34 @@
 @mixin font-content {
   font-family: $font-familly--regular;
   font-size: $font-regular--small;
+}
+
+//position
+@mixin bottomFullPosition {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+@mixin leftPosition {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 50%;
+}
+@mixin rightPosition {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  right: 0;
+}
+
+//background and font color
+@mixin bkBackWtFont {
+  background-color: $main-black-color;
+  color: white;
+}
+@mixin primaryBackBkFont {
+  background-color: $primary-color;
+  color: $main-black-color;
 }

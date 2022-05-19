@@ -2,7 +2,8 @@ import { connectToDatabase } from "../../../lib/db";
 import { getSession } from "next-auth/react";
 const handler = async (req, res) => {
   const client = await connectToDatabase();
-  const { postId, photoUrl, postingDate, title, content } = req.body;
+  const { postId, photoUrl, postingDate, title, content, photoPublicId } =
+    req.body;
   console.log("postID", postId);
   console.log("photoUrl", photoUrl);
   const session = await getSession({ req });
@@ -13,7 +14,7 @@ const handler = async (req, res) => {
   if (existingPost) {
     const result = await diaryCollection.updateOne(
       { postId: postId },
-      { $push: { photo: photoUrl } }
+      { $push: { photo: photoUrl, photoPublicId: photoPublicId } }
     );
     res.status(201).json({ message: "Saved to MongoDB!" });
     client.close();
@@ -22,6 +23,7 @@ const handler = async (req, res) => {
   const result = await diaryCollection.insertOne({
     userId: idOfSession,
     photo: [photoUrl],
+    photoPublicId: [photoPublicId],
     postId: postId,
     postingDate: postingDate,
     title: title,

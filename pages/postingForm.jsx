@@ -5,12 +5,12 @@ import form from "../styles/pages/formOfDiary.module.scss";
 import IsUploading from "./IsUploading";
 import { makeId } from "../components/makeId";
 import { useEffect, useRef, useState } from "react";
-const postingForm = () => {
+const postingForm = ({ showModal, setShowModal }) => {
   const date = useRef();
   const title = useRef();
   const content = useRef();
   const [uploaded, setUploaded] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
   const [image, setImage] = useState(); //인풋에 올린 사진
   const [preview, setPreview] = useState();
   const checkThisImg = (e) => {
@@ -21,6 +21,11 @@ const postingForm = () => {
       setImage(null);
     }
   };
+  //showModal이 바뀌면 최상위 파일인 _app에도 반영한다.
+  useEffect(() => {
+    setShowModal(showModal);
+  }, [showModal]);
+
   useEffect(() => {
     //인풋에서 첨부할 사진을 선택하고나면, 그 사진을 스트링데이터로 변환시켜 preview state에 담는다.
     if (image) {
@@ -57,9 +62,12 @@ const postingForm = () => {
         }
       ).then((res) => res.json());
       //mongodb에 사진url과, 작성한 글의 id, form의 텍스트 내용들을 함께 보낸다.
+      console.log(`data.public_id`);
+      console.log(data.public_id);
       let postContent = {
         postId: diaryPostId,
         photoUrl: data.url,
+        photoPublicId: data.public_id,
         postingDate: enteredDate,
         title: enteredTitle,
         content: enteredContent,
@@ -75,7 +83,6 @@ const postingForm = () => {
       console.log("data", data);
     }
     setUploaded(true);
-    //setShowModal(false);
   };
   return (
     <div className={form.wrapper}>

@@ -1,20 +1,28 @@
-import loading from "../styles/pages/isUploading.module.scss";
+import loading from "../../styles/pages/isUploading.module.scss";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-const IsUploading = ({ uploaded, setUploaded, showModal, setShowModal }) => {
-  const [uploadedState, setUploadedState] = useState(uploaded);
+const DeleteModal = ({
+  isLoading,
+  setIsLoading,
+  showSuccessModal,
+  setShowSuccessModal,
+}) => {
   const router = useRouter();
+
   const handler = () => {
-    // setUploaded(false);
     router.push("/");
-    setShowModal(false);
+    setShowSuccessModal(false);
   };
   useEffect(() => {
-    setUploadedState(uploaded);
-  }, [uploaded]);
+    setIsLoading(isLoading);
+  }, [isLoading]);
+
+  useEffect(() => {
+    setShowSuccessModal(showSuccessModal);
+  }, [showSuccessModal]);
   return (
     <div className={loading.wrapper}>
-      {uploadedState ? (
+      {showSuccessModal ? (
         <div className={loading.modal}>
           <img src="/logo.png" height="100px"></img>
           <p className={loading.title}>작성 완료!</p>
@@ -23,10 +31,10 @@ const IsUploading = ({ uploaded, setUploaded, showModal, setShowModal }) => {
           </button>
         </div>
       ) : (
-        <p className={loading.loadingState}>업로드 중...</p>
+        <p className={loading.loadingState}>진행 중...</p>
       )}
     </div>
   );
 };
 
-export default IsUploading;
+export default DeleteModal;
