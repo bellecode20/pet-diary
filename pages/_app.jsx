@@ -1,20 +1,23 @@
 import "../styles/globals.scss";
-import type { AppProps } from "next/app";
+// import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import { useState, useEffect } from "react";
-
-function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+import { store } from "../store";
+import { Provider } from "react-redux";
+function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const [showModal, setShowModal] = useState(false);
   useEffect(() => {
     setShowModal(showModal);
   }, [showModal]);
   return (
     <SessionProvider session={session} refetchInterval={5 * 60}>
-      <Component
-        {...pageProps}
-        showModal={showModal}
-        setShowModal={setShowModal}
-      />
+      <Provider store={store}>
+        <Component
+          {...pageProps}
+          showModal={showModal}
+          setShowModal={setShowModal}
+        />
+      </Provider>
     </SessionProvider>
   );
 }

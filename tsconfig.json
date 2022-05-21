@@ -23,7 +23,8 @@
     "pages/api/auth/signup copy.js",
     "pages/index copy.jsx",
     "pages/postingForm.jsx",
-    "pages/layout/uploadNav.jsx"
+    "pages/layout/uploadNav.jsx",
+    "pages/_app.jsx"
   ],
   "exclude": ["node_modules"]
 }

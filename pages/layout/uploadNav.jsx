@@ -1,11 +1,11 @@
 import Head from "next/head";
 import Image from "next/image";
 import nav from "../../styles/layout/uploadNav.module.scss";
-const UploadNav = () => {
+const UploadNav = ({ formId }) => {
   return (
     <div className={nav.headerNav}>
       <button>Back</button>
-      <button form="posting">저장</button>
+      <button form={formId}>저장</button>
     </div>
   );
 };
