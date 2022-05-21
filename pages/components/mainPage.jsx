@@ -12,7 +12,8 @@ const MainPage = ({ title, main, urlToPost }) => {
   return (
     <div className={comu.wrapper}>
       <div className={header.header}>{title}</div>
-      <div className={comu.mainContainer}>{main}</div>
+      {/* <div className={comu.mainContainer}>{main}</div> */}
+      {main}
       <Link href={urlToPost} passHref>
         <a className={styles.addBtn}>+</a>
       </Link>

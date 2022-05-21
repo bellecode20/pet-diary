@@ -4,44 +4,51 @@ import { connectToDatabase } from "../../lib/db";
 import MainPage from "../components/mainPage";
 import styles from "../../styles/Home.module.scss";
 import Image from "next/image";
-import { increment } from "../../slices/counterSlice";
-import { useDispatch, useSelector } from "react-redux";
-const Index = ({ textedDiaries }) => {
+import post from "../../styles/layout/post.module.scss";
+import Link from "next/link";
+
+const Index = ({ textedCommunity }) => {
   return (
     <MainPage
       title={"Community"}
-      main={<Content textedDiaries={textedDiaries}></Content>}
+      main={<Content textedCommunity={textedCommunity}></Content>}
       urlToPost={"/"}
     ></MainPage>
   );
 };
-const Content = ({ textedDiaries }) => {
+const Content = ({ textedCommunity }) => {
   const { data: session, status } = useSession();
   console.log(session);
-  const diaryies = JSON.parse(textedDiaries);
-  const count = useSelector((state) => state.counter.value);
-  const dispatch = useDispatch();
+  const communityPosts = JSON.parse(textedCommunity);
   return (
     <div>
-      {diaryies.map((diary) => (
-        // <Link href={`/privatediary/${diary.postId}`}>
-        <a className={styles.dayContainer} custom-attribute={diary.postId}>
-          <div className={styles.timeLineStart}></div>
-          <div className={styles.timeLineCircle}></div>
-          <div className={styles.timeLine}></div>
-          <div className={styles.dateOfDiary}>{diary.postingDate}</div>
-          <div className={styles.diary}>
-            <div>{diary.title}</div>
-            {diary.photo.map((img) => (
-              <Image src={img} width="500px" height="500px"></Image>
-            ))}
-            <div className={styles.diaryContent}>{diary.content}</div>
+      {communityPosts.map((el) => (
+        <Link href={`/communityCategory/${el.postId}`}>
+          <div className={post.postContainer}>
+            <p className={post.tag}>{el.title}</p>
+            <p className={post.content}>{el.content}</p>
+            <div className={post.imgsPreview}>
+              {el.photo.map((img) => (
+                <Image src={img} width="300px" height="100px"></Image>
+              ))}
+            </div>
+            <div className={post.owner}>
+              <p className={post.name}>{el.userId}</p>
+              <p className={post.date}>
+                {el.timestamp.month}. {el.timestamp.date}
+              </p>
+            </div>
+            <div className={post.social}>
+              <span className={post.like}>
+                {el.likeIds.length === 0 ? "츄르" : el.LikeIds.length}
+              </span>
+              <span className={post.comment}>
+                {el.commentIds.length === 0 ? "댓글" : el.commentIds.length}
+              </span>
+            </div>
           </div>
-        </a>
-        // </Link>
+        </Link>
       ))}
-      <button onClick={() => dispatch(increment())}>increment</button>
-      {count}
     </div>
   );
 };
@@ -56,21 +63,21 @@ export const getServerSideProps = async (context) => {
       },
     };
   }
-  console.log(`session communityCategory.jsx`);
-  console.log(session);
-  console.log(session.user.userId);
+
   //작성한 전체 글 보기
   const client = await connectToDatabase();
-  const diaryCollection = client.db().collection("privateDiary");
-  const diaries = await diaryCollection
+  const communityCollection = client.db().collection("community");
+  const community = await communityCollection
     .find({
       userId: session.user.userId,
     })
+    .sort({ $natural: -1 })
+    .limit(5)
     .toArray();
-  const textedDiaries = JSON.stringify(diaries);
+  const textedCommunity = JSON.stringify(community);
   return {
     //props로 몽고디비데이터도 전달
-    props: { session, textedDiaries },
+    props: { session, textedCommunity },
   };
 };
 export default Index;

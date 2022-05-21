@@ -5,6 +5,7 @@ import { makeId } from "../../components/makeId";
 import { useEffect, useRef, useState } from "react";
 import { uploadToCloudinary } from "../../lib/uploadToCloudinary";
 import { uploadToMongodb } from "../../lib/uploadToMongodb";
+import { makeTimestamp } from "../../components/makeTimestamp";
 const CommuPostingForm = () => {
   const title = useRef();
   const content = useRef();
@@ -47,7 +48,7 @@ const CommuPostingForm = () => {
       postId: commuPostId,
       title: enteredTitle,
       content: enteredContent,
-      postingTime: new Date().getDate(),
+      timestamp: makeTimestamp(),
     };
     console.log(fileInput.files);
     for (let file of fileInput.files) {

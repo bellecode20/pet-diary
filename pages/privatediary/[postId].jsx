@@ -11,7 +11,7 @@ import "slick-carousel/slick/slick-theme.css";
 import DeleteModal from "../layout/deleteModal";
 import { useEffect, useState } from "react";
 import DeleteDecisionModal from "../layout/deleteDecisionModal";
-import AllCrudModal from "../layout/allCrudModal";
+// import AllCrudModal from "../layout/allCrudModal";
 const Post = ({ textedDiary, showModal, setShowModal }) => {
   const router = useRouter();
   const privateDiary = JSON.parse(textedDiary);

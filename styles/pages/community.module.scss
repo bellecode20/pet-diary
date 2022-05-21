@@ -1,7 +1,7 @@
 @import "abstracts/variables.module.scss";
 @import "abstracts/mixins.module.scss";
 .wrapper {
-  padding-top: calc($header-height + 3vh);
+  padding-top: calc($header-height - 3vh);
   padding-bottom: $tab-bar-height;
   .mainContainer {
     height: 100vh;
