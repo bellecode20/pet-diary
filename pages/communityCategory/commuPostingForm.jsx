@@ -3,8 +3,8 @@ import form from "../../styles/pages/formOfdiary.module.scss";
 import IsUploading from "../IsUploading";
 import { makeId } from "../../components/makeId";
 import { useEffect, useRef, useState } from "react";
-import { uploadToCloudinary } from "../../lib/uploadToCloudinary";
-import { uploadToMongodb } from "../../lib/uploadToMongodb";
+import { requestPostToCloudinary } from "../../lib/requestPostToCloudinary";
+import { requestPostToMongodb } from "../../lib/requestPostToMongodb";
 import { makeTimestamp } from "../../components/makeTimestamp";
 const CommuPostingForm = () => {
   const title = useRef();
@@ -52,7 +52,7 @@ const CommuPostingForm = () => {
     };
     console.log(fileInput.files);
     for (let file of fileInput.files) {
-      const data = await uploadToCloudinary(
+      const data = await requestPostToCloudinary(
         formData,
         file,
         "community-uploads"
@@ -60,7 +60,7 @@ const CommuPostingForm = () => {
       //mongodb에 사진url과, 작성한 글의 id, form의 텍스트 내용들을 함께 보낸다.
       postContent.photoUrl = data.url;
       postContent.photoPublicId = data.public_id;
-      const postResult = await uploadToMongodb(
+      const postResult = await requestPostToMongodb(
         "/api/form/postCommu",
         postContent
       );

@@ -5,7 +5,7 @@ import post from "../../styles/layout/post.module.scss";
 import Image from "next/image";
 import { useRef } from "react";
 import { makeId } from "../../components/makeId";
-import { uploadToMongodb } from "../../lib/uploadToMongodb";
+import { requestPostToMongodb } from "../../lib/requestPostToMongodb";
 import { makeTimestamp } from "../../components/makeTimestamp";
 
 const MainPage = ({ textedCommunity, textedComments }) => {
@@ -19,6 +19,27 @@ const MainPage = ({ textedCommunity, textedComments }) => {
   const forceReload = () => {
     router.reload();
   };
+  const deleteComment = async (e) => {
+    let deleteInfo = {
+      commuPostId: commuPost.commuPostId,
+      commentPostId: e.target.getAttribute("data-remove"),
+    };
+    const deleteResult = await requestPostToMongodb(
+      "/api/form/deleteComment",
+      deleteInfo
+    );
+    console.log("deleteComment", deleteResult);
+  };
+  const deleteCommu = async (e) => {
+    let deleteInfo = {
+      commuPostId: commuPost.commuPostId,
+    };
+    const deleteResult = await requestPostToMongodb(
+      "/api/form/deleteCommu",
+      deleteInfo
+    );
+    console.log("deleteCommu", deleteResult);
+  };
   const submitComments = async (e) => {
     e.preventDefault();
     const enteredComment = comment.current.value;
@@ -29,7 +50,7 @@ const MainPage = ({ textedCommunity, textedComments }) => {
       content: enteredComment,
       timestamp: makeTimestamp(),
     };
-    const postResult = await uploadToMongodb(
+    const postResult = await requestPostToMongodb(
       "/api/form/postComment",
       commentInfo
     );
@@ -38,6 +59,13 @@ const MainPage = ({ textedCommunity, textedComments }) => {
   return (
     <div>
       <div className={post.postContainer}>
+        <button
+          data-remove={commuPost.commuPostId}
+          className={post.commuDeleteBtn}
+          onClick={deleteCommu}
+        >
+          삭제
+        </button>
         <p className={post.tag}>{commuPost.title}</p>
         <p className={post.content}>{commuPost.content}</p>
         <div className={commuPost.imgsPreview}>
@@ -67,7 +95,13 @@ const MainPage = ({ textedCommunity, textedComments }) => {
           <div className={post.commentTop}>
             <p>{el.userId}</p>
             {el.userId === thisUserId && (
-              <button className={post.commentDeleteBtn}>삭제</button>
+              <button
+                data-remove={el.commentPostId}
+                className={post.commentDeleteBtn}
+                onClick={deleteComment}
+              >
+                삭제
+              </button>
             )}
           </div>
           <p>{el.content}</p>

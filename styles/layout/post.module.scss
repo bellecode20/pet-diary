@@ -1,6 +1,7 @@
 @import "abstracts/variables.module.scss";
 @import "abstracts/mixins.module.scss";
 .postContainer {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 1vh;
@@ -9,12 +10,15 @@
     padding-left: 8.2vw;
     padding-right: 8.2vw;
   }
-
+  .commuDeleteBtn {
+    position: absolute;
+    right: 0;
+    background-color: $primary-color;
+  }
   .owner {
     display: flex;
     justify-content: space-between;
   }
-
   .tag {
     background-color: $main-black-color;
     color: $white;
