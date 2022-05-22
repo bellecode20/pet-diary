@@ -4,7 +4,7 @@ import Link from "next/link";
 const MainNav = () => {
   return (
     <div className={navi.tabBar}>
-      <Link href="/community" passHref>
+      <Link href="/communityCategory" passHref>
         <a className={navi.menu}>
           <img src="/diary_cat_01.jpg" className={navi.menuLogo}></img>
           <p>커뮤니티</p>

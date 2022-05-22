@@ -1,13 +1,40 @@
-import { getSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { connectToDatabase } from "../../lib/db";
 import post from "../../styles/layout/post.module.scss";
 import Image from "next/image";
+import { useRef } from "react";
+import { makeId } from "../../components/makeId";
+import { uploadToMongodb } from "../../lib/uploadToMongodb";
+import { makeTimestamp } from "../../components/makeTimestamp";
 
-const MainPage = ({ textedCommunity }) => {
-  const router = useRouter();
+const MainPage = ({ textedCommunity, textedComments }) => {
   const commuPost = JSON.parse(textedCommunity);
-
+  const comments = JSON.parse(textedComments);
+  const { data: session } = useSession();
+  const thisUserId = session.user.userId;
+  const router = useRouter();
+  const { postId } = router.query;
+  const comment = useRef();
+  const forceReload = () => {
+    router.reload();
+  };
+  const submitComments = async (e) => {
+    e.preventDefault();
+    const enteredComment = comment.current.value;
+    const commentPostId = makeId();
+    let commentInfo = {
+      commentPostId: commentPostId,
+      commuPostId: postId,
+      content: enteredComment,
+      timestamp: makeTimestamp(),
+    };
+    const postResult = await uploadToMongodb(
+      "/api/form/postComment",
+      commentInfo
+    );
+    forceReload();
+  };
   return (
     <div>
       <div className={post.postContainer}>
@@ -31,13 +58,27 @@ const MainPage = ({ textedCommunity }) => {
           <span className={post.comment}>
             {commuPost.commentIds.length === 0
               ? "댓글"
-              : commuPost.commentIds.length}
+              : `댓글 ${commuPost.commentIds.length}`}
           </span>
         </div>
       </div>
-      <div>댓글창</div>
-      <form className={post.commentForm}>
-        <input type="text" className={post.commentInput}></input>
+      {comments.map((el) => (
+        <div className={post.commentContainer}>
+          <div className={post.commentTop}>
+            <p>{el.userId}</p>
+            {el.userId === thisUserId && (
+              <button className={post.commentDeleteBtn}>삭제</button>
+            )}
+          </div>
+          <p>{el.content}</p>
+          <p className={post.commentTime}>
+            {el.timestamp.month}. {el.timestamp.date}. {el.timestamp.hour}:
+            {el.timestamp.minute}
+          </p>
+        </div>
+      ))}
+      <form className={post.commentForm} onSubmit={submitComments}>
+        <input type="text" className={post.commentInput} ref={comment}></input>
         <button className={post.commentBtn}>send</button>
       </form>
     </div>
@@ -61,12 +102,18 @@ export const getServerSideProps = async (context) => {
   const client = await connectToDatabase();
   const communityCollection = client.db().collection("community");
   const community = await communityCollection.findOne({
-    postId: postId,
+    commuPostId: postId,
   });
   const textedCommunity = JSON.stringify(community);
+
+  const commentsCollection = client.db().collection("comments");
+  const comments = await commentsCollection
+    .find({ commuPostId: postId })
+    .toArray();
+  const textedComments = JSON.stringify(comments);
   return {
     //props로 몽고디비데이터도 전달
-    props: { session, textedCommunity },
+    props: { session, textedCommunity, textedComments },
   };
 };
 

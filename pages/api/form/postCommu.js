@@ -22,7 +22,7 @@ const handler = async (req, res) => {
     return;
   }
   const result = await communityCollection.insertOne({
-    postId: postId,
+    commuPostId: postId,
     userId: idOfSession,
     photo: [photoUrl],
     photoPublicId: [photoPublicId],

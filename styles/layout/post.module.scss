@@ -44,3 +44,16 @@
     background-color: $primary-color;
   }
 }
+.commentContainer {
+  border-bottom: 1px solid black;
+  .commentTop {
+    display: flex;
+    justify-content: space-between;
+    .commentDeleteBtn {
+      background-color: $primary-color;
+    }
+  }
+  .commentTime {
+    text-align: right;
+  }
+}

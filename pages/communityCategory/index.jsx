@@ -23,7 +23,7 @@ const Content = ({ textedCommunity }) => {
   return (
     <div>
       {communityPosts.map((el) => (
-        <Link href={`/communityCategory/${el.postId}`}>
+        <Link href={`/communityCategory/${el.commuPostId}`}>
           <div className={post.postContainer}>
             <p className={post.tag}>{el.title}</p>
             <p className={post.content}>{el.content}</p>
