@@ -1,6 +1,5 @@
 import { getSession } from "next-auth/react";
 import { useSession } from "next-auth/react";
-import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.scss";
 import header from "../styles/layout/header.module.scss";
@@ -17,7 +16,7 @@ const Home = ({ textedDiaries }) => {
       <div className={header.header}>{session.user.userId}의 Diary</div>
       <div className={styles.mainContainer}>
         {diaryies.map((diary) => (
-          <Link href={`/privatediary/${diary.postId}`}>
+          <Link href={`/privatediaryCategory/${diary.postId}`}>
             <a className={styles.dayContainer} custom-attribute={diary.postId}>
               <div className={styles.timeLineStart}></div>
               <div className={styles.timeLineCircle}></div>
@@ -34,7 +33,7 @@ const Home = ({ textedDiaries }) => {
           </Link>
         ))}
       </div>
-      <Link href="/postingForm" passHref>
+      <Link href="/privatediaryCategory/postingForm" passHref>
         <a className={styles.addBtn}>+</a>
       </Link>
       <MainNav></MainNav>

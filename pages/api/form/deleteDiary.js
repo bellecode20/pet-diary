@@ -3,11 +3,10 @@ import { getSession } from "next-auth/react";
 const cloudinary = require("../../../lib/cloudinary");
 
 const handler = async (req, res) => {
-  console.log("deleteDiary");
-  const session = await getSession({ req: req });
-  const idOfSession = session.user.userId;
   const client = await connectToDatabase();
+  const session = await getSession({ req: req });
   const diaryCollection = client.db().collection("privateDiary");
+  const idOfSession = session.user.userId;
   const userId = req.body.userId;
   const postId = req.body.postId;
   const photoPublicId = req.body.photoPublicId;
@@ -25,7 +24,6 @@ const handler = async (req, res) => {
       userId: userId,
       postId: postId,
     });
-    console.log(result);
     const cloudResult = await cloudinary.api.delete_resources(
       photoPublicIdArr,
       { resource_type: "image" },
@@ -33,7 +31,6 @@ const handler = async (req, res) => {
         console.log(result, error);
       }
     );
-    console.log(cloudResult);
     res.status(200).json({ message: "Delete the diary post from MongoDB!" });
     client.close();
     return;

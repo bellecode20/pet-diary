@@ -1,4 +1,4 @@
-import sign from "../styles/pages/signUp.module.scss";
+import sign from "../../styles/pages/signUp.module.scss";
 import { useRef, useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";

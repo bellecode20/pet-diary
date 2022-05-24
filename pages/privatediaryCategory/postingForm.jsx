@@ -1,14 +1,16 @@
+import Head from "next/head";
+import Image from "next/image";
 import UploadNav from "../layout/uploadNav";
-import form from "../../styles/pages/formOfdiary.module.scss";
+import form from "../../styles/pages/formOfDiary.module.scss";
 import IsUploading from "../IsUploading";
 import { makeId } from "../../components/makeId";
 import { useEffect, useRef, useState } from "react";
-import { requestPostToCloudinary } from "../../components/requestPostToCloudinary";
-import { requestPostToMongodb } from "../../components/requestPostToMongodb";
-import { makeTimestamp } from "../../components/makeTimestamp";
-const CommuPostingForm = () => {
+const postingForm = ({ showModal, setShowModal }) => {
+  const date = useRef();
   const title = useRef();
   const content = useRef();
+  const [uploaded, setUploaded] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
   const [image, setImage] = useState(); //인풋에 올린 사진
   const [preview, setPreview] = useState();
   const checkThisImg = (e) => {
@@ -19,6 +21,10 @@ const CommuPostingForm = () => {
       setImage(null);
     }
   };
+  //showModal이 바뀌면 최상위 파일인 _app에도 반영한다.
+  useEffect(() => {
+    setShowModal(showModal);
+  }, [showModal]);
 
   useEffect(() => {
     //인풋에서 첨부할 사진을 선택하고나면, 그 사진을 스트링데이터로 변환시켜 preview state에 담는다.
@@ -30,65 +36,77 @@ const CommuPostingForm = () => {
       reader.readAsDataURL(image);
     } else setPreview(null);
   }, [image]);
-
-  const postCommu = async (e) => {
+  const postDiary = async (e) => {
     e.preventDefault();
+    console.log("e");
     const form = e.currentTarget;
     const fileInput = Array.from(form.elements).find(
       ({ name }) => name === "photo[]"
     );
     const formData = new FormData();
-    const commuPostId = makeId();
+    const diaryPostId = makeId();
+    const enteredDate = date.current.value;
     const enteredTitle = title.current.value;
     const enteredContent = content.current.value;
+    setShowModal(true);
+    console.log(showModal);
     //FormData를 만들고 cloudinary에 보낸다. 이렇게 cloudinary에 사진 원본을 저장한다.
     //올리는 파일 수 만큼 cloudinary에 보내고 mongodb에 저장하는 걸 반복한다.
-
-    let postContent = {
-      postId: commuPostId,
-      title: enteredTitle,
-      content: enteredContent,
-      timestamp: makeTimestamp(),
-    };
-    console.log(fileInput.files);
-    if (fileInput.files.length > 0) {
-      for (let file of fileInput.files) {
-        const data = await requestPostToCloudinary(
-          formData,
-          file,
-          "community-uploads"
-        );
-        //mongodb에 사진url과, 작성한 글의 id, form의 텍스트 내용들을 함께 보낸다.
-        postContent.photoUrl = data.url;
-        postContent.photoPublicId = data.public_id;
-        const postResult = await requestPostToMongodb(
-          "/api/form/postCommu",
-          postContent
-        );
-      }
-    } else {
-      const postResult = await requestPostToMongodb(
-        "/api/form/postCommu",
-        postContent
-      );
+    for (let file of fileInput.files) {
+      formData.append("file", file);
+      formData.append("upload_preset", "diary-uploads");
+      const data = await fetch(
+        "https://api.cloudinary.com/v1_1/diarycloud/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      ).then((res) => res.json());
+      //mongodb에 사진url과, 작성한 글의 id, form의 텍스트 내용들을 함께 보낸다.
+      console.log(`data.public_id`);
+      console.log(data.public_id);
+      let postContent = {
+        postId: diaryPostId,
+        photoUrl: data.url,
+        photoPublicId: data.public_id,
+        postingDate: enteredDate,
+        title: enteredTitle,
+        content: enteredContent,
+      };
+      const postResult = await fetch("/api/form/postDiary", {
+        method: "POST",
+        body: JSON.stringify(postContent),
+        //headers
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((res) => res.json());
+      console.log("data", data);
     }
+    setUploaded(true);
   };
   return (
     <div className={form.wrapper}>
       <div>
-        <UploadNav formId="postingCommu"></UploadNav>
+        <UploadNav formId="posting"></UploadNav>
         <form
           className={form.mainContainer}
           encType="multipart/form-data"
-          id="postingCommu"
-          onSubmit={postCommu}
+          id="posting"
+          onSubmit={postDiary}
         >
           <div className={form.dateForm}>
-            <p className={form.date}>커뮤니티 글 쓰기</p>
+            <label htmlFor="diary__form__date"></label>
+            <input
+              id="diary__form__date"
+              type="date"
+              ref={date}
+              className={form.date}
+            />
           </div>
           <div className={form.photoForm}>
             <label
-              htmlFor="commu__form__photo"
+              htmlFor="diary__form__photo"
               className={image ? form.whenPhoto : form.border} //사진 선택하면 테두리 없어진다.
             >
               <img
@@ -102,7 +120,7 @@ const CommuPostingForm = () => {
             <input
               type="file"
               multiple
-              id="commu__form__photo"
+              id="diary__form__photo"
               accept="image/png, image/jpeg"
               style={{ display: "none" }}
               name="photo[]"
@@ -113,20 +131,30 @@ const CommuPostingForm = () => {
           <div className={form.textContainer}>
             <input
               type="text"
+              id={form.diary__form__title}
               className={form.title}
-              placeholder="우리집 냥이 소개하기"
+              placeholder="스프와의 첫 만남"
               ref={title}
             />
             <textarea
+              id={form.diary__form__content}
               className={form.content}
-              placeholder="사람들에게 우리집 냥이를 자랑해보세요"
+              placeholder="오늘은 스프가 집에 처음 왔다."
               ref={content}
             ></textarea>
           </div>
         </form>
       </div>
+      {showModal && (
+        <IsUploading
+          uploaded={uploaded}
+          setUploaded={setUploaded}
+          showModal={showModal}
+          setShowModal={setShowModal}
+        ></IsUploading>
+      )}
     </div>
   );
 };
 
-export default CommuPostingForm;
+export default postingForm;

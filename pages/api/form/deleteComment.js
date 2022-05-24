@@ -1,4 +1,3 @@
-// import { getSession } from "next-auth/react";
 import { connectToDatabase } from "../../../lib/db";
 import { getIdBySession } from "../../../lib/getIdBySession";
 

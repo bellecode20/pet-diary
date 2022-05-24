@@ -1,10 +1,6 @@
-import Head from "next/head";
-import Image from "next/image";
-import navi from "../styles/layout/navigations.module.scss";
-import header from "../styles/layout/header.module.scss";
-import settings from "../styles/pages/settings.module.scss";
-import Post from "./layout/post";
-import MainNav from "./layout/mainNav";
+import header from "../../styles/layout/header.module.scss";
+import settings from "../../styles/pages/settings.module.scss";
+import MainNav from "../layout/mainNav";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 const Settings = () => {

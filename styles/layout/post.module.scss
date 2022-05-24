@@ -10,10 +10,17 @@
     padding-left: 8.2vw;
     padding-right: 8.2vw;
   }
-  .commuDeleteBtn {
+  .menuBtn {
     position: absolute;
     right: 0;
-    background-color: $primary-color;
+    .commuDeleteBtn {
+      // position: absolute;
+      // right: 0;
+      background-color: $primary-color;
+    }
+    :hover {
+      background-color: $gray-color;
+    }
   }
   .owner {
     display: flex;

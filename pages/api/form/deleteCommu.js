@@ -1,7 +1,8 @@
 import { connectToDatabase } from "../../../lib/db";
 import { getIdBySession } from "../../../lib/getIdBySession";
+const cloudinary = require("../../../lib/cloudinary");
 
-const deleteComment = async (req, res) => {
+const deleteCommu = async (req, res) => {
   const client = await connectToDatabase();
   const commentCollection = client.db().collection("comments");
   const commuCollection = client.db().collection("community");
@@ -19,9 +20,16 @@ const deleteComment = async (req, res) => {
     const commentResult = await commentCollection.deleteMany({
       commuPostId: req.body.commuPostId,
     });
+    const cloudResult = await cloudinary.api.delete_resources(
+      thisCommu.photoPublicId,
+      { resource_type: "image" },
+      (result, error) => {
+        console.log(result, error);
+      }
+    );
   }
 
   res.status(200).json({ message: "delete the community post from MongoDB!" });
   client.close();
 };
-export default deleteComment;
+export default deleteCommu;

@@ -22,7 +22,7 @@
     "pages/signup copy.tsx",
     "pages/api/auth/signup copy.js",
     "pages/index copy.jsx",
-    "pages/postingForm.jsx",
+    "pages/privatediaryCategory/postingForm.jsx",
     "pages/layout/uploadNav.jsx",
     "pages/_app.jsx"
   ],

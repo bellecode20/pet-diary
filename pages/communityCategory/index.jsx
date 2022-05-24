@@ -49,6 +49,9 @@ const Content = ({ textedCommunity }) => {
           </div>
         </Link>
       ))}
+      <Link href="/communityCategory/commuPostingForm">
+        <a>커뮤니티 글 쓰기</a>
+      </Link>
     </div>
   );
 };

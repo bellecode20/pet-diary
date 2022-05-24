@@ -5,8 +5,9 @@ import post from "../../styles/layout/post.module.scss";
 import Image from "next/image";
 import { useRef } from "react";
 import { makeId } from "../../components/makeId";
-import { requestPostToMongodb } from "../../lib/requestPostToMongodb";
+import { requestPostToMongodb } from "../../components/requestPostToMongodb";
 import { makeTimestamp } from "../../components/makeTimestamp";
+import Link from "next/link";
 
 const MainPage = ({ textedCommunity, textedComments }) => {
   const commuPost = JSON.parse(textedCommunity);
@@ -59,13 +60,23 @@ const MainPage = ({ textedCommunity, textedComments }) => {
   return (
     <div>
       <div className={post.postContainer}>
-        <button
-          data-remove={commuPost.commuPostId}
-          className={post.commuDeleteBtn}
-          onClick={deleteCommu}
-        >
-          삭제
-        </button>
+        <div className={post.menuBtn}>
+          <Link href={`/communityCategory/update/${commuPost.commuPostId}`}>
+            <button
+              data-remove={commuPost.commuPostId}
+              className={post.commuDeleteBtn}
+            >
+              수정
+            </button>
+          </Link>
+          <button
+            data-remove={commuPost.commuPostId}
+            className={post.commuDeleteBtn}
+            onClick={deleteCommu}
+          >
+            삭제
+          </button>
+        </div>
         <p className={post.tag}>{commuPost.title}</p>
         <p className={post.content}>{commuPost.content}</p>
         <div className={commuPost.imgsPreview}>

@@ -15,8 +15,8 @@ const handler = async (req, res) => {
   console.log(idOfSession);
 
   const result = await commentsCollection.insertOne({
-    commentPostId: commentPostId,
     commuPostId: commuPostId,
+    commentPostId: commentPostId,
     userId: idOfSession,
     content: content,
     timestamp: timestamp,

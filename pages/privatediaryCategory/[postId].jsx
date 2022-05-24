@@ -11,7 +11,6 @@ import "slick-carousel/slick/slick-theme.css";
 import DeleteModal from "../layout/deleteModal";
 import { useEffect, useState } from "react";
 import DeleteDecisionModal from "../layout/deleteDecisionModal";
-// import AllCrudModal from "../layout/allCrudModal";
 const Post = ({ textedDiary, showModal, setShowModal }) => {
   const router = useRouter();
   const privateDiary = JSON.parse(textedDiary);
@@ -45,6 +44,7 @@ const Post = ({ textedDiary, showModal, setShowModal }) => {
           postId={privateDiary.postId}
           userId={privateDiary.userId}
           setShowModal={setShowModal}
+          mode="updateDiary"
         ></DetailDiaryNav>
         <div className={form.mainContainer}>
           <div className={form.dateForm}>
