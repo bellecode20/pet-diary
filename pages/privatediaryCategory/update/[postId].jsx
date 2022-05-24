@@ -60,11 +60,11 @@ const updatingForm = ({ showModal, setShowModal, textedDiary }) => {
   return (
     <div className={form.wrapper}>
       <div>
-        <UploadNav formId="posting"></UploadNav>
+        <UploadNav formId="updateDiary"></UploadNav>
         <form
           className={form.mainContainer}
           encType="multipart/form-data"
-          id="posting"
+          id="updateDiary"
           onSubmit={postDiary}
         >
           <div className={form.dateForm}>

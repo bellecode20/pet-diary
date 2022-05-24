@@ -5,6 +5,8 @@ import form from "../../styles/pages/formOfDiary.module.scss";
 import IsUploading from "../IsUploading";
 import { makeId } from "../../components/makeId";
 import { useEffect, useRef, useState } from "react";
+import { requestPostToMongodb } from "../../components/requestPostToMongodb";
+import { requestPostToCloudinary } from "../../components/requestPostToCloudinary";
 const postingForm = ({ showModal, setShowModal }) => {
   const date = useRef();
   const title = useRef();
@@ -52,36 +54,35 @@ const postingForm = ({ showModal, setShowModal }) => {
     console.log(showModal);
     //FormData를 만들고 cloudinary에 보낸다. 이렇게 cloudinary에 사진 원본을 저장한다.
     //올리는 파일 수 만큼 cloudinary에 보내고 mongodb에 저장하는 걸 반복한다.
-    for (let file of fileInput.files) {
-      formData.append("file", file);
-      formData.append("upload_preset", "diary-uploads");
-      const data = await fetch(
-        "https://api.cloudinary.com/v1_1/diarycloud/image/upload",
-        {
-          method: "POST",
-          body: formData,
-        }
-      ).then((res) => res.json());
-      //mongodb에 사진url과, 작성한 글의 id, form의 텍스트 내용들을 함께 보낸다.
-      console.log(`data.public_id`);
-      console.log(data.public_id);
-      let postContent = {
-        postId: diaryPostId,
-        photoUrl: data.url,
-        photoPublicId: data.public_id,
-        postingDate: enteredDate,
-        title: enteredTitle,
-        content: enteredContent,
-      };
-      const postResult = await fetch("/api/form/postDiary", {
-        method: "POST",
-        body: JSON.stringify(postContent),
-        //headers
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }).then((res) => res.json());
-      console.log("data", data);
+    if (fileInput.files.length > 0) {
+      for (let file of fileInput.files) {
+        const data = await requestPostToCloudinary(
+          formData,
+          file,
+          "diary-uploads"
+        );
+        //mongodb에 사진url과, 작성한 글의 id, form의 텍스트 내용들을 함께 보낸다.
+        console.log(`data.public_id`);
+        console.log(data.public_id);
+        let postContent = {
+          postId: diaryPostId,
+          photoUrl: data.url,
+          photoPublicId: data.public_id,
+          postingDate: enteredDate,
+          title: enteredTitle,
+          content: enteredContent,
+        };
+        const postResult = await requestPostToMongodb(
+          "/api/form/postDiary",
+          postContent
+        );
+        console.log("data", data);
+      }
+    } else {
+      const postResult = await requestPostToMongodb(
+        "/api/form/postDiary",
+        postContent
+      );
     }
     setUploaded(true);
   };

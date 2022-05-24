@@ -1,6 +1,7 @@
 import loading from "../../styles/pages/isUploading.module.scss";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { requestPostToMongodb } from "../../components/requestPostToMongodb";
 const DeleteDecisionModal = ({
   userId,
   postId,
@@ -25,14 +26,10 @@ const DeleteDecisionModal = ({
       photoPublicId: photoPublicId,
     };
     console.log(postInfo);
-    const response = await fetch("../api/form/deleteDiary", {
-      method: "POST",
-      body: JSON.stringify(postInfo),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
+    const result = await requestPostToMongodb(
+      "../api/form/deleteDiary",
+      postInfo
+    );
     setShowSuccessModal(true);
     console.log(`data deleteModal`);
     console.log(data);
