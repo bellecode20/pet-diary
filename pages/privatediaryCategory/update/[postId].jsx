@@ -7,6 +7,8 @@ import IsUploading from "../../IsUploading";
 import { makeId } from "../../../components/makeId";
 import { useEffect, useRef, useState } from "react";
 import { connectToDatabase } from "../../../lib/db";
+import { requestPostToCloudinary } from "../../../components/requestPostToCloudinary";
+import { requestPostToMongodb } from "../../../components/requestPostToMongodb";
 
 const updatingForm = ({ showModal, setShowModal, textedDiary }) => {
   const date = useRef();
@@ -50,12 +52,48 @@ const updatingForm = ({ showModal, setShowModal, textedDiary }) => {
       ({ name }) => name === "newPhoto[]"
     );
     let enteredInfo = {
-      date: dateValue,
+      postingDate: dateValue,
       title: titleValue,
       content: contentValue,
     };
-
-    console.log(enteredInfo);
+    if (fileInput.files.length > 0) {
+      let postInfoForUpdating = {
+        userId: postInfo.userId,
+        postId: postInfo.postId,
+      };
+      //1. 이 글의 Id를 보내고, 사진 삭제 요청한다. (cloudinary -> mongodb 순)
+      const deleteResult = await fetch("../../api/form/deleteForUpdate", {
+        method: "POST",
+        body: JSON.stringify(postInfoForUpdating),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await deleteResult.json();
+      for (let i = 0; i < fileInput.files.length; i++) {
+        const data = await requestPostToCloudinary(
+          fileInput.files[i],
+          "diary-uploads"
+        );
+        //mongodb에 사진url과, 작성한 글의 id, form의 텍스트 내용들, 반복문을 몇번째 도는 중인지 함께 보낸다.
+        let newPostContent = {
+          userId: postInfo.userId,
+          postId: postInfo.postId,
+          photoUrl: data.url,
+          photoPublicId: data.public_id,
+          postingDate: dateValue,
+          title: titleValue,
+          content: contentValue,
+          forLoopIndex: i,
+        };
+        //2. 새로운 사진을 업로드하길 요청한다.
+        const postResult = await requestPostToMongodb(
+          "/api/form/updateDiary",
+          newPostContent
+        );
+        console.log("postResult", postResult);
+      }
+    }
   };
   return (
     <div className={form.wrapper}>

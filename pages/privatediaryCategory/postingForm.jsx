@@ -45,7 +45,7 @@ const postingForm = ({ showModal, setShowModal }) => {
     const fileInput = Array.from(form.elements).find(
       ({ name }) => name === "photo[]"
     );
-    const formData = new FormData();
+    // const formData = new FormData();
     const diaryPostId = makeId();
     const enteredDate = date.current.value;
     const enteredTitle = title.current.value;
@@ -56,11 +56,7 @@ const postingForm = ({ showModal, setShowModal }) => {
     //올리는 파일 수 만큼 cloudinary에 보내고 mongodb에 저장하는 걸 반복한다.
     if (fileInput.files.length > 0) {
       for (let file of fileInput.files) {
-        const data = await requestPostToCloudinary(
-          formData,
-          file,
-          "diary-uploads"
-        );
+        const data = await requestPostToCloudinary(file, "diary-uploads");
         //mongodb에 사진url과, 작성한 글의 id, form의 텍스트 내용들을 함께 보낸다.
         console.log(`data.public_id`);
         console.log(data.public_id);
