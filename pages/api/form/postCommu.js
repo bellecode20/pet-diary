@@ -34,6 +34,7 @@ const handler = async (req, res) => {
     likeIds: [],
     commentIds: [],
   });
+  console.log("맨아래");
   res.status(201).json({ message: "Saved to MongoDB!" });
   client.close();
   return;

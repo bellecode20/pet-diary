@@ -25,6 +25,7 @@ const Content = ({ textedCommunity }) => {
       {communityPosts.map((el) => (
         <Link href={`/communityCategory/${el.commuPostId}`}>
           <div className={post.postContainer}>
+            {el.isUpdated && <p>수정됨</p>}
             <p className={post.tag}>{el.title}</p>
             <p className={post.content}>{el.content}</p>
             <div className={post.imgsPreview}>

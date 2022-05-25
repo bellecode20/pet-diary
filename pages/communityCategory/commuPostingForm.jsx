@@ -50,7 +50,6 @@ const CommuPostingForm = () => {
       content: enteredContent,
       timestamp: makeTimestamp(),
     };
-    console.log(fileInput.files);
     if (fileInput.files.length > 0) {
       for (let file of fileInput.files) {
         const data = await requestPostToCloudinary(file, "community-uploads");

@@ -5,11 +5,13 @@ const deleteForUpdate = async (req, res) => {
   const client = await connectToDatabase();
   const session = await getSession({ req: req });
   const idOfSession = session.user.userId;
-  console.log(req.body);
+  const requestedCollection = client.db().collection(req.body.collectionName);
   if (req.body.userId === idOfSession) {
     //1. cloudinary에서 삭제하기 위해서는 먼저 publicid를 알아야 한다.
-    const diaryCollection = client.db().collection("privateDiary");
-    const oldPost = await diaryCollection.findOne({ postId: req.body.postId });
+    // const diaryCollection = client.db().collection("privateDiary");
+    const oldPost = await requestedCollection.findOne({
+      postId: req.body.postId,
+    });
     //2. publicId를 보내서 삭제한다.
     console.log(oldPost);
     console.log(oldPost.photoPublicId);
@@ -21,7 +23,7 @@ const deleteForUpdate = async (req, res) => {
       }
     );
     //3. mongodb의 기존 publicId관련 필드들을 []로 리셋한다.
-    const mongoResult = await diaryCollection.updateOne(
+    const mongoResult = await requestedCollection.updateOne(
       {
         postId: req.body.postId,
       },

@@ -43,7 +43,6 @@ const updatingForm = ({ showModal, setShowModal, textedDiary }) => {
       reader.readAsDataURL(image);
     } else setPreview(null);
   }, [image]);
-  const requestDelete = () => {};
   const postDiary = async (e) => {
     e.preventDefault();
     console.log("update [postId]");
@@ -51,15 +50,16 @@ const updatingForm = ({ showModal, setShowModal, textedDiary }) => {
     const fileInput = Array.from(form.elements).find(
       ({ name }) => name === "newPhoto[]"
     );
-    let enteredInfo = {
-      postingDate: dateValue,
-      title: titleValue,
-      content: contentValue,
-    };
+    // let enteredInfo = {
+    //   postingDate: dateValue,
+    //   title: titleValue,
+    //   content: contentValue,
+    // };
     if (fileInput.files.length > 0) {
       let postInfoForUpdating = {
         userId: postInfo.userId,
         postId: postInfo.postId,
+        collectionName: "privateDiary",
       };
       //1. 이 글의 Id를 보내고, 사진 삭제 요청한다. (cloudinary -> mongodb 순)
       const deleteResult = await fetch("../../api/form/deleteForUpdate", {
@@ -70,13 +70,14 @@ const updatingForm = ({ showModal, setShowModal, textedDiary }) => {
         },
       });
       const data = await deleteResult.json();
+      //2. 새로운 사진을 업로드하길 요청한다.
       for (let i = 0; i < fileInput.files.length; i++) {
         const data = await requestPostToCloudinary(
           fileInput.files[i],
           "diary-uploads"
         );
         //mongodb에 사진url과, 작성한 글의 id, form의 텍스트 내용들, 반복문을 몇번째 도는 중인지 함께 보낸다.
-        let newPostContent = {
+        let updateDiaryContent = {
           userId: postInfo.userId,
           postId: postInfo.postId,
           photoUrl: data.url,
@@ -86,10 +87,9 @@ const updatingForm = ({ showModal, setShowModal, textedDiary }) => {
           content: contentValue,
           forLoopIndex: i,
         };
-        //2. 새로운 사진을 업로드하길 요청한다.
         const postResult = await requestPostToMongodb(
           "/api/form/updateDiary",
-          newPostContent
+          updateDiaryContent
         );
         console.log("postResult", postResult);
       }
