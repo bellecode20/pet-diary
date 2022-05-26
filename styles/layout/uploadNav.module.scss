@@ -10,8 +10,29 @@
   background-color: $main-black-color;
   display: flex;
   justify-content: space-between;
-  button {
+  .basic {
     @include nav__button--bold;
     flex-basis: 15vw;
+  }
+  .hiddenMenu {
+    position: absolute;
+    top: $nav--upload;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    width: 10rem;
+  }
+  .updateBtn {
+    font-family: $font-familly--light;
+    color: $white;
+    background-color: $main-black-color;
+  }
+  .deleteBtn {
+    font-family: $font-familly--light;
+    background-color: $primary-color;
+  }
+  :hover {
+    background-color: $white;
+    color: $main-black-color;
   }
 }

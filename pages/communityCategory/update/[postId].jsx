@@ -1,13 +1,9 @@
 import UploadNav from "../../layout/uploadNav";
 import form from "../../../styles/pages/formOfdiary.module.scss";
 import { getSession, useSession } from "next-auth/react";
-import { useRouter } from "next/router";
 import { connectToDatabase } from "../../../lib/db";
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { makeId } from "../../../components/makeId";
 import { requestPostToMongodb } from "../../../components/requestPostToMongodb";
-import Link from "next/link";
 import { requestPostToCloudinary } from "../../../components/requestPostToCloudinary";
 import ModalContainer from "../../../components/ModalContainer";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,6 +26,8 @@ const updatingCommu = ({ textedCommunity }) => {
   };
   const updateCommu = async (e) => {
     e.preventDefault();
+    dispatch(modalIsShown(true));
+    dispatch(changeCategory("LoadingModal"));
     const form = e.currentTarget;
     const fileInput = Array.from(form.elements).find(
       ({ name }) => name === "newCommuPhoto[]"
@@ -71,6 +69,7 @@ const updatingCommu = ({ textedCommunity }) => {
         dispatch(modalIsShown(true));
       }
     }
+    dispatch(changeCategory("SuccessModal"));
   };
   useEffect(() => {
     //인풋에서 첨부할 사진을 선택하고나면, 그 사진을 스트링데이터로 변환시켜 preview state에 담는다.
@@ -88,15 +87,6 @@ const updatingCommu = ({ textedCommunity }) => {
   return (
     <div className={form.wrapper}>
       <UploadNav formId="updatingCommu"></UploadNav>
-      <button
-        onClick={() => {
-          dispatch(modalIsShown(true));
-          // dispatch(changeCategory("communityCategory"));
-          dispatch(changeCategory("loading"));
-        }}
-      >
-        모달창보여줘
-      </button>
       <form
         className={form.mainContainer}
         encType="multipart/form-data"

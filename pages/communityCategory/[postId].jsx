@@ -8,6 +8,9 @@ import { makeId } from "../../components/makeId";
 import { requestPostToMongodb } from "../../components/requestPostToMongodb";
 import { makeTimestamp } from "../../components/makeTimestamp";
 import Link from "next/link";
+import ModalContainer from "../../components/ModalContainer";
+import { useDispatch, useSelector } from "react-redux";
+import { changeCategory, modalIsShown } from "../../store/features/modalSlice";
 
 const MainPage = ({ textedCommunity, textedComments }) => {
   const commuPost = JSON.parse(textedCommunity);
@@ -32,6 +35,7 @@ const MainPage = ({ textedCommunity, textedComments }) => {
     console.log("deleteComment", deleteResult);
   };
   const deleteCommu = async (e) => {
+    dispatch(changeCategory("LoadingModal"));
     let deleteInfo = {
       commuPostId: commuPost.commuPostId,
     };
@@ -39,6 +43,7 @@ const MainPage = ({ textedCommunity, textedComments }) => {
       "/api/form/deleteCommu",
       deleteInfo
     );
+    dispatch(changeCategory("SuccessModal"));
     console.log("deleteCommu", deleteResult);
   };
   const submitComments = async (e) => {
@@ -57,6 +62,9 @@ const MainPage = ({ textedCommunity, textedComments }) => {
     );
     forceReload();
   };
+  const modal = useSelector((state) => state.modal.isShown);
+  const dispatch = useDispatch();
+  console.log(modal);
   return (
     <div>
       <div className={post.postContainer}>
@@ -72,7 +80,11 @@ const MainPage = ({ textedCommunity, textedComments }) => {
           <button
             data-remove={commuPost.commuPostId}
             className={post.commuDeleteBtn}
-            onClick={deleteCommu}
+            onClick={() => {
+              dispatch(modalIsShown(true));
+              dispatch(changeCategory("GoOrStopModal"));
+              console.log(modal);
+            }}
           >
             삭제
           </button>
@@ -126,6 +138,13 @@ const MainPage = ({ textedCommunity, textedComments }) => {
         <input type="text" className={post.commentInput} ref={comment}></input>
         <button className={post.commentBtn}>send</button>
       </form>
+      {modal && (
+        <ModalContainer
+          titleText="정말 삭제할까요?"
+          yesText="삭제하기"
+          yesAction={deleteCommu}
+        ></ModalContainer>
+      )}
     </div>
   );
 };

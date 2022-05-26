@@ -1,12 +1,16 @@
 import UploadNav from "../layout/uploadNav";
 import form from "../../styles/pages/formOfdiary.module.scss";
-import IsUploading from "../IsUploading";
 import { makeId } from "../../components/makeId";
 import { useEffect, useRef, useState } from "react";
 import { requestPostToCloudinary } from "../../components/requestPostToCloudinary";
 import { requestPostToMongodb } from "../../components/requestPostToMongodb";
 import { makeTimestamp } from "../../components/makeTimestamp";
+import { useDispatch, useSelector } from "react-redux";
+import { changeCategory, modalIsShown } from "../../store/features/modalSlice";
+import ModalContainer from "../../components/ModalContainer";
 const CommuPostingForm = () => {
+  const dispatch = useDispatch();
+  const modal = useSelector((state) => state.modal.isShown);
   const title = useRef();
   const content = useRef();
   const [image, setImage] = useState(); //인풋에 올린 사진
@@ -19,7 +23,6 @@ const CommuPostingForm = () => {
       setImage(null);
     }
   };
-
   useEffect(() => {
     //인풋에서 첨부할 사진을 선택하고나면, 그 사진을 스트링데이터로 변환시켜 preview state에 담는다.
     if (image) {
@@ -33,6 +36,8 @@ const CommuPostingForm = () => {
 
   const postCommu = async (e) => {
     e.preventDefault();
+    dispatch(modalIsShown(true));
+    dispatch(changeCategory("LoadingModal"));
     const form = e.currentTarget;
     const fileInput = Array.from(form.elements).find(
       ({ name }) => name === "photo[]"
@@ -67,59 +72,59 @@ const CommuPostingForm = () => {
         postContent
       );
     }
+    dispatch(changeCategory("SuccessModal"));
   };
   return (
     <div className={form.wrapper}>
-      <div>
-        <UploadNav formId="postingCommu"></UploadNav>
-        <form
-          className={form.mainContainer}
-          encType="multipart/form-data"
-          id="postingCommu"
-          onSubmit={postCommu}
-        >
-          <div className={form.dateForm}>
-            <p className={form.date}>커뮤니티 글 쓰기</p>
-          </div>
-          <div className={form.photoForm}>
-            <label
-              htmlFor="commu__form__photo"
-              className={image ? form.whenPhoto : form.border} //사진 선택하면 테두리 없어진다.
-            >
-              <img
-                src={preview}
-                onClick={() => {
-                  setImage(null);
-                }}
-                className={form.thumbnail}
-              ></img>
-            </label>
-            <input
-              type="file"
-              multiple
-              id="commu__form__photo"
-              accept="image/png, image/jpeg"
-              style={{ display: "none" }}
-              name="photo[]"
-              onChange={checkThisImg}
-              title="시각장애인리더기"
-            />
-          </div>
-          <div className={form.textContainer}>
-            <input
-              type="text"
-              className={form.title}
-              placeholder="우리집 냥이 소개하기"
-              ref={title}
-            />
-            <textarea
-              className={form.content}
-              placeholder="사람들에게 우리집 냥이를 자랑해보세요"
-              ref={content}
-            ></textarea>
-          </div>
-        </form>
-      </div>
+      <UploadNav formId="postingCommu"></UploadNav>
+      <form
+        className={form.mainContainer}
+        encType="multipart/form-data"
+        id="postingCommu"
+        onSubmit={postCommu}
+      >
+        <div className={form.dateForm}>
+          <p className={form.date}>커뮤니티 글 쓰기</p>
+        </div>
+        <div className={form.photoForm}>
+          <label
+            htmlFor="commu__form__photo"
+            className={image ? form.whenPhoto : form.border} //사진 선택하면 테두리 없어진다.
+          >
+            <img
+              src={preview}
+              onClick={() => {
+                setImage(null);
+              }}
+              className={form.thumbnail}
+            ></img>
+          </label>
+          <input
+            type="file"
+            multiple
+            id="commu__form__photo"
+            accept="image/png, image/jpeg"
+            style={{ display: "none" }}
+            name="photo[]"
+            onChange={checkThisImg}
+            title="시각장애인리더기"
+          />
+        </div>
+        <div className={form.textContainer}>
+          <input
+            type="text"
+            className={form.title}
+            placeholder="우리집 냥이 소개하기"
+            ref={title}
+          />
+          <textarea
+            className={form.content}
+            placeholder="사람들에게 우리집 냥이를 자랑해보세요"
+            ref={content}
+          ></textarea>
+        </div>
+      </form>
+      {modal && <ModalContainer></ModalContainer>}
     </div>
   );
 };

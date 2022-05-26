@@ -1,23 +1,55 @@
-import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { changeCategory, modalIsShown } from "../../store/features/modalSlice";
 import nav from "../../styles/layout/uploadNav.module.scss";
-import DeleteModal from "./deleteModal";
-const DetailDiaryNav = ({ setShowModal, mode, postId }) => {
+const DetailDiaryNav = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
-  const popUpModal = () => {
-    setShowModal(true);
+  const { postId } = router.query;
+  const thisUrl = router.asPath;
+  const makeFormCategory = () => {
+    let formCategory = "";
+    const wasInDiary = thisUrl.includes("/privatediaryCategory");
+    if (wasInDiary) {
+      formCategory = "privatediaryCategory";
+    } else {
+      formCategory = "communityCategory";
+    }
+    return formCategory;
+  };
+  const goUpdatingForm = () => {
+    router.push(`/${makeFormCategory()}/update/${postId}`);
+  };
+  const [isToggled, setIsToggled] = useState(false);
+  const showModal = () => {
+    console.log("showModal detailDiaryNav.jsx");
+    dispatch(modalIsShown(true));
+    dispatch(changeCategory("GoOrStopModal"));
   };
   return (
     <div className={nav.headerNav}>
-      <button>Back</button>
-      {mode === "updateDiary" && (
-        <Link href={`/privatediaryCategory/update/${postId}`}>
-          <button>수정</button>
-        </Link>
+      <button className={nav.basic}>Back</button>
+      <button
+        className={nav.basic}
+        onClick={() => {
+          setIsToggled(!isToggled);
+        }}
+      >
+        +
+      </button>
+      {isToggled && (
+        <div className={nav.hiddenMenu}>
+          <button onClick={goUpdatingForm} className={nav.updateBtn}>
+            수정
+          </button>
+          <button className={nav.deleteBtn} onClick={showModal}>
+            삭제
+          </button>
+        </div>
       )}
-      <button onClick={popUpModal}>삭제</button>
     </div>
   );
 };

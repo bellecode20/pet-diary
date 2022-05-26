@@ -32,10 +32,9 @@ const SuccessModal = ({ children }) => {
     <div className={loading.wrapper}>
       <div className={loading.modal}>
         <img src="/logo.png" height="100px"></img>
-        <p className={loading.title}>{category}수정+작성 완료!</p>
-        <p>{children}</p>
+        <p className={loading.title}>{category}완료!</p>
         <button className={loading.button} onClick={handleClose}>
-          확인
+          닫기
         </button>
       </div>
     </div>

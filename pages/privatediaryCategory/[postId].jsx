@@ -1,6 +1,4 @@
-import navi from "../../styles/layout/navigations.module.scss";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import { getSession } from "next-auth/react";
 import { connectToDatabase } from "../../lib/db";
 import DetailDiaryNav from "../layout/DetailDiaryNav";
@@ -8,26 +6,14 @@ import form from "../../styles/pages/formOfDiary.module.scss";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import DeleteModal from "../layout/deleteModal";
-import { useEffect, useState } from "react";
-import DeleteDecisionModal from "../layout/deleteDecisionModal";
-const Post = ({ textedDiary, showModal, setShowModal }) => {
-  const router = useRouter();
+import { useDispatch, useSelector } from "react-redux";
+import ModalContainer from "../../components/ModalContainer";
+import { requestPostToMongodb } from "../../components/requestPostToMongodb";
+import { changeCategory } from "../../store/features/modalSlice";
+const Post = ({ textedDiary }) => {
   const privateDiary = JSON.parse(textedDiary);
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    setShowModal(showModal);
-  }, [showModal]);
-
-  useEffect(() => {
-    setIsLoading(isLoading);
-  }, [isLoading]);
-  useEffect(() => {
-    setShowSuccessModal(showSuccessModal);
-  }, [showSuccessModal]);
-
+  const dispatch = useDispatch();
+  const modal = useSelector((state) => state.modal.isShown);
   //캐러셀 라이브러리 설정코드다.
   const settings = {
     dots: true,
@@ -37,52 +23,49 @@ const Post = ({ textedDiary, showModal, setShowModal }) => {
     slidesToScroll: 1,
     adaptiveHeight: true,
   };
+  const requestDelete = async () => {
+    dispatch(changeCategory("LoadingModal"));
+    let postInfo = {
+      userId: privateDiary.userId,
+      postId: privateDiary.postId,
+      photoPublicId: privateDiary.photoPublicId,
+    };
+    console.log(postInfo);
+    const result = await requestPostToMongodb(
+      "../api/form/deleteDiary",
+      postInfo
+    );
+    dispatch(changeCategory("SuccessModal"));
+    console.log(`result`);
+    console.log(result);
+  };
   return (
     <div className={form.wrapper}>
-      <div>
-        <DetailDiaryNav
-          postId={privateDiary.postId}
-          userId={privateDiary.userId}
-          setShowModal={setShowModal}
-          mode="updateDiary"
-        ></DetailDiaryNav>
-        <div className={form.mainContainer}>
-          <div className={form.dateForm}>
-            <p className={form.date}>{privateDiary.postingDate}</p>
-          </div>
-          <div className={form.photoForm}>
-            <div className={form.whenPhoto}>
-              <Slider {...settings}>
-                {privateDiary.photo.map((img) => (
-                  <img src={img}></img>
-                ))}
-              </Slider>
-            </div>
-          </div>
-          <div className={form.textContainer}>
-            <p className={form.title}>{privateDiary.title}</p>
-            <p className={form.content}>{privateDiary.content}</p>
+      <DetailDiaryNav></DetailDiaryNav>
+      <div className={form.mainContainer}>
+        <div className={form.dateForm}>
+          <p className={form.date}>{privateDiary.postingDate}</p>
+        </div>
+        <div className={form.photoForm}>
+          <div className={form.whenPhoto}>
+            <Slider {...settings}>
+              {privateDiary.photo.map((img) => (
+                <img src={img}></img>
+              ))}
+            </Slider>
           </div>
         </div>
+        <div className={form.textContainer}>
+          <p className={form.title}>{privateDiary.title}</p>
+          <p className={form.content}>{privateDiary.content}</p>
+        </div>
       </div>
-      {isLoading && (
-        <DeleteModal
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
-          showSuccessModal={showSuccessModal}
-          setShowSuccessModal={setShowSuccessModal}
-        ></DeleteModal>
-      )}
-      {showModal && (
-        <DeleteDecisionModal
-          postId={privateDiary.postId}
-          userId={privateDiary.userId}
-          photoPublicId={privateDiary.photoPublicId}
-          setIsLoading={setIsLoading}
-          setShowModal={setShowModal}
-          showSuccessModal={showSuccessModal}
-          setShowSuccessModal={setShowSuccessModal}
-        ></DeleteDecisionModal>
+      {modal && (
+        <ModalContainer
+          titleText="다이어리 삭제하시겠습니까?"
+          yesText="삭제하기"
+          yesAction={requestDelete}
+        ></ModalContainer>
       )}
     </div>
   );
@@ -100,9 +83,6 @@ export const getServerSideProps = async (context) => {
       },
     };
   }
-  console.log(`session index.jsx`);
-  console.log(session);
-  console.log(session.user.userId);
   const postId = context.params.postId;
   const client = await connectToDatabase();
   const diaryCollection = client.db().collection("privateDiary");

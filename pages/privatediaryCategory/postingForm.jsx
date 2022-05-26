@@ -2,17 +2,14 @@ import Head from "next/head";
 import Image from "next/image";
 import UploadNav from "../layout/uploadNav";
 import form from "../../styles/pages/formOfDiary.module.scss";
-import IsUploading from "../IsUploading";
 import { makeId } from "../../components/makeId";
 import { useEffect, useRef, useState } from "react";
 import { requestPostToMongodb } from "../../components/requestPostToMongodb";
 import { requestPostToCloudinary } from "../../components/requestPostToCloudinary";
-const postingForm = ({ showModal, setShowModal }) => {
+const postingForm = () => {
   const date = useRef();
   const title = useRef();
   const content = useRef();
-  const [uploaded, setUploaded] = useState(false);
-  // const [showModal, setShowModal] = useState(false);
   const [image, setImage] = useState(); //인풋에 올린 사진
   const [preview, setPreview] = useState();
   const checkThisImg = (e) => {
@@ -23,10 +20,6 @@ const postingForm = ({ showModal, setShowModal }) => {
       setImage(null);
     }
   };
-  //showModal이 바뀌면 최상위 파일인 _app에도 반영한다.
-  useEffect(() => {
-    setShowModal(showModal);
-  }, [showModal]);
 
   useEffect(() => {
     //인풋에서 첨부할 사진을 선택하고나면, 그 사진을 스트링데이터로 변환시켜 preview state에 담는다.
@@ -50,8 +43,6 @@ const postingForm = ({ showModal, setShowModal }) => {
     const enteredDate = date.current.value;
     const enteredTitle = title.current.value;
     const enteredContent = content.current.value;
-    setShowModal(true);
-    console.log(showModal);
     //FormData를 만들고 cloudinary에 보낸다. 이렇게 cloudinary에 사진 원본을 저장한다.
     //올리는 파일 수 만큼 cloudinary에 보내고 mongodb에 저장하는 걸 반복한다.
     if (fileInput.files.length > 0) {
@@ -80,7 +71,6 @@ const postingForm = ({ showModal, setShowModal }) => {
         postContent
       );
     }
-    setUploaded(true);
   };
   return (
     <div className={form.wrapper}>
@@ -142,14 +132,6 @@ const postingForm = ({ showModal, setShowModal }) => {
           </div>
         </form>
       </div>
-      {showModal && (
-        <IsUploading
-          uploaded={uploaded}
-          setUploaded={setUploaded}
-          showModal={showModal}
-          setShowModal={setShowModal}
-        ></IsUploading>
-      )}
     </div>
   );
 };
