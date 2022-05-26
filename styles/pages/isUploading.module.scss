@@ -8,9 +8,6 @@
   top: 0;
   bottom: 0;
   background-color: $opacity-black-color;
-  //   .background {
-  //     background-color: $main-black-color;
-  //   }
   .modal {
     position: absolute;
     height: 30vh;
@@ -47,8 +44,15 @@
     }
   }
   .loadingState {
-    @include rightPosition;
+    @include font-content;
+    position: absolute;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
     color: white;
+    background-color: black;
+    font-size: $font-regular;
+    padding: 2rem;
+    text-align: center;
   }
 }

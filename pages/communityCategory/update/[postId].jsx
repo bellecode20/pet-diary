@@ -3,14 +3,16 @@ import form from "../../../styles/pages/formOfdiary.module.scss";
 import { getSession, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { connectToDatabase } from "../../../lib/db";
-import post from "../../../styles/layout/post.module.scss";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { makeId } from "../../../components/makeId";
 import { requestPostToMongodb } from "../../../components/requestPostToMongodb";
 import Link from "next/link";
 import { requestPostToCloudinary } from "../../../components/requestPostToCloudinary";
-
+import ModalContainer from "../../../components/ModalContainer";
+import { useDispatch, useSelector } from "react-redux";
+import { modalIsShown } from "../../../store/features/modalSlice";
+import { changeCategory } from "../../../store/features/modalSlice";
 const updatingCommu = ({ textedCommunity }) => {
   const commuPost = JSON.parse(textedCommunity);
   const [titleValue, setTitleValue] = useState(commuPost.title);
@@ -66,6 +68,7 @@ const updatingCommu = ({ textedCommunity }) => {
           updateCommuToMongo
         );
         console.log("postResult", postResult);
+        dispatch(modalIsShown(true));
       }
     }
   };
@@ -80,9 +83,20 @@ const updatingCommu = ({ textedCommunity }) => {
     } else setPreview(null);
   }, [image]);
 
+  const modal = useSelector((state) => state.modal.isShown);
+  const dispatch = useDispatch();
   return (
     <div className={form.wrapper}>
       <UploadNav formId="updatingCommu"></UploadNav>
+      <button
+        onClick={() => {
+          dispatch(modalIsShown(true));
+          // dispatch(changeCategory("communityCategory"));
+          dispatch(changeCategory("loading"));
+        }}
+      >
+        모달창보여줘
+      </button>
       <form
         className={form.mainContainer}
         encType="multipart/form-data"
@@ -120,18 +134,17 @@ const updatingCommu = ({ textedCommunity }) => {
           <input
             type="text"
             className={form.title}
-            // ref={title}
             value={titleValue}
             onChange={(e) => setTitleValue(e.target.value)}
           />
           <textarea
             className={form.content}
-            // ref={content}
             value={contentValue}
             onChange={(e) => setContentValue(e.target.value)}
           ></textarea>
         </div>
       </form>
+      {modal && <ModalContainer></ModalContainer>}
     </div>
   );
 };
