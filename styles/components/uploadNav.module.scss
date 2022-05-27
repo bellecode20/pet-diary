@@ -1,6 +1,6 @@
 @import "abstracts/variables.module.scss";
 @import "abstracts/mixins.module.scss";
-@import "../components/buttons.module.scss";
+@import "buttons.module.scss";
 .headerNav {
   position: fixed;
   height: $nav--upload;

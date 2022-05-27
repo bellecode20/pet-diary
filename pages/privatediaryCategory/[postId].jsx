@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { getSession } from "next-auth/react";
 import { connectToDatabase } from "../../lib/db";
-import DetailDiaryNav from "../layout/DetailDiaryNav";
-import form from "../../styles/pages/formOfDiary.module.scss";
+import DetailDiaryNav from "../components/DetailDiaryNav";
+import form from "../../styles/pages/formOfPosting.module.scss";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";

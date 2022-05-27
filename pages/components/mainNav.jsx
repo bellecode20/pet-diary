@@ -1,5 +1,4 @@
-import navi from "../../styles/layout/navigations.module.scss";
-import Image from "next/image";
+import navi from "../../styles/components/navigations.module.scss";
 import Link from "next/link";
 const MainNav = () => {
   return (

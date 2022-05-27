@@ -1,12 +1,12 @@
 import { getSession } from "next-auth/react";
-import UploadNav from "../../layout/uploadNav";
-import form from "../../../styles/pages/formOfDiary.module.scss";
+import UploadNav from "../../components/uploadNav";
+import form from "../../../styles/pages/formOfPosting.module.scss";
 import { useEffect, useRef, useState } from "react";
 import { connectToDatabase } from "../../../lib/db";
 import { requestPostToCloudinary } from "../../../components/requestPostToCloudinary";
 import { requestPostToMongodb } from "../../../components/requestPostToMongodb";
 
-const updatingForm = ({ showModal, setShowModal, textedDiary }) => {
+const updatingForm = ({ textedDiary }) => {
   const date = useRef();
   const title = useRef();
   const content = useRef();
@@ -24,10 +24,6 @@ const updatingForm = ({ showModal, setShowModal, textedDiary }) => {
       setImage(null);
     }
   };
-  //showModal이 바뀌면 최상위 파일인 _app에도 반영한다.
-  // useEffect(() => {
-  //   setShowModal(showModal);
-  // }, [showModal]);
 
   useEffect(() => {
     //인풋에서 첨부할 사진을 선택하고나면, 그 사진을 스트링데이터로 변환시켜 preview state에 담는다.
@@ -46,11 +42,6 @@ const updatingForm = ({ showModal, setShowModal, textedDiary }) => {
     const fileInput = Array.from(form.elements).find(
       ({ name }) => name === "newPhoto[]"
     );
-    // let enteredInfo = {
-    //   postingDate: dateValue,
-    //   title: titleValue,
-    //   content: contentValue,
-    // };
     if (fileInput.files.length > 0) {
       let postInfoForUpdating = {
         userId: postInfo.userId,

@@ -1,10 +1,9 @@
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { changeCategory, modalIsShown } from "../../store/features/modalSlice";
-import nav from "../../styles/layout/uploadNav.module.scss";
+import nav from "../../styles/components/uploadNav.module.scss";
 const DetailDiaryNav = () => {
   const dispatch = useDispatch();
   const router = useRouter();

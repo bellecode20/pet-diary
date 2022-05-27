@@ -1,4 +1,4 @@
-import loading from "../../styles/pages/isUploading.module.scss";
+import loading from "../../styles/components/isUploading.module.scss";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 const DeleteModal = ({

@@ -12,7 +12,7 @@ const handler = async (req, res) => {
       console.log(req.body.forLoopIndex);
       const result = await commuCollection.updateOne(
         {
-          postId: req.body.postId,
+          commuPostId: req.body.commuPostId,
         },
         {
           $set: {
@@ -35,7 +35,7 @@ const handler = async (req, res) => {
       //첫번째 반복문이 아니라면 사진만 배열에 추가한다.
       const result = await commuCollection.updateOne(
         {
-          postId: req.body.postId,
+          commuPostId: req.body.commuPostId,
         },
         {
           $push: {

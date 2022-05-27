@@ -1,59 +1,55 @@
 import { getSession } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import { connectToDatabase } from "../../lib/db";
-import MainPage from "../components/mainPage";
-import styles from "../../styles/Home.module.scss";
+import MainPage from "../layout/mainPage";
 import Image from "next/image";
-import post from "../../styles/layout/post.module.scss";
 import Link from "next/link";
+import mainPage from "../../styles/layout/mainPage.module.scss";
 
-const Index = ({ textedCommunity }) => {
-  return (
-    <MainPage
-      title={"Community"}
-      main={<Content textedCommunity={textedCommunity}></Content>}
-      urlToPost={"/"}
-    ></MainPage>
-  );
-};
 const Content = ({ textedCommunity }) => {
   const { data: session, status } = useSession();
   console.log(session);
   const communityPosts = JSON.parse(textedCommunity);
   return (
-    <div>
+    <div className={mainPage.commuMainContainer}>
       {communityPosts.map((el) => (
         <Link href={`/communityCategory/${el.commuPostId}`}>
-          <div className={post.postContainer}>
+          <div className={mainPage.postContainer}>
             {el.isUpdated && <p>수정됨</p>}
-            <p className={post.tag}>{el.title}</p>
-            <p className={post.content}>{el.content}</p>
-            <div className={post.imgsPreview}>
+            <p className={mainPage.tag}>{el.title}</p>
+            <div className={mainPage.imgsPreview}>
               {el.photo.map((img) => (
                 <Image src={img} width="300px" height="100px"></Image>
               ))}
             </div>
-            <div className={post.owner}>
-              <p className={post.name}>{el.userId}</p>
-              <p className={post.date}>
+            <p className={mainPage.content}>{el.content}</p>
+            <div className={mainPage.owner}>
+              <p className={mainPage.name}>{el.userId}</p>
+              <p className={mainPage.date}>
                 {el.timestamp.month}. {el.timestamp.date}
               </p>
             </div>
-            <div className={post.social}>
-              <span className={post.like}>
-                {el.likeIds.length === 0 ? "츄르" : el.LikeIds.length}
+            <div className={mainPage.social}>
+              <span className={mainPage.like}>
+                츄르 {el.likeIds.length >= 0 && el.likeIds.length}
               </span>
-              <span className={post.comment}>
-                {el.commentIds.length === 0 ? "댓글" : el.commentIds.length}
+              <span className={mainPage.comment}>
+                댓글 {el.commentIds.length >= 0 && el.commentIds.length}
               </span>
             </div>
           </div>
         </Link>
       ))}
-      <Link href="/communityCategory/commuPostingForm">
-        <a>커뮤니티 글 쓰기</a>
-      </Link>
     </div>
+  );
+};
+const Index = ({ textedCommunity }) => {
+  return (
+    <MainPage
+      title={"Community"}
+      main={<Content textedCommunity={textedCommunity}></Content>}
+      urlToPost={"/communityCategory/commuPostingForm"}
+    ></MainPage>
   );
 };
 export const getServerSideProps = async (context) => {

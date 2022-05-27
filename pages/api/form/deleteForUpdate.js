@@ -5,22 +5,22 @@ const deleteForUpdate = async (req, res) => {
   const client = await connectToDatabase();
   const session = await getSession({ req: req });
   const idOfSession = session.user.userId;
-  const requestedCollection = client.db().collection(req.body.collectionName);
-  let postFieldName;
-  if (req.body.collectionName === "privateDiary") {
-    postFieldName = "postId";
-  } else if (req.body.collectionName === "community") {
-    postFieldName = "commuPostId";
+  const { userId, postId, collectionName } = req.body;
+  const requestedCollection = client.db().collection(collectionName);
+  let fieldName;
+  if (collectionName === "privateDiary") {
+    fieldName = "postId";
+  } else if (collectionName === "community") {
+    fieldName = "commuPostId";
   }
-  if (req.body.userId === idOfSession) {
+  if (userId === idOfSession) {
     //1. cloudinary에서 삭제하기 위해서는 먼저 publicid를 알아야 한다.
-    // const diaryCollection = client.db().collection("privateDiary");
     const oldPost = await requestedCollection.findOne({
-      postFieldName: req.body.postId,
+      [fieldName]: postId,
     });
     //2. publicId를 보내서 삭제한다.
+    console.log(`oldPost`);
     console.log(oldPost);
-    console.log(oldPost.photoPublicId);
     const cloudResult = await cloudinary.api.delete_resources(
       oldPost.photoPublicId,
       { resource_type: "image" },
@@ -31,7 +31,7 @@ const deleteForUpdate = async (req, res) => {
     //3. mongodb의 기존 publicId관련 필드들을 []로 리셋한다.
     const mongoResult = await requestedCollection.updateOne(
       {
-        postFieldName: req.body.postId,
+        [fieldName]: postId,
       },
       { $set: { photoPublicId: [], photo: [] } }
     );

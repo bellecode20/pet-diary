@@ -1,70 +1,67 @@
 @import "abstracts/variables.module.scss";
 @import "abstracts/mixins.module.scss";
-.postContainer {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 1vh;
-  border-bottom: 5px solid $gray-color;
-  > * {
-    padding-left: 8.2vw;
-    padding-right: 8.2vw;
-  }
-  .menuBtn {
-    position: absolute;
-    right: 0;
-    .commuDeleteBtn {
-      // position: absolute;
-      // right: 0;
-      background-color: $primary-color;
-    }
-    :hover {
-      background-color: $gray-color;
-    }
-  }
-  .owner {
+.wrapper {
+  padding-top: $nav--upload;
+  padding-bottom: $small-input--height;
+  .mainContainer {
+    overflow-y: auto;
+    height: 100vh;
+    max-height: calc(100vh - $nav--upload - $small-input--height);
     display: flex;
-    justify-content: space-between;
-  }
-  .tag {
-    background-color: $main-black-color;
-    color: $white;
-    font-family: $font-familly--extraLight;
-    margin-top: 3vh;
-    padding: 0;
-    margin-left: 8.2vw;
-    margin-right: 8.2vw;
-    border-radius: 1rem;
-    padding: 3px;
-  }
-  .social {
-    border-top: 2px solid black;
-    padding: 10px 8.2vw;
-    display: flex;
-    gap: 3rem;
+    flex-direction: column;
+    > * {
+      padding-left: 8.2vw;
+      padding-right: 8.2vw;
+    }
+    .owner {
+      display: flex;
+      justify-content: space-between;
+    }
+    .tag {
+      background-color: $main-black-color;
+      color: $white;
+      font-family: $font-familly--extraLight;
+      margin-top: 3vh;
+      padding: 0;
+      margin-left: 8.2vw;
+      margin-right: 8.2vw;
+      border-radius: 1rem;
+      padding: 3px;
+    }
+    .social {
+      border-top: 2px solid black;
+      border-bottom: 2px solid black;
+      padding: 10px 8.2vw;
+      display: flex;
+      gap: 3rem;
+    }
+    .commentContainer {
+      border-bottom: 1px solid black;
+      .commentTop {
+        display: flex;
+        justify-content: space-between;
+        .commentDeleteBtn {
+          background-color: $primary-color;
+        }
+      }
+      .commentTime {
+        text-align: right;
+      }
+    }
   }
 }
 .commentForm {
+  position: fixed;
+  left: 0;
+  right: 0;
   display: flex;
+  padding: 0;
   .commentInput {
     width: 100%;
-    height: 100px;
+    height: $small-input--height;
     border: 3px solid $gray-color;
   }
   .commentBtn {
     background-color: $primary-color;
-  }
-}
-.commentContainer {
-  border-bottom: 1px solid black;
-  .commentTop {
-    display: flex;
-    justify-content: space-between;
-    .commentDeleteBtn {
-      background-color: $primary-color;
-    }
-  }
-  .commentTime {
-    text-align: right;
   }
 }

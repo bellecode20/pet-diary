@@ -23,7 +23,7 @@
     "pages/api/auth/signup copy.js",
     "pages/index copy.jsx",
     "pages/privatediaryCategory/postingForm.jsx",
-    "pages/layout/uploadNav.jsx",
+    "pages/components/uploadNav.jsx",
     "pages/_app.jsx"
   ],
   "exclude": ["node_modules"]

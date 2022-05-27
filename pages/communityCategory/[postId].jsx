@@ -7,12 +7,12 @@ import { useRef } from "react";
 import { makeId } from "../../components/makeId";
 import { requestPostToMongodb } from "../../components/requestPostToMongodb";
 import { makeTimestamp } from "../../components/makeTimestamp";
-import Link from "next/link";
 import ModalContainer from "../../components/ModalContainer";
 import { useDispatch, useSelector } from "react-redux";
-import { changeCategory, modalIsShown } from "../../store/features/modalSlice";
+import { changeCategory } from "../../store/features/modalSlice";
+import DetailDiaryNav from "../components/detailDiaryNav";
 
-const MainPage = ({ textedCommunity, textedComments }) => {
+const CommuIndex = ({ textedCommunity, textedComments }) => {
   const commuPost = JSON.parse(textedCommunity);
   const comments = JSON.parse(textedComments);
   const { data: session } = useSession();
@@ -66,9 +66,10 @@ const MainPage = ({ textedCommunity, textedComments }) => {
   const dispatch = useDispatch();
   console.log(modal);
   return (
-    <div>
-      <div className={post.postContainer}>
-        <div className={post.menuBtn}>
+    <div className={post.wrapper}>
+      <DetailDiaryNav></DetailDiaryNav>
+      <div className={post.mainContainer}>
+        {/* <div className={post.menuBtn}>
           <Link href={`/communityCategory/update/${commuPost.commuPostId}`}>
             <button
               data-remove={commuPost.commuPostId}
@@ -88,14 +89,14 @@ const MainPage = ({ textedCommunity, textedComments }) => {
           >
             삭제
           </button>
-        </div>
+        </div> */}
         <p className={post.tag}>{commuPost.title}</p>
-        <p className={post.content}>{commuPost.content}</p>
         <div className={commuPost.imgsPreview}>
           {commuPost.photo.map((img) => (
             <Image src={img} width="300px" height="100px"></Image>
           ))}
         </div>
+        <p className={post.content}>{commuPost.content}</p>
         <div className={post.owner}>
           <p className={post.name}>{commuPost.userId}</p>
           <p className={post.date}>
@@ -112,28 +113,29 @@ const MainPage = ({ textedCommunity, textedComments }) => {
               : `댓글 ${commuPost.commentIds.length}`}
           </span>
         </div>
-      </div>
-      {comments.map((el) => (
-        <div className={post.commentContainer}>
-          <div className={post.commentTop}>
-            <p>{el.userId}</p>
-            {el.userId === thisUserId && (
-              <button
-                data-remove={el.commentPostId}
-                className={post.commentDeleteBtn}
-                onClick={deleteComment}
-              >
-                삭제
-              </button>
-            )}
+        {/* </div> */}
+        {comments.map((el) => (
+          <div className={post.commentContainer}>
+            <div className={post.commentTop}>
+              <p>{el.userId}</p>
+              {el.userId === thisUserId && (
+                <button
+                  data-remove={el.commentPostId}
+                  className={post.commentDeleteBtn}
+                  onClick={deleteComment}
+                >
+                  삭제
+                </button>
+              )}
+            </div>
+            <p>{el.content}</p>
+            <p className={post.commentTime}>
+              {el.timestamp.month}. {el.timestamp.date}. {el.timestamp.hour}:
+              {el.timestamp.minute}
+            </p>
           </div>
-          <p>{el.content}</p>
-          <p className={post.commentTime}>
-            {el.timestamp.month}. {el.timestamp.date}. {el.timestamp.hour}:
-            {el.timestamp.minute}
-          </p>
-        </div>
-      ))}
+        ))}
+      </div>
       <form className={post.commentForm} onSubmit={submitComments}>
         <input type="text" className={post.commentInput} ref={comment}></input>
         <button className={post.commentBtn}>send</button>
@@ -181,4 +183,4 @@ export const getServerSideProps = async (context) => {
   };
 };
 
-export default MainPage;
+export default CommuIndex;

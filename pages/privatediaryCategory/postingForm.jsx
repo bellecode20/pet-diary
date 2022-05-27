@@ -1,11 +1,12 @@
-import Head from "next/head";
-import Image from "next/image";
-import UploadNav from "../layout/uploadNav";
-import form from "../../styles/pages/formOfDiary.module.scss";
+import UploadNav from "../components/uploadNav";
+import ModalContainer from "../../components/ModalContainer";
 import { makeId } from "../../components/makeId";
 import { useEffect, useRef, useState } from "react";
 import { requestPostToMongodb } from "../../components/requestPostToMongodb";
 import { requestPostToCloudinary } from "../../components/requestPostToCloudinary";
+import form from "../../styles/pages/formOfPosting.module.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { changeCategory, modalIsShown } from "../../store/features/modalSlice";
 const postingForm = () => {
   const date = useRef();
   const title = useRef();
@@ -20,7 +21,8 @@ const postingForm = () => {
       setImage(null);
     }
   };
-
+  const dispatch = useDispatch();
+  const modal = useSelector((state) => state.modal.isShown);
   useEffect(() => {
     //인풋에서 첨부할 사진을 선택하고나면, 그 사진을 스트링데이터로 변환시켜 preview state에 담는다.
     if (image) {
@@ -33,7 +35,8 @@ const postingForm = () => {
   }, [image]);
   const postDiary = async (e) => {
     e.preventDefault();
-    console.log("e");
+    dispatch(modalIsShown(true));
+    dispatch(changeCategory("LoadingModal"));
     const form = e.currentTarget;
     const fileInput = Array.from(form.elements).find(
       ({ name }) => name === "photo[]"
@@ -71,67 +74,67 @@ const postingForm = () => {
         postContent
       );
     }
+    dispatch(changeCategory("SuccessModal"));
   };
   return (
     <div className={form.wrapper}>
-      <div>
-        <UploadNav formId="posting"></UploadNav>
-        <form
-          className={form.mainContainer}
-          encType="multipart/form-data"
-          id="posting"
-          onSubmit={postDiary}
-        >
-          <div className={form.dateForm}>
-            <label htmlFor="diary__form__date"></label>
-            <input
-              id="diary__form__date"
-              type="date"
-              ref={date}
-              className={form.date}
-            />
-          </div>
-          <div className={form.photoForm}>
-            <label
-              htmlFor="diary__form__photo"
-              className={image ? form.whenPhoto : form.border} //사진 선택하면 테두리 없어진다.
-            >
-              <img
-                src={preview}
-                onClick={() => {
-                  setImage(null);
-                }}
-                className={form.thumbnail}
-              ></img>
-            </label>
-            <input
-              type="file"
-              multiple
-              id="diary__form__photo"
-              accept="image/png, image/jpeg"
-              style={{ display: "none" }}
-              name="photo[]"
-              onChange={checkThisImg}
-              title="시각장애인리더기"
-            />
-          </div>
-          <div className={form.textContainer}>
-            <input
-              type="text"
-              id={form.diary__form__title}
-              className={form.title}
-              placeholder="스프와의 첫 만남"
-              ref={title}
-            />
-            <textarea
-              id={form.diary__form__content}
-              className={form.content}
-              placeholder="오늘은 스프가 집에 처음 왔다."
-              ref={content}
-            ></textarea>
-          </div>
-        </form>
-      </div>
+      <UploadNav formId="posting"></UploadNav>
+      <form
+        className={form.mainContainer}
+        encType="multipart/form-data"
+        id="posting"
+        onSubmit={postDiary}
+      >
+        <div className={form.dateForm}>
+          <label htmlFor="diary__form__date"></label>
+          <input
+            id="diary__form__date"
+            type="date"
+            ref={date}
+            className={form.date}
+          />
+        </div>
+        <div className={form.photoForm}>
+          <label
+            htmlFor="diary__form__photo"
+            className={image ? form.whenPhoto : form.border} //사진 선택하면 테두리 없어진다.
+          >
+            <img
+              src={preview}
+              onClick={() => {
+                setImage(null);
+              }}
+              className={form.thumbnail}
+            ></img>
+          </label>
+          <input
+            type="file"
+            multiple
+            id="diary__form__photo"
+            accept="image/png, image/jpeg"
+            style={{ display: "none" }}
+            name="photo[]"
+            onChange={checkThisImg}
+            title="시각장애인리더기"
+          />
+        </div>
+        <div className={form.textContainer}>
+          <input
+            type="text"
+            id={form.diary__form__title}
+            className={form.title}
+            placeholder="스프와의 첫 만남"
+            ref={title}
+          />
+          <textarea
+            id={form.diary__form__content}
+            className={form.content}
+            placeholder="오늘은 스프가 집에 처음 왔다."
+            ref={content}
+          ></textarea>
+        </div>
+      </form>
+      {modal && <ModalContainer></ModalContainer>}
     </div>
   );
 };

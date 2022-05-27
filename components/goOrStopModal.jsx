@@ -1,4 +1,4 @@
-import loading from "../styles/pages/isUploading.module.scss";
+import loading from "../styles/components/isUploading.module.scss";
 import { useDispatch } from "react-redux";
 import { modalIsShown } from "../store/features/modalSlice";
 import { useRouter } from "next/router";

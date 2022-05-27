@@ -1,4 +1,4 @@
-import loading from "../styles/pages/isUploading.module.scss";
+import loading from "../styles/components/isUploading.module.scss";
 import { useDispatch } from "react-redux";
 import { changeCategory, modalIsShown } from "../store/features/modalSlice";
 import { useRouter } from "next/router";
@@ -32,7 +32,7 @@ const SuccessModal = ({ children }) => {
     <div className={loading.wrapper}>
       <div className={loading.modal}>
         <img src="/logo.png" height="100px"></img>
-        <p className={loading.title}>{category}완료!</p>
+        <p className={loading.title}>완료!</p>
         <button className={loading.button} onClick={handleClose}>
           닫기
         </button>

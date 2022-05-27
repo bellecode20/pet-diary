@@ -1,5 +1,5 @@
-import UploadNav from "../layout/uploadNav";
-import form from "../../styles/pages/formOfdiary.module.scss";
+import UploadNav from "../components/uploadNav";
+import form from "../../styles/pages/formOfPosting.module.scss";
 import { makeId } from "../../components/makeId";
 import { useEffect, useRef, useState } from "react";
 import { requestPostToCloudinary } from "../../components/requestPostToCloudinary";

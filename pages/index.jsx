@@ -2,42 +2,43 @@ import { getSession } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import styles from "../styles/Home.module.scss";
-import header from "../styles/layout/header.module.scss";
-import MainNav from "./layout/mainNav";
 import Link from "next/link";
 import { connectToDatabase } from "../lib/db";
-
-const Home = ({ textedDiaries }) => {
+import MainPage from "./layout/mainPage";
+const CommuContent = ({ textedDiaries }) => {
   const { data: session, status } = useSession();
   console.log(session);
   const diaryies = JSON.parse(textedDiaries);
   return (
-    <div className={styles.wrapper}>
-      <div className={header.header}>{session.user.userId}의 Diary</div>
-      <div className={styles.mainContainer}>
-        {diaryies.map((diary) => (
-          <Link href={`/privatediaryCategory/${diary.postId}`}>
-            <a className={styles.dayContainer} custom-attribute={diary.postId}>
-              <div className={styles.timeLineStart}></div>
-              <div className={styles.timeLineCircle}></div>
-              <div className={styles.timeLine}></div>
-              <div className={styles.dateOfDiary}>{diary.postingDate}</div>
-              <div className={styles.diary}>
-                <div>{diary.title}</div>
-                {diary.photo.map((img) => (
-                  <Image src={img} width="500px" height="500px"></Image>
-                ))}
-                <div className={styles.diaryContent}>{diary.content}</div>
-              </div>
-            </a>
-          </Link>
-        ))}
-      </div>
-      <Link href="/privatediaryCategory/postingForm" passHref>
-        <a className={styles.addBtn}>+</a>
-      </Link>
-      <MainNav></MainNav>
+    <div className={styles.mainContainer}>
+      {diaryies.map((diary) => (
+        <Link href={`/privatediaryCategory/${diary.postId}`}>
+          <a className={styles.dayContainer} custom-attribute={diary.postId}>
+            <div className={styles.timeLineStart}></div>
+            <div className={styles.timeLineCircle}></div>
+            <div className={styles.timeLine}></div>
+            <div className={styles.dateOfDiary}>{diary.postingDate}</div>
+            <div className={styles.diary}>
+              <div>{diary.title}</div>
+              {diary.photo.map((img) => (
+                <Image src={img} width="500px" height="500px"></Image>
+              ))}
+              <div className={styles.diaryContent}>{diary.content}</div>
+            </div>
+          </a>
+        </Link>
+      ))}
     </div>
+  );
+};
+
+const Home = ({ textedDiaries }) => {
+  return (
+    <MainPage
+      title={"Diary"}
+      main={<CommuContent textedDiaries={textedDiaries}></CommuContent>}
+      urlToPost={"/privatediaryCategory/postingForm"}
+    ></MainPage>
   );
 };
 

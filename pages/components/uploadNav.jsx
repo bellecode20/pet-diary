@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import nav from "../../styles/layout/uploadNav.module.scss";
+import nav from "../../styles/components/uploadNav.module.scss";
 const UploadNav = ({ formId }) => {
   const router = useRouter();
   const goBack = () => {

@@ -1,5 +1,5 @@
-import UploadNav from "../../layout/uploadNav";
-import form from "../../../styles/pages/formOfdiary.module.scss";
+import UploadNav from "../../components/uploadNav";
+import form from "../../../styles/pages/formOfPosting.module.scss";
 import { getSession, useSession } from "next-auth/react";
 import { connectToDatabase } from "../../../lib/db";
 import { useEffect, useRef, useState } from "react";
@@ -35,7 +35,7 @@ const updatingCommu = ({ textedCommunity }) => {
     if (fileInput.files.length > 0) {
       let commuInfoForUpdating = {
         userId: commuPost.userId,
-        commuPostId: commuPost.commuPostId,
+        postId: commuPost.commuPostId,
         collectionName: "community",
       };
       //1. 이 글의 Id를 보내고, 사진 삭제 요청한다. (cloudinary -> mongodb 순)

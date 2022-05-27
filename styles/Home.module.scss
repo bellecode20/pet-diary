@@ -1,77 +1,73 @@
 @import "abstracts/variables.module.scss";
 @import "abstracts/mixins.module.scss";
 
-.wrapper {
-  padding-top: $header-height;
-  padding-bottom: $tab-bar-height;
-  .mainContainer {
-    height: 100vh;
-    max-height: calc(100vh - $header-height - $tab-bar-height);
-    //height: 100vh와 max-height이렇게 설정한다. 그래서 메인컨테이너에 스크롤 안생겼다.
-    overflow-y: auto;
-    padding-top: 2rem;
-    padding-left: $diary__timeLine-padding--left;
-    padding-right: $diary__timeLine-padding--right;
-    // background-color: rgb(255, 230, 230);
-    .dayContainer {
-      @include font-content;
-      display: grid;
-      grid-template-columns: 13px auto;
-      grid-template-rows: 10px 13px auto;
-      column-gap: 10px;
-      cursor: pointer;
-      .timeLineStart {
-        grid-column: 1 / 2;
-        grid-row: 1 / 2;
-        width: 2px;
-        height: 100%;
-        align-self: center;
-        justify-self: center;
-        background-color: $main-black-color;
-      }
-      .timeLineCircle {
-        grid-column: 1 / 2;
-        grid-row: 2 / 3;
-        width: 10px;
-        height: 10px;
-        margin-top: 2px;
-        margin-bottom: 2px;
-        border-radius: 50%;
-        background-color: $primary-color;
-        align-self: center;
-        justify-self: center;
-      }
-      .timeLine {
-        grid-column: 1/2;
-        grid-row: 3 / 4;
-        align-self: center;
-        justify-self: center;
-        width: 2px;
-        height: 100%;
-        background-color: $main-black-color;
-      }
-      .dateOfDiary {
-        grid-column: 2/3;
-        grid-row: 2 / 3;
-      }
-      .diary {
-        grid-column: 2/3;
-        grid-row: 3 / 4;
-        // border-left: 2px solid $main-black-color;
-        // padding-left: 3vw;
-        padding-bottom: 3vh;
-        .diaryContent {
-          overflow: hidden;
-          text-overflow: ellipsis;
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-        }
+.mainContainer {
+  height: 100vh;
+  max-height: calc(100vh - $header-height - $tab-bar-height);
+  //height: 100vh와 max-height이렇게 설정한다. 그래서 메인컨테이너에 스크롤 안생겼다.
+  overflow-y: auto;
+  padding-top: 2rem;
+  padding-left: $diary__timeLine-padding--left;
+  padding-right: $diary__timeLine-padding--right;
+  // background-color: rgb(255, 230, 230);
+  .dayContainer {
+    @include font-content;
+    display: grid;
+    grid-template-columns: 13px auto;
+    grid-template-rows: 10px 13px auto;
+    column-gap: 10px;
+    cursor: pointer;
+    .timeLineStart {
+      grid-column: 1 / 2;
+      grid-row: 1 / 2;
+      width: 2px;
+      height: 100%;
+      align-self: center;
+      justify-self: center;
+      background-color: $main-black-color;
+    }
+    .timeLineCircle {
+      grid-column: 1 / 2;
+      grid-row: 2 / 3;
+      width: 10px;
+      height: 10px;
+      margin-top: 2px;
+      margin-bottom: 2px;
+      border-radius: 50%;
+      background-color: $primary-color;
+      align-self: center;
+      justify-self: center;
+    }
+    .timeLine {
+      grid-column: 1/2;
+      grid-row: 3 / 4;
+      align-self: center;
+      justify-self: center;
+      width: 2px;
+      height: 100%;
+      background-color: $main-black-color;
+    }
+    .dateOfDiary {
+      grid-column: 2/3;
+      grid-row: 2 / 3;
+    }
+    .diary {
+      grid-column: 2/3;
+      grid-row: 3 / 4;
+      // border-left: 2px solid $main-black-color;
+      // padding-left: 3vw;
+      padding-bottom: 3vh;
+      .diaryContent {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
       }
     }
-    .dayContainer:hover {
-      background-color: #f9efdf;
-    }
+  }
+  .dayContainer:hover {
+    background-color: #f9efdf;
   }
   .addBtn {
     background-color: $primary-color;

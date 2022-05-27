@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import navi from "../styles/layout/navigations.module.scss";
-import UploadNav from "./layout/uploadNav";
+import navi from "../styles/components/navigations.module.scss";
+import UploadNav from "./components/uploadNav";
 import intro from "../styles/pages/intro.module.scss";
 const Intro: NextPage = () => {
   return (
