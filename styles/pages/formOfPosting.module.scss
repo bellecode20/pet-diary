@@ -5,7 +5,8 @@
   .mainContainer {
     height: 100vh;
     max-height: calc(100vh - $nav--upload);
-    overflow-y: scroll;
+    overflow-x: hidden;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     .dateForm {

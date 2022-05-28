@@ -14,7 +14,11 @@
   font-family: $font-familly--regular;
   font-size: $font-regular--small;
 }
-
+@mixin font--gray--light {
+  font-family: $font-familly--extraLight;
+  color: $gray-color;
+  letter-spacing: -1px;
+}
 //position
 @mixin bottomFullPosition {
   position: absolute;

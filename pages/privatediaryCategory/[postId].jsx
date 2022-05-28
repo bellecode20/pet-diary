@@ -1,11 +1,8 @@
-import Image from "next/image";
+import CarouselSlide from "../components/carouselSlide";
 import { getSession } from "next-auth/react";
 import { connectToDatabase } from "../../lib/db";
 import DetailDiaryNav from "../components/DetailDiaryNav";
 import form from "../../styles/pages/formOfPosting.module.scss";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import { useDispatch, useSelector } from "react-redux";
 import ModalContainer from "../../components/ModalContainer";
 import { requestPostToMongodb } from "../../components/requestPostToMongodb";
@@ -14,15 +11,7 @@ const Post = ({ textedDiary }) => {
   const privateDiary = JSON.parse(textedDiary);
   const dispatch = useDispatch();
   const modal = useSelector((state) => state.modal.isShown);
-  //캐러셀 라이브러리 설정코드다.
-  const settings = {
-    dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    adaptiveHeight: true,
-  };
+
   const requestDelete = async () => {
     dispatch(changeCategory("LoadingModal"));
     let postInfo = {
@@ -39,6 +28,7 @@ const Post = ({ textedDiary }) => {
     console.log(`result`);
     console.log(result);
   };
+
   return (
     <div className={form.wrapper}>
       <DetailDiaryNav></DetailDiaryNav>
@@ -48,11 +38,7 @@ const Post = ({ textedDiary }) => {
         </div>
         <div className={form.photoForm}>
           <div className={form.whenPhoto}>
-            <Slider {...settings}>
-              {privateDiary.photo.map((img) => (
-                <img src={img}></img>
-              ))}
-            </Slider>
+            <CarouselSlide data={privateDiary}></CarouselSlide>
           </div>
         </div>
         <div className={form.textContainer}>

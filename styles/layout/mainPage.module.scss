@@ -23,6 +23,9 @@
     .postContainer {
       margin-bottom: 1vh;
       font-size: $font-regular--small;
+      .isUpdated {
+        @include font--gray--light;
+      }
       .tag {
         font-family: $font-familly--bold;
         font-size: $font-regular;
@@ -32,11 +35,10 @@
         margin-bottom: 0.5rem;
       }
       .owner {
+        @include font--gray--light;
         display: flex;
         justify-content: space-between;
         font-size: $font-small;
-        font-family: $font-familly--extraLight;
-        color: $gray-color;
         margin: 1rem 0 0.5rem 0;
       }
       .social {

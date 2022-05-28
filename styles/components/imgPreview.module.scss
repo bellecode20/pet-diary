@@ -1,0 +1,12 @@
+.container {
+  position: relative;
+  min-width: 20rem;
+  max-width: 100%;
+  min-height: 30vh;
+  max-height: 50vh;
+  margin: 2rem 0 1rem 0;
+  display: flex;
+  .photo {
+    object-position: left top;
+  }
+}

@@ -1,8 +1,6 @@
 import { getSession, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { connectToDatabase } from "../../lib/db";
-import post from "../../styles/layout/post.module.scss";
-import Image from "next/image";
 import { useRef } from "react";
 import { makeId } from "../../components/makeId";
 import { requestPostToMongodb } from "../../components/requestPostToMongodb";
@@ -11,6 +9,8 @@ import ModalContainer from "../../components/ModalContainer";
 import { useDispatch, useSelector } from "react-redux";
 import { changeCategory } from "../../store/features/modalSlice";
 import DetailDiaryNav from "../components/detailDiaryNav";
+import CarouselSlide from "../components/carouselSlide";
+import post from "../../styles/layout/post.module.scss";
 
 const CommuIndex = ({ textedCommunity, textedComments }) => {
   const commuPost = JSON.parse(textedCommunity);
@@ -91,11 +91,7 @@ const CommuIndex = ({ textedCommunity, textedComments }) => {
           </button>
         </div> */}
         <p className={post.tag}>{commuPost.title}</p>
-        <div className={commuPost.imgsPreview}>
-          {commuPost.photo.map((img) => (
-            <Image src={img} width="300px" height="100px"></Image>
-          ))}
-        </div>
+        <CarouselSlide data={commuPost}></CarouselSlide>
         <p className={post.content}>{commuPost.content}</p>
         <div className={post.owner}>
           <p className={post.name}>{commuPost.userId}</p>

@@ -2,9 +2,9 @@ import { getSession } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import { connectToDatabase } from "../../lib/db";
 import MainPage from "../layout/mainPage";
-import Image from "next/image";
 import Link from "next/link";
 import mainPage from "../../styles/layout/mainPage.module.scss";
+import ImgPreview from "../components/imgPreview";
 
 const Content = ({ textedCommunity }) => {
   const { data: session, status } = useSession();
@@ -15,18 +15,14 @@ const Content = ({ textedCommunity }) => {
       {communityPosts.map((el) => (
         <Link href={`/communityCategory/${el.commuPostId}`}>
           <div className={mainPage.postContainer}>
-            {el.isUpdated && <p>수정됨</p>}
+            <p className={mainPage.isUpdated}> {el.isUpdated && "(수정됨)"}</p>
             <p className={mainPage.tag}>{el.title}</p>
-            <div className={mainPage.imgsPreview}>
-              {el.photo.map((img) => (
-                <Image src={img} width="300px" height="100px"></Image>
-              ))}
-            </div>
+            <ImgPreview data={el}></ImgPreview>
             <p className={mainPage.content}>{el.content}</p>
             <div className={mainPage.owner}>
               <p className={mainPage.name}>{el.userId}</p>
               <p className={mainPage.date}>
-                {el.timestamp.month}. {el.timestamp.date}
+                {el.timestamp.month}. {el.timestamp.date}.
               </p>
             </div>
             <div className={mainPage.social}>

@@ -5,6 +5,7 @@ import styles from "../styles/Home.module.scss";
 import Link from "next/link";
 import { connectToDatabase } from "../lib/db";
 import MainPage from "./layout/mainPage";
+import ImgPreview from "./components/imgPreview";
 const CommuContent = ({ textedDiaries }) => {
   const { data: session, status } = useSession();
   console.log(session);
@@ -20,9 +21,7 @@ const CommuContent = ({ textedDiaries }) => {
             <div className={styles.dateOfDiary}>{diary.postingDate}</div>
             <div className={styles.diary}>
               <div>{diary.title}</div>
-              {diary.photo.map((img) => (
-                <Image src={img} width="500px" height="500px"></Image>
-              ))}
+              <ImgPreview data={diary}></ImgPreview>
               <div className={styles.diaryContent}>{diary.content}</div>
             </div>
           </a>
