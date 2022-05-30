@@ -91,7 +91,7 @@ const CommuIndex = ({ textedCommunity, textedComments }) => {
           </button>
         </div> */}
         <p className={post.tag}>{commuPost.title}</p>
-        <CarouselSlide data={commuPost}></CarouselSlide>
+        <CarouselSlide data={commuPost.photo}></CarouselSlide>
         <p className={post.content}>{commuPost.content}</p>
         <div className={post.owner}>
           <p className={post.name}>{commuPost.userId}</p>

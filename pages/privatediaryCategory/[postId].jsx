@@ -1,7 +1,7 @@
 import CarouselSlide from "../components/carouselSlide";
 import { getSession } from "next-auth/react";
 import { connectToDatabase } from "../../lib/db";
-import DetailDiaryNav from "../components/DetailDiaryNav";
+import DetailDiaryNav from "../components/detailDiaryNav";
 import form from "../../styles/pages/formOfPosting.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import ModalContainer from "../../components/ModalContainer";
@@ -38,7 +38,7 @@ const Post = ({ textedDiary }) => {
         </div>
         <div className={form.photoForm}>
           <div className={form.whenPhoto}>
-            <CarouselSlide data={privateDiary}></CarouselSlide>
+            <CarouselSlide data={privateDiary.photo}></CarouselSlide>
           </div>
         </div>
         <div className={form.textContainer}>

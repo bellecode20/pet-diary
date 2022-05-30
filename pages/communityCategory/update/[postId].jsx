@@ -9,21 +9,14 @@ import ModalContainer from "../../../components/ModalContainer";
 import { useDispatch, useSelector } from "react-redux";
 import { modalIsShown } from "../../../store/features/modalSlice";
 import { changeCategory } from "../../../store/features/modalSlice";
+import CarouselSlide from "../../components/carouselSlide";
 const updatingCommu = ({ textedCommunity }) => {
   const commuPost = JSON.parse(textedCommunity);
   const [titleValue, setTitleValue] = useState(commuPost.title);
   const [contentValue, setContentValue] = useState(commuPost.content);
-  const [image, setImage] = useState(); //인풋에 올린 사진
-  const [preview, setPreview] = useState(commuPost.photo[0]);
+  const [image, setImage] = useState(); //input에서 선택한 사진 파일
+  const [preview, setPreview] = useState();
 
-  const checkThisImg = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImage(file);
-    } else {
-      setImage(null);
-    }
-  };
   const updateCommu = async (e) => {
     e.preventDefault();
     dispatch(modalIsShown(true));
@@ -71,14 +64,29 @@ const updatingCommu = ({ textedCommunity }) => {
     }
     dispatch(changeCategory("SuccessModal"));
   };
+  const checkThisImg = (e) => {
+    const allArray = Array.from(e.target.files);
+    if (allArray.length > 0) {
+      setPreview([]);
+      setImage(allArray);
+    } else {
+      setImage(null);
+    }
+  };
+
   useEffect(() => {
     //인풋에서 첨부할 사진을 선택하고나면, 그 사진을 스트링데이터로 변환시켜 preview state에 담는다.
     if (image) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreview(reader.result);
-      };
-      reader.readAsDataURL(image);
+      for (let x of image) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const url = reader.result;
+          setPreview((preview) => [...preview, url]);
+        };
+        reader.readAsDataURL(x);
+      }
+    } else if (commuPost.photo.length > 0) {
+      setPreview(commuPost.photo);
     } else setPreview(null);
   }, [image]);
 
@@ -96,18 +104,14 @@ const updatingCommu = ({ textedCommunity }) => {
         <div className={form.dateForm}>
           <p className={form.date}>커뮤니티 글 쓰기</p>
         </div>
+        {preview && <CarouselSlide data={preview}></CarouselSlide>}
         <div className={form.photoForm}>
           <label
             htmlFor="updateCommu__form__photo"
-            className={image ? form.whenPhoto : form.border} //사진 선택하면 테두리 없어진다.
+            // className={form.noPhoto}
+            className={preview ? form.whenPhoto : form.noPhoto}
           >
-            <img
-              src={preview}
-              onClick={() => {
-                setImage(null);
-              }}
-              className={form.thumbnail}
-            ></img>
+            + 사진
           </label>
           <input
             type="file"

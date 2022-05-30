@@ -1,14 +1,12 @@
 import { getSession } from "next-auth/react";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import styles from "../styles/Home.module.scss";
 import Link from "next/link";
 import { connectToDatabase } from "../lib/db";
 import MainPage from "./layout/mainPage";
 import ImgPreview from "./components/imgPreview";
 const CommuContent = ({ textedDiaries }) => {
-  const { data: session, status } = useSession();
-  console.log(session);
+  // const { data: session, status } = useSession();
   const diaryies = JSON.parse(textedDiaries);
   return (
     <div className={styles.mainContainer}>
@@ -52,9 +50,6 @@ export const getServerSideProps = async (context) => {
       },
     };
   }
-  console.log(`session index.jsx`);
-  console.log(session);
-  console.log(session.user.userId);
   //작성한 전체 글 보기
   const client = await connectToDatabase();
   const diaryCollection = client.db().collection("privateDiary");

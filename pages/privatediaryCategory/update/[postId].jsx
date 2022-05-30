@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { connectToDatabase } from "../../../lib/db";
 import { requestPostToCloudinary } from "../../../components/requestPostToCloudinary";
 import { requestPostToMongodb } from "../../../components/requestPostToMongodb";
+import CarouselSlide from "../../components/carouselSlide";
 
 const updatingForm = ({ textedDiary }) => {
   const date = useRef();
@@ -17,9 +18,10 @@ const updatingForm = ({ textedDiary }) => {
   const [image, setImage] = useState(); //인풋에 올린 사진
   const [preview, setPreview] = useState();
   const checkThisImg = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImage(file);
+    const allArray = Array.from(e.target.files);
+    if (allArray.length > 0) {
+      setPreview([]);
+      setImage(allArray);
     } else {
       setImage(null);
     }
@@ -28,13 +30,19 @@ const updatingForm = ({ textedDiary }) => {
   useEffect(() => {
     //인풋에서 첨부할 사진을 선택하고나면, 그 사진을 스트링데이터로 변환시켜 preview state에 담는다.
     if (image) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreview(reader.result);
-      };
-      reader.readAsDataURL(image);
+      for (let x of image) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const url = reader.result;
+          setPreview((preview) => [...preview, url]);
+        };
+        reader.readAsDataURL(x);
+      }
+    } else if (postInfo.photo.length > 0) {
+      setPreview(postInfo.photo);
     } else setPreview(null);
   }, [image]);
+
   const postDiary = async (e) => {
     e.preventDefault();
     console.log("update [postId]");
@@ -102,19 +110,12 @@ const updatingForm = ({ textedDiary }) => {
             onChange={(e) => setDateValue(e.target.value)}
           />
         </div>
+        {preview && <CarouselSlide data={preview}></CarouselSlide>}
         <div className={form.photoForm}>
           <label
             htmlFor="diary__form__photo"
-            className={image ? form.whenPhoto : form.border} //사진 선택하면 테두리 없어진다.
-          >
-            <img
-              src={preview}
-              onClick={() => {
-                setImage(null);
-              }}
-              className={form.thumbnail}
-            ></img>
-          </label>
+            className={preview ? form.whenPhoto : form.noPhoto}
+          ></label>
           <input
             type="file"
             multiple

@@ -24,7 +24,6 @@ const DetailDiaryNav = () => {
   };
   const [isToggled, setIsToggled] = useState(false);
   const showModal = () => {
-    console.log("showModal detailDiaryNav.jsx");
     dispatch(modalIsShown(true));
     dispatch(changeCategory("GoOrStopModal"));
   };
