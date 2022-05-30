@@ -156,7 +156,7 @@ export const getServerSideProps = async (context) => {
   if (!session) {
     return {
       redirect: {
-        destination: "/signup",
+        destination: "/settings/signup",
         permanent: false,
       },
     };

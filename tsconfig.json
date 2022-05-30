@@ -24,7 +24,8 @@
     "pages/index copy.jsx",
     "pages/privatediaryCategory/postingForm.jsx",
     "pages/components/uploadNav.jsx",
-    "pages/_app.jsx"
+    "pages/_app.jsx",
+    "pages/index.jsx"
   ],
   "exclude": ["node_modules"]
 }

@@ -10,7 +10,7 @@ const DeleteModal = ({
   const router = useRouter();
 
   const handler = () => {
-    router.push("/");
+    router.push("/privatediaryCategory");
     setShowSuccessModal(false);
   };
   useEffect(() => {

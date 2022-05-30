@@ -1,8 +1,9 @@
 import sign from "../../styles/pages/signUp.module.scss";
 import { useRef, useState } from "react";
-import { signIn, useSession } from "next-auth/react";
+import { getSession, signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-const Intro = () => {
+import Account from "../layout/account";
+const SignUpContent = () => {
   const [isLogin, setIsLogin] = useState(true);
   const idRef = useRef();
   const pwRef = useRef();
@@ -11,6 +12,8 @@ const Intro = () => {
   const { data: session, status } = useSession();
   const switchAuthMode = () => {
     setIsLogin((prevState) => !prevState);
+    idRef.current.value = "";
+    pwRef.current.value = "";
   };
   async function createUser(enteredId, enteredPw) {
     let userInfo = {
@@ -41,7 +44,7 @@ const Intro = () => {
       });
       //로그인에 성공하면
       if (result.error === null) {
-        router.push("/");
+        router.push("/privatediaryCategory");
       }
       console.log(`result`);
       console.log(result);
@@ -56,13 +59,7 @@ const Intro = () => {
     }
   }
   return (
-    <div className={sign.wrapper}>
-      <img
-        className={sign.logo}
-        src="/logo.png"
-        height="100px"
-        width="100px"
-      ></img>
+    <>
       <p className={sign.title}>{isLogin ? "로그인" : "가입하기"}</p>
       <form id="signUp" onSubmit={submitHandler}>
         <div>
@@ -87,8 +84,22 @@ const Intro = () => {
         {!isLogin ? "로그인하기" : "계정만들기"}
       </button>
       <p>{status === "authenticated" ? "인증됨" : "안됨"}</p>
-    </div>
+    </>
   );
 };
 
-export default Intro;
+const SignUp = () => {
+  return <Account main={<SignUpContent></SignUpContent>}></Account>;
+};
+export const getServerSideProps = async (context) => {
+  const session = await getSession({ req: context.req });
+  if (session) {
+    return {
+      redirect: {
+        destination: "/privatediaryCategory",
+      },
+    };
+  }
+  return { props: { session } };
+};
+export default SignUp;

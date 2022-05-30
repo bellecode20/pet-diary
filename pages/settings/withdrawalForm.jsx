@@ -4,9 +4,10 @@ import { signIn, getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Account from "../layout/account";
 
-const ChangePwFormContent = () => {
+const WithDrawalFormContent = () => {
   const oldPwRef = useRef();
   const newPwRef = useRef();
+  const router = useRouter();
   async function changePw(enteredOldPw, enteredNewPw) {
     let oldAndNewPws = {
       oldPw: enteredOldPw,
@@ -20,6 +21,7 @@ const ChangePwFormContent = () => {
       },
     });
     const data = await response.json();
+    console.log(`data changePwForm`);
     console.log(data);
   }
   async function submitHandler(e) {
@@ -32,7 +34,8 @@ const ChangePwFormContent = () => {
   }
   return (
     <>
-      <p className={sign.title}>비밀번호 변경</p>
+      <p className={sign.title}>탈퇴하기</p>
+      <p>비밀번호를 입력해주세요</p>
       <form id="changePw" onSubmit={submitHandler}>
         <div>
           <label htmlFor="oldPw">기존 비밀번호</label>
@@ -44,10 +47,10 @@ const ChangePwFormContent = () => {
             className={sign.idInput}
           ></input>
         </div>
-        <div>
+        {/* <div>
           <label htmlFor="newPw">새로운 비밀번호</label>
           <input type="text" required id="newPw" ref={newPwRef}></input>
-        </div>
+        </div> */}
         <button className={sign.upBtn} form="changePw">
           확인
         </button>
@@ -55,9 +58,10 @@ const ChangePwFormContent = () => {
     </>
   );
 };
-
-const ChangePwForm = () => {
-  return <Account main={<ChangePwFormContent></ChangePwFormContent>}></Account>;
+const WithDrawalForm = () => {
+  return (
+    <Account main={<WithDrawalFormContent></WithDrawalFormContent>}></Account>
+  );
 };
 export const getServerSideProps = async (context) => {
   //context로 받아온 것을 getSession으로 꺼내준다. 만약 유저가 인증되었다면 쿠키가 존재한다.
@@ -74,4 +78,4 @@ export const getServerSideProps = async (context) => {
     props: { session },
   };
 };
-export default ChangePwForm;
+export default WithDrawalForm;

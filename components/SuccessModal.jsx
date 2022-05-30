@@ -16,8 +16,8 @@ const SuccessModal = ({ children }) => {
     } else if (thisUrl.includes("/communityCategory")) {
       nextUrl = "/communityCategory";
     } else if (thisUrl.includes("/privatediaryCategory")) {
-      nextUrl = "/";
-    }
+      nextUrl = "/privatediaryCategory";
+    } else nextUrl = "/";
     return nextUrl;
   };
   const category = useSelector((state) => state.modal.category);

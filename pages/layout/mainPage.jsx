@@ -13,9 +13,11 @@ const MainPage = ({ title, main, urlToPost }) => {
     <div className={overall.wrapper}>
       <div className={overall.header}>{title}</div>
       {main}
-      <button className={overall.addBtn} onClick={goToPost}>
-        +
-      </button>
+      {urlToPost && (
+        <button className={overall.addBtn} onClick={goToPost}>
+          +
+        </button>
+      )}
       <MainNav></MainNav>
     </div>
   );

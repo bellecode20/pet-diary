@@ -9,7 +9,7 @@ const MainNav = () => {
           <p>커뮤니티</p>
         </a>
       </Link>
-      <Link href="/" passHref>
+      <Link href="/privatediaryCategory" passHref>
         <a className={navi.menu}>
           <img src="/diary_cat_01.jpg" className={navi.menuBigLogo}></img>
         </a>

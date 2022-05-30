@@ -52,8 +52,6 @@ const postingForm = () => {
       for (let file of fileInput.files) {
         const data = await requestPostToCloudinary(file, "diary-uploads");
         //mongodb에 사진url과, 작성한 글의 id, form의 텍스트 내용들을 함께 보낸다.
-        console.log(`data.public_id`);
-        console.log(data.public_id);
         let postContent = {
           postId: diaryPostId,
           photoUrl: data.url,

@@ -6,9 +6,15 @@
   overflow-y: auto;
   padding-top: 2rem;
   padding: 2rem $diary__timeLine-padding--left;
-
+  font-size: $font-regular--small;
+  .menuTitle {
+    font-family: $font-familly--semiBold;
+    font-size: $font-regular;
+    padding-bottom: 1rem;
+  }
   .profile {
-    display: flex;
+    .idOfUser {
+    }
   }
   .history {
     display: flex;
@@ -16,22 +22,18 @@
     padding-top: 3rem;
   }
   .account {
-    padding-top: 5rem;
-    display: flex;
-    flex-direction: column;
-    .menuTitle {
-      font-family: $font-familly--semiBold;
-      font-size: $font-regular;
-    }
+    padding-top: 3rem;
     .accountList {
+      cursor: pointer;
       :hover {
-        cursor: pointer;
-        background-color: $gray-color;
+        background-color: $opacity-main-color;
       }
       display: flex;
       flex-direction: column;
       .accountItem {
         display: flex;
+        padding: 3px 0;
+        color: $main-black-color;
       }
     }
   }

@@ -64,7 +64,6 @@ const CommuIndex = ({ textedCommunity, textedComments }) => {
   };
   const modal = useSelector((state) => state.modal.isShown);
   const dispatch = useDispatch();
-  console.log(modal);
   return (
     <div className={post.wrapper}>
       <DetailDiaryNav></DetailDiaryNav>
@@ -153,7 +152,7 @@ export const getServerSideProps = async (context) => {
   if (!session) {
     return {
       redirect: {
-        destination: "/signup",
+        destination: "/settings/signup",
         permanent: false,
       },
     };

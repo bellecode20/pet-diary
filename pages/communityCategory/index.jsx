@@ -54,7 +54,7 @@ export const getServerSideProps = async (context) => {
   if (!session) {
     return {
       redirect: {
-        destination: "/signup",
+        destination: "/settings/signup",
         permanent: false,
       },
     };
@@ -64,9 +64,7 @@ export const getServerSideProps = async (context) => {
   const client = await connectToDatabase();
   const communityCollection = client.db().collection("community");
   const community = await communityCollection
-    .find({
-      userId: session.user.userId,
-    })
+    .find()
     .sort({ $natural: -1 })
     .limit(5)
     .toArray();
