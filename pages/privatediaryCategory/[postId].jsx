@@ -60,15 +60,6 @@ const Post = ({ textedDiary }) => {
 export default Post;
 
 export const getServerSideProps = async (context) => {
-  const session = await getSession({ req: context.req });
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/settings/signup",
-        permanent: false,
-      },
-    };
-  }
   const postId = context.params.postId;
   const client = await connectToDatabase();
   const diaryCollection = client.db().collection("privateDiary");

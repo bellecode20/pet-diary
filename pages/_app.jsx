@@ -3,7 +3,7 @@ import "../styles/globals.scss";
 import { SessionProvider } from "next-auth/react";
 import { store } from "../store/store";
 import { Provider } from "react-redux";
-import CheckAuth from "./checkAuth";
+import CheckAuth from "./components/checkAuth";
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
     <SessionProvider session={session} refetchInterval={5 * 60}>

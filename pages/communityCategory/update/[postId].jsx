@@ -144,17 +144,6 @@ const updatingCommu = ({ textedCommunity }) => {
 };
 
 export const getServerSideProps = async (context) => {
-  console.log(context.params);
-  //context로 받아온 것을 getSession으로 꺼내준다. 만약 유저가 인증되었다면 쿠키가 존재한다.
-  const session = await getSession({ req: context.req });
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/settings/signup",
-        permanent: false,
-      },
-    };
-  }
   const { postId } = context.query;
   const client = await connectToDatabase();
   const communityCollection = client.db().collection("community");
@@ -164,7 +153,7 @@ export const getServerSideProps = async (context) => {
   const textedCommunity = JSON.stringify(community);
   return {
     //props로 몽고디비데이터도 전달
-    props: { session, textedCommunity },
+    props: { textedCommunity },
   };
 };
 export default updatingCommu;

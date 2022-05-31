@@ -3,8 +3,12 @@ import { useRef, useState } from "react";
 import { signIn, getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Account from "../layout/account";
-
+import ModalContainer from "../../components/ModalContainer";
+import { useSelector, useDispatch } from "react-redux";
+import { changeCategory, modalIsShown } from "../../store/features/modalSlice";
 const ChangePwFormContent = () => {
+  const dispatch = useDispatch();
+  const modal = useSelector((state) => state.modal.isShown);
   const oldPwRef = useRef();
   const newPwRef = useRef();
   async function changePw(enteredOldPw, enteredNewPw) {
@@ -27,8 +31,10 @@ const ChangePwFormContent = () => {
     const enteredOldPw = oldPwRef.current.value;
     const enteredNewPw = newPwRef.current.value;
     const result = await changePw(enteredOldPw, enteredNewPw);
-    // console.log(`result`);
-    // console.log(result);
+    dispatch(modalIsShown(true));
+    // dispatch(changeCategory("SuccessModal"));
+    console.log(`result`);
+    console.log(result);
   }
   return (
     <>
@@ -52,6 +58,7 @@ const ChangePwFormContent = () => {
           확인
         </button>
       </form>
+      {modal && <ModalContainer></ModalContainer>}
     </>
   );
 };
@@ -59,19 +66,5 @@ const ChangePwFormContent = () => {
 const ChangePwForm = () => {
   return <Account main={<ChangePwFormContent></ChangePwFormContent>}></Account>;
 };
-export const getServerSideProps = async (context) => {
-  //context로 받아온 것을 getSession으로 꺼내준다. 만약 유저가 인증되었다면 쿠키가 존재한다.
-  const session = await getSession({ req: context.req });
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/settings/signup",
-        permanent: false,
-      },
-    };
-  }
-  return {
-    props: { session },
-  };
-};
+
 export default ChangePwForm;

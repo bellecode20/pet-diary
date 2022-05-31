@@ -150,17 +150,6 @@ const updatingForm = ({ textedDiary }) => {
 };
 
 export const getServerSideProps = async (context) => {
-  console.log(context.params);
-  //context로 받아온 것을 getSession으로 꺼내준다. 만약 유저가 인증되었다면 쿠키가 존재한다.
-  const session = await getSession({ req: context.req });
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/settings/signup",
-        permanent: false,
-      },
-    };
-  }
   const client = await connectToDatabase();
   const diaryCollection = client.db().collection("privateDiary");
   const diary = await diaryCollection.findOne({
@@ -169,7 +158,7 @@ export const getServerSideProps = async (context) => {
   const textedDiary = JSON.stringify(diary);
   return {
     //props로 몽고디비데이터도 전달
-    props: { session, textedDiary },
+    props: { textedDiary },
   };
 };
 export default updatingForm;

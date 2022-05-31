@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isShown: false,
-  category: "",
+  category: "SuccessModal",
 };
 
 export const modalSlice = createSlice({
