@@ -47,10 +47,6 @@ const WithDrawalFormContent = () => {
             className={sign.idInput}
           ></input>
         </div>
-        {/* <div>
-          <label htmlFor="newPw">새로운 비밀번호</label>
-          <input type="text" required id="newPw" ref={newPwRef}></input>
-        </div> */}
         <button className={sign.upBtn} form="changePw">
           확인
         </button>
