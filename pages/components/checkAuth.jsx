@@ -5,8 +5,6 @@ import SignUp from "../settings/signup";
 import Intro from "../index";
 const CheckAuth = ({ children }) => {
   const { data: session, status } = useSession();
-  console.log(session);
-  console.log("CheckAuth");
   const router = useRouter();
   if (router.asPath.includes("signup") && status === "unauthenticated") {
     return [children];
@@ -14,13 +12,9 @@ const CheckAuth = ({ children }) => {
   if (status === "loading") {
     return <p>Loading...</p>;
   }
-
   if (status === "unauthenticated") {
     return <Intro></Intro>;
   }
-  console.log(`children`);
-  console.log(status);
-
   return <>{children}</>;
 };
 

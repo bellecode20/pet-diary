@@ -6,6 +6,7 @@ import { requestPostToMongodb } from "../../components/requestPostToMongodb";
 import { requestPostToCloudinary } from "../../components/requestPostToCloudinary";
 import form from "../../styles/pages/formOfPosting.module.scss";
 import { useDispatch, useSelector } from "react-redux";
+import CarouselSlide from "../components/carouselSlide";
 import { changeCategory, modalIsShown } from "../../store/features/modalSlice";
 const postingForm = () => {
   const date = useRef();
@@ -14,9 +15,10 @@ const postingForm = () => {
   const [image, setImage] = useState(); //인풋에 올린 사진
   const [preview, setPreview] = useState();
   const checkThisImg = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImage(file);
+    const allArray = Array.from(e.target.files);
+    if (allArray.length > 0) {
+      setPreview([]);
+      setImage(allArray);
     } else {
       setImage(null);
     }
@@ -26,12 +28,16 @@ const postingForm = () => {
   useEffect(() => {
     //인풋에서 첨부할 사진을 선택하고나면, 그 사진을 스트링데이터로 변환시켜 preview state에 담는다.
     if (image) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreview(reader.result);
-      };
-      reader.readAsDataURL(image);
-    } else setPreview(null);
+      for (let x of image) {
+        let reader = new FileReader();
+        reader.onload = (e) => {
+          setPreview((preview) => [...preview, e.target.result]);
+        };
+        reader.readAsDataURL(x);
+      }
+    } else {
+      setPreview(null);
+    }
   }, [image]);
   const postDiary = async (e) => {
     e.preventDefault();
@@ -92,18 +98,21 @@ const postingForm = () => {
             className={form.date}
           />
         </div>
+        {preview && <CarouselSlide data={preview}></CarouselSlide>}
         <div className={form.photoForm}>
           <label
             htmlFor="diary__form__photo"
             className={image ? form.whenPhoto : form.border} //사진 선택하면 테두리 없어진다.
           >
-            <img
+            {" "}
+            + 사진
+            {/* <img
               src={preview}
               onClick={() => {
                 setImage(null);
               }}
               className={form.thumbnail}
-            ></img>
+            ></img> */}
           </label>
           <input
             type="file"

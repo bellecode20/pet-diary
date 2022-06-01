@@ -4,6 +4,12 @@ import Image from "next/image";
 import carousel from "../../styles/components/carouselSlide.module.scss";
 import { format } from "path";
 const CarouselSlide = ({ data }) => {
+  // console.log(`data1`);
+  // console.log(data);
+  useEffect(() => {
+    console.log(`data2`);
+    console.log(data);
+  }, [data]);
   const [viewportRef, embla] = useEmblaCarousel({
     containScroll: "keepSnaps",
   });
