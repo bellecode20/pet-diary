@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { signIn, getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Account from "../layout/account";
-
+import { signOut } from "next-auth/react";
 const WithDrawalFormContent = () => {
   const oldPwRef = useRef();
   const newPwRef = useRef();
@@ -20,6 +20,7 @@ const WithDrawalFormContent = () => {
       },
     });
     const data = await response.json();
+    const next = await signOut();
     console.log(`data withdrawal`);
     console.log(data);
   }
@@ -27,8 +28,8 @@ const WithDrawalFormContent = () => {
     e.preventDefault();
     const enteredOldPw = oldPwRef.current.value;
     const result = await requestWithdrawal(enteredOldPw);
-    // console.log(`result`);
-    // console.log(result);
+    console.log(`result`);
+    console.log(result);
   }
   return (
     <>

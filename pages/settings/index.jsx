@@ -1,5 +1,5 @@
 import settings from "../../styles/pages/settings.module.scss";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import MainPage from "../layout/mainPage";
 import { useEffect } from "react";
@@ -7,6 +7,7 @@ import ModalContainer from "../../components/ModalContainer";
 import { useDispatch, useSelector } from "react-redux";
 import { modalIsShown, changeCategory } from "../../store/features/modalSlice";
 const SettingsContent = () => {
+  const { data: session, status } = useSession();
   const modal = useSelector((state) => state.modal.isShown);
   const dispatch = useDispatch();
   const logoutHandler = () => {
@@ -18,7 +19,7 @@ const SettingsContent = () => {
     <div className={settings.mainContainer}>
       <div className={settings.profile}>
         <p className={settings.menuTitle}>아이디</p>
-        <p className={settings.idOfUser}>아이디</p>
+        <p className={settings.idOfUser}>{session.user.userId}</p>
       </div>
       {/* <div className={settings.history}>
         <div>
