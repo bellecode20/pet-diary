@@ -15,6 +15,17 @@ async function handler(req, res) {
     res.status(422).json({
       message:
         "Invalid input - id and pw should also be at least 7 characters long.",
+      status: 422,
+      contentStatus: "001",
+    });
+    return;
+  }
+  let onlyEngAndNum = /^[A-Za-z][A-Za-z0-9]*$/;
+  if (!onlyEngAndNum.test(userId) || !onlyEngAndNum.test(userPw)) {
+    res.status(422).json({
+      message: "no",
+      status: 422,
+      contentStatus: "002",
     });
     return;
   }
@@ -26,7 +37,13 @@ async function handler(req, res) {
   const existingUser = await usersCollection.findOne({ userId: userId });
   const hashedPassword = await hashPassword(userPw); //비밀번호를 해쉬화한다.
   if (existingUser) {
-    res.status(422).json({ message: "User exists already!" });
+    res
+      .status(422)
+      .json({
+        message: "User exists already!",
+        status: 422,
+        contentStatus: "003",
+      });
     client.close();
     return;
   }
@@ -34,8 +51,7 @@ async function handler(req, res) {
     userId: userId,
     userPw: hashedPassword,
   });
-  //console.log(result);
-  res.status(201).json({ message: "Created user!" });
+  res.status(201).json({ message: "Created user!", status: 201 });
   client.close();
 }
 export default handler;

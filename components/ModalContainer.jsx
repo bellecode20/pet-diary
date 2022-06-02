@@ -4,6 +4,7 @@ import SuccessModal from "./SuccessModal";
 import LoadingModal from "./LoadingModal";
 import { useSelector } from "react-redux";
 import GoOrStopModal from "./GoOrStopModal";
+import ErrorCloseModal from "./errorCloseModal";
 const ModalContainer = ({ titleText, yesText, yesAction }) => {
   const [isBrowser, setIsBrowser] = useState(false);
   const category = useSelector((state) => state.modal.category);
@@ -28,6 +29,11 @@ const ModalContainer = ({ titleText, yesText, yesAction }) => {
           yesText={yesText}
           yesAction={yesAction}
         ></GoOrStopModal>,
+        document.getElementById("modal-root")
+      );
+    } else if (category === "ErrorCloseModal") {
+      return ReactDOM.createPortal(
+        <ErrorCloseModal></ErrorCloseModal>,
         document.getElementById("modal-root")
       );
     }

@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   isShown: false,
   category: "SuccessModal",
+  contentText: "",
 };
 
 export const modalSlice = createSlice({
@@ -15,7 +16,11 @@ export const modalSlice = createSlice({
     changeCategory: (state, action) => {
       state.category = action.payload;
     },
+    changeContentText: (state, action) => {
+      state.contentText = action.payload;
+    },
   },
 });
-export const { modalIsShown, changeCategory } = modalSlice.actions;
+export const { modalIsShown, changeCategory, changeContentText } =
+  modalSlice.actions;
 export default modalSlice.reducer;

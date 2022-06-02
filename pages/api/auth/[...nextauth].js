@@ -15,10 +15,7 @@ export default NextAuth({
           userId: credentials.userId,
         }); //유저가 입력한 아이디와 일치하는 아이디가 있는지 찾는다.
         const isValid = await verifyPassword(credentials.userPw, user.userPw);
-        if (!user) {
-          client.close();
-          throw new Error("No user found!");
-        } else if (!isValid) {
+        if (!user || !isValid) {
           client.close();
           throw new Error("Could not log you in!");
         }
