@@ -7,7 +7,11 @@ import { requestPostToCloudinary } from "../../components/requestPostToCloudinar
 import form from "../../styles/pages/formOfPosting.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import CarouselSlide from "../components/carouselSlide";
-import { changeCategory, modalIsShown } from "../../store/features/modalSlice";
+import {
+  changeContentText,
+  changeCategory,
+  modalIsShown,
+} from "../../store/features/modalSlice";
 const postingForm = () => {
   const date = useRef();
   const title = useRef();
@@ -47,12 +51,21 @@ const postingForm = () => {
     const fileInput = Array.from(form.elements).find(
       ({ name }) => name === "photo[]"
     );
-    // const formData = new FormData();
     const diaryPostId = makeId();
     const enteredDate = date.current.value;
     const enteredTitle = title.current.value;
     const enteredContent = content.current.value;
-    //FormData를 만들고 cloudinary에 보낸다. 이렇게 cloudinary에 사진 원본을 저장한다.
+    if (
+      enteredDate === "" ||
+      enteredTitle === "" ||
+      enteredContent === "" ||
+      fileInput.files.length < 1
+    ) {
+      console.log("nono");
+      dispatch(changeCategory("ErrorCloseModal"));
+      dispatch(changeContentText("모든 항목을 채워주세요"));
+      return;
+    }
     //올리는 파일 수 만큼 cloudinary에 보내고 mongodb에 저장하는 걸 반복한다.
     if (fileInput.files.length > 0) {
       for (let file of fileInput.files) {

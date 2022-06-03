@@ -7,8 +7,11 @@ import { requestPostToMongodb } from "../../../components/requestPostToMongodb";
 import { requestPostToCloudinary } from "../../../components/requestPostToCloudinary";
 import ModalContainer from "../../../components/ModalContainer";
 import { useDispatch, useSelector } from "react-redux";
-import { modalIsShown } from "../../../store/features/modalSlice";
-import { changeCategory } from "../../../store/features/modalSlice";
+import {
+  modalIsShown,
+  changeCategory,
+  changeContentText,
+} from "../../../store/features/modalSlice";
 import CarouselSlide from "../../components/carouselSlide";
 const updatingCommu = ({ textedCommunity }) => {
   const commuPost = JSON.parse(textedCommunity);
@@ -16,7 +19,8 @@ const updatingCommu = ({ textedCommunity }) => {
   const [contentValue, setContentValue] = useState(commuPost.content);
   const [image, setImage] = useState(); //input에서 선택한 사진 파일
   const [preview, setPreview] = useState();
-
+  const modal = useSelector((state) => state.modal.isShown);
+  const dispatch = useDispatch();
   const updateCommu = async (e) => {
     e.preventDefault();
     dispatch(modalIsShown(true));
@@ -25,6 +29,15 @@ const updatingCommu = ({ textedCommunity }) => {
     const fileInput = Array.from(form.elements).find(
       ({ name }) => name === "newCommuPhoto[]"
     );
+    if (
+      titleValue === "" ||
+      contentValue === "" ||
+      fileInput.files.length < 1
+    ) {
+      dispatch(changeCategory("ErrorCloseModal"));
+      dispatch(changeContentText("모든 항목을 채워주세요"));
+      return;
+    }
     if (fileInput.files.length > 0) {
       let commuInfoForUpdating = {
         userId: commuPost.userId,
@@ -90,8 +103,6 @@ const updatingCommu = ({ textedCommunity }) => {
     } else setPreview(null);
   }, [image]);
 
-  const modal = useSelector((state) => state.modal.isShown);
-  const dispatch = useDispatch();
   return (
     <div className={form.wrapper}>
       <UploadNav formId="updatingCommu"></UploadNav>

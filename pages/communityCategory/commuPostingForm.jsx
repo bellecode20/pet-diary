@@ -6,7 +6,11 @@ import { requestPostToCloudinary } from "../../components/requestPostToCloudinar
 import { requestPostToMongodb } from "../../components/requestPostToMongodb";
 import { makeTimestamp } from "../../components/makeTimestamp";
 import { useDispatch, useSelector } from "react-redux";
-import { changeCategory, modalIsShown } from "../../store/features/modalSlice";
+import {
+  changeCategory,
+  changeContentText,
+  modalIsShown,
+} from "../../store/features/modalSlice";
 import ModalContainer from "../../components/ModalContainer";
 import CarouselSlide from "../components/carouselSlide";
 const CommuPostingForm = () => {
@@ -48,13 +52,19 @@ const CommuPostingForm = () => {
     const fileInput = Array.from(form.elements).find(
       ({ name }) => name === "photo[]"
     );
-    // const formData = new FormData();
     const commuPostId = makeId();
     const enteredTitle = title.current.value;
     const enteredContent = content.current.value;
-    //FormData를 만들고 cloudinary에 보낸다. 이렇게 cloudinary에 사진 원본을 저장한다.
     //올리는 파일 수 만큼 cloudinary에 보내고 mongodb에 저장하는 걸 반복한다.
-
+    if (
+      enteredTitle === "" ||
+      enteredContent === "" ||
+      fileInput.files.length < 1
+    ) {
+      dispatch(changeCategory("ErrorCloseModal"));
+      dispatch(changeContentText("모든 항목을 채워주세요"));
+      return;
+    }
     let postContent = {
       postId: commuPostId,
       title: enteredTitle,

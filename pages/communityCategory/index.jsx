@@ -9,13 +9,18 @@ import {
   selectLoadDb,
   changeCommuLimit,
 } from "../../store/features/loadDbSlice";
+import { useState } from "react";
 const Content = ({ textedCommunity }) => {
+  const [toggleLoadBtn, setToggleLoadBtn] = useState(false);
   const communityPosts = JSON.parse(textedCommunity);
   const loadDb = useSelector(selectLoadDb);
   const dispatch = useDispatch();
   const handleCommuLoad = () => {
     // 전체 커뮤니티 글을 다 렌더링 한 상태라면 dispatch하지 않는다.
-    if (communityPosts.length < loadDb.commuLimit) return;
+    if (communityPosts.length < loadDb.commuLimit) {
+      setToggleLoadBtn(true);
+      return;
+    }
     dispatch(changeCommuLimit(loadDb.commuLimit + 5));
   };
   const limitedCommunityPosts = communityPosts.reduce((result, post, index) => {
@@ -50,7 +55,9 @@ const Content = ({ textedCommunity }) => {
           </div>
         </Link>
       ))}
-      <button onClick={handleCommuLoad}>더보기</button>
+      <button onClick={handleCommuLoad}>
+        {toggleLoadBtn ? "모든 글을 확인했어요" : "더보기"}
+      </button>
     </div>
   );
 };

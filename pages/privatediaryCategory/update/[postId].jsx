@@ -6,6 +6,12 @@ import { connectToDatabase } from "../../../lib/db";
 import { requestPostToCloudinary } from "../../../components/requestPostToCloudinary";
 import { requestPostToMongodb } from "../../../components/requestPostToMongodb";
 import CarouselSlide from "../../components/carouselSlide";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  changeCategory,
+  changeContentText,
+  modalIsShown,
+} from "../../../store/features/modalSlice";
 
 const updatingForm = ({ textedDiary }) => {
   const date = useRef();
@@ -17,6 +23,8 @@ const updatingForm = ({ textedDiary }) => {
   const [contentValue, setContentValue] = useState(postInfo.content);
   const [image, setImage] = useState(); //인풋에 올린 사진
   const [preview, setPreview] = useState();
+  const dispatch = useDispatch();
+  const modal = useSelector((state) => state.modal.isShown);
   const checkThisImg = (e) => {
     const allArray = Array.from(e.target.files);
     if (allArray.length > 0) {
@@ -26,7 +34,6 @@ const updatingForm = ({ textedDiary }) => {
       setImage(null);
     }
   };
-
   useEffect(() => {
     //인풋에서 첨부할 사진을 선택하고나면, 그 사진을 스트링데이터로 변환시켜 preview state에 담는다.
     if (image) {
@@ -45,11 +52,21 @@ const updatingForm = ({ textedDiary }) => {
 
   const postDiary = async (e) => {
     e.preventDefault();
-    console.log("update [postId]");
+    dispatch(modalIsShown(true));
+    dispatch(changeCategory("LoadingModal"));
     const form = e.currentTarget;
     const fileInput = Array.from(form.elements).find(
       ({ name }) => name === "newPhoto[]"
     );
+    if (
+      titleValue === "" ||
+      contentValue === "" ||
+      fileInput.files.length < 1
+    ) {
+      dispatch(changeCategory("ErrorCloseModal"));
+      dispatch(changeContentText("모든 항목을 채워주세요"));
+      return;
+    }
     if (fileInput.files.length > 0) {
       let postInfoForUpdating = {
         userId: postInfo.userId,
@@ -89,6 +106,7 @@ const updatingForm = ({ textedDiary }) => {
         console.log("postResult", postResult);
       }
     }
+    dispatch(changeCategory("SuccessModal"));
   };
   return (
     <div className={form.wrapper}>

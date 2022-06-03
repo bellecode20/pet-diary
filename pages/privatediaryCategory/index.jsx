@@ -10,13 +10,17 @@ import {
   changeDiaryLimit,
   selectLoadDb,
 } from "../../store/features/loadDbSlice";
+import { useState } from "react";
 const CommuContent = ({ textedDiaries }) => {
-  // const { data: session, status } = useSession();
+  const [toggleLoadBtn, setToggleLoadBtn] = useState(false);
   const diaryies = JSON.parse(textedDiaries);
   const dispatch = useDispatch();
   const loadDb = useSelector(selectLoadDb);
   const handleDiaryLoad = () => {
-    if (diaryies.length < loadDb.diaryLimit) return;
+    if (diaryies.length < loadDb.diaryLimit) {
+      setToggleLoadBtn(true);
+      return;
+    }
     dispatch(changeDiaryLimit(loadDb.diaryLimit + 5));
   };
   const limitedDiaryPosts = diaryies.reduce((result, post, index) => {
@@ -44,7 +48,9 @@ const CommuContent = ({ textedDiaries }) => {
           </a>
         </Link>
       ))}
-      <button onClick={handleDiaryLoad}>더보기</button>
+      <button onClick={handleDiaryLoad}>
+        {toggleLoadBtn ? "모든 글을 확인했어요" : "더보기"}
+      </button>
     </div>
   );
 };
