@@ -31,7 +31,7 @@ const Post = ({ textedDiary }) => {
 
   return (
     <div className={form.wrapper}>
-      <DetailDiaryNav userId={privateDiary.postId}></DetailDiaryNav>
+      <DetailDiaryNav userId={privateDiary.userId}></DetailDiaryNav>
       <div className={form.mainContainer}>
         <div className={form.dateForm}>
           <p className={form.date}>{privateDiary.postingDate}</p>

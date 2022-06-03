@@ -104,15 +104,7 @@ const postingForm = () => {
             htmlFor="diary__form__photo"
             className={image ? form.whenPhoto : form.border} //사진 선택하면 테두리 없어진다.
           >
-            {" "}
             + 사진
-            {/* <img
-              src={preview}
-              onClick={() => {
-                setImage(null);
-              }}
-              className={form.thumbnail}
-            ></img> */}
           </label>
           <input
             type="file"

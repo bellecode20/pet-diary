@@ -5,12 +5,31 @@ import Link from "next/link";
 import { connectToDatabase } from "../../lib/db";
 import MainPage from "../layout/mainPage";
 import ImgPreview from "../components/imgPreview";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  changeDiaryLimit,
+  selectLoadDb,
+} from "../../store/features/loadDbSlice";
 const CommuContent = ({ textedDiaries }) => {
   // const { data: session, status } = useSession();
   const diaryies = JSON.parse(textedDiaries);
+  const dispatch = useDispatch();
+  const loadDb = useSelector(selectLoadDb);
+  const handleDiaryLoad = () => {
+    if (diaryies.length < loadDb.diaryLimit) return;
+    dispatch(changeDiaryLimit(loadDb.diaryLimit + 5));
+  };
+  const limitedDiaryPosts = diaryies.reduce((result, post, index) => {
+    if (index < loadDb.diaryLimit) {
+      result.push(post);
+    }
+    return result;
+  }, []);
+  const { data: session, status } = useSession();
+  console.log(session.user.userId);
   return (
     <div className={styles.mainContainer}>
-      {diaryies.map((diary) => (
+      {limitedDiaryPosts.map((diary) => (
         <Link href={`/privatediaryCategory/${diary.postId}`}>
           <a className={styles.dayContainer} custom-attribute={diary.postId}>
             <div className={styles.timeLineStart}></div>
@@ -25,6 +44,7 @@ const CommuContent = ({ textedDiaries }) => {
           </a>
         </Link>
       ))}
+      <button onClick={handleDiaryLoad}>더보기</button>
     </div>
   );
 };

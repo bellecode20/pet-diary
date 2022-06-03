@@ -34,7 +34,7 @@ const DetailDiaryNav = ({ userId }) => {
       <button className={nav.basic} onClick={() => router.back()}>
         Back
       </button>
-      {userId === session.userId && (
+      {userId === session.user.userId && (
         <button
           className={nav.basic}
           onClick={() => {

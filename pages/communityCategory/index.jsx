@@ -3,12 +3,30 @@ import MainPage from "../layout/mainPage";
 import Link from "next/link";
 import mainPage from "../../styles/layout/mainPage.module.scss";
 import ImgPreview from "../components/imgPreview";
-
+import { wrapper } from "../../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectLoadDb,
+  changeCommuLimit,
+} from "../../store/features/loadDbSlice";
 const Content = ({ textedCommunity }) => {
   const communityPosts = JSON.parse(textedCommunity);
+  const loadDb = useSelector(selectLoadDb);
+  const dispatch = useDispatch();
+  const handleCommuLoad = () => {
+    // 전체 커뮤니티 글을 다 렌더링 한 상태라면 dispatch하지 않는다.
+    if (communityPosts.length < loadDb.commuLimit) return;
+    dispatch(changeCommuLimit(loadDb.commuLimit + 5));
+  };
+  const limitedCommunityPosts = communityPosts.reduce((result, post, index) => {
+    if (index < loadDb.commuLimit) {
+      result.push(post);
+    }
+    return result;
+  }, []);
   return (
     <div className={mainPage.commuMainContainer}>
-      {communityPosts.map((el) => (
+      {limitedCommunityPosts.map((el) => (
         <Link href={`/communityCategory/${el.commuPostId}`}>
           <div className={mainPage.postContainer}>
             <p className={mainPage.isUpdated}> {el.isUpdated && "(수정됨)"}</p>
@@ -32,7 +50,7 @@ const Content = ({ textedCommunity }) => {
           </div>
         </Link>
       ))}
-      <button>더보기</button>
+      <button onClick={handleCommuLoad}>더보기</button>
     </div>
   );
 };
@@ -45,25 +63,19 @@ const Index = ({ textedCommunity }) => {
     ></MainPage>
   );
 };
-export const getServerSideProps = async (context) => {
-  //작성한 전체 글 보기
-  const client = await connectToDatabase();
-  const communityCollection = client.db().collection("community");
-  // const community = await communityCollection
-  //   .find()
-  //   .sort({ $natural: -1 })
-  //   .limit(5)
-  //   .toArray();
-  const community = await communityCollection
-    .find()
-    .sort({ $natural: -1 })
-    .skip(skip)
-    .limit(limit)
-    .toArray();
-  const textedCommunity = JSON.stringify(community);
-  return {
-    //props로 몽고디비데이터도 전달
-    props: { textedCommunity },
-  };
-};
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) => async (context) => {
+    const client = await connectToDatabase();
+    const communityCollection = client.db().collection("community");
+    const community = await communityCollection
+      .find()
+      .sort({ $natural: -1 })
+      .toArray();
+    const textedCommunity = JSON.stringify(community);
+    return {
+      //props로 몽고디비데이터도 전달
+      props: { textedCommunity },
+    };
+  }
+);
 export default Index;
