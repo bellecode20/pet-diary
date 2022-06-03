@@ -3,7 +3,7 @@ import nav from "../../styles/components/uploadNav.module.scss";
 const UploadNav = ({ formId }) => {
   const router = useRouter();
   const goBack = () => {
-    router.push("/");
+    router.back();
   };
   return (
     <div className={nav.headerNav}>

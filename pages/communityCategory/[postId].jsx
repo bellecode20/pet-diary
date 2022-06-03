@@ -7,12 +7,14 @@ import { requestPostToMongodb } from "../../components/requestPostToMongodb";
 import { makeTimestamp } from "../../components/makeTimestamp";
 import ModalContainer from "../../components/ModalContainer";
 import { useDispatch, useSelector } from "react-redux";
-import { changeCategory } from "../../store/features/modalSlice";
+import { changeCategory, modalIsShown } from "../../store/features/modalSlice";
 import DetailDiaryNav from "../components/detailDiaryNav";
 import CarouselSlide from "../components/carouselSlide";
 import post from "../../styles/layout/post.module.scss";
 
 const CommuIndex = ({ textedCommunity, textedComments }) => {
+  const modal = useSelector((state) => state.modal.isShown);
+  const dispatch = useDispatch();
   const commuPost = JSON.parse(textedCommunity);
   const comments = JSON.parse(textedComments);
   const { data: session } = useSession();
@@ -33,6 +35,9 @@ const CommuIndex = ({ textedCommunity, textedComments }) => {
       deleteInfo
     );
     console.log("deleteComment", deleteResult);
+    dispatch(modalIsShown(true));
+    dispatch(changeCategory("LoadingModal"));
+    forceReload();
   };
   const deleteCommu = async (e) => {
     dispatch(changeCategory("LoadingModal"));
@@ -60,35 +65,14 @@ const CommuIndex = ({ textedCommunity, textedComments }) => {
       "/api/form/postComment",
       commentInfo
     );
+    dispatch(modalIsShown(true));
+    dispatch(changeCategory("LoadingModal"));
     forceReload();
   };
-  const modal = useSelector((state) => state.modal.isShown);
-  const dispatch = useDispatch();
   return (
     <div className={post.wrapper}>
-      <DetailDiaryNav></DetailDiaryNav>
+      <DetailDiaryNav userId={commuPost.userId}></DetailDiaryNav>
       <div className={post.mainContainer}>
-        {/* <div className={post.menuBtn}>
-          <Link href={`/communityCategory/update/${commuPost.commuPostId}`}>
-            <button
-              data-remove={commuPost.commuPostId}
-              className={post.commuDeleteBtn}
-            >
-              수정
-            </button>
-          </Link>
-          <button
-            data-remove={commuPost.commuPostId}
-            className={post.commuDeleteBtn}
-            onClick={() => {
-              dispatch(modalIsShown(true));
-              dispatch(changeCategory("GoOrStopModal"));
-              console.log(modal);
-            }}
-          >
-            삭제
-          </button>
-        </div> */}
         <p className={post.tag}>{commuPost.title}</p>
         <CarouselSlide data={commuPost.photo}></CarouselSlide>
         <p className={post.content}>{commuPost.content}</p>

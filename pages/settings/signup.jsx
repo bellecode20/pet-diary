@@ -16,7 +16,7 @@ const SignUpContent = () => {
   const pwRef = useRef();
   const router = useRouter();
   const dispatch = useDispatch();
-  const modal = useSelector((state) => state.modal.isShown);
+  // const modal = useSelector((state) => state.modal.isShown);
   dispatch(changeCategory("ErrorCloseModal"));
   const { data: session, status } = useSession();
   const switchAuthMode = () => {
@@ -76,8 +76,6 @@ const SignUpContent = () => {
         console.error(result.error);
         dispatch(modalIsShown(true));
         dispatch(changeContentText("아이디나 비밀번호를 다시 확인해주세요"));
-        console.log("notokay");
-        console.log(modal);
       }
       //로그인에 성공하는 경우이다.
       else if (result.error === null) {
@@ -118,7 +116,7 @@ const SignUpContent = () => {
         {!isLogin ? "로그인하기" : "계정만들기"}
       </button>
       <p>{status === "authenticated" ? "인증됨" : "안됨"}</p>
-      {modal && <ModalContainer></ModalContainer>}
+      {/* {modal && <ModalContainer></ModalContainer>} */}
     </>
   );
 };

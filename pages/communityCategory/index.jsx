@@ -1,5 +1,3 @@
-import { getSession } from "next-auth/react";
-import { useSession } from "next-auth/react";
 import { connectToDatabase } from "../../lib/db";
 import MainPage from "../layout/mainPage";
 import Link from "next/link";
@@ -7,8 +5,6 @@ import mainPage from "../../styles/layout/mainPage.module.scss";
 import ImgPreview from "../components/imgPreview";
 
 const Content = ({ textedCommunity }) => {
-  const { data: session, status } = useSession();
-  console.log(session);
   const communityPosts = JSON.parse(textedCommunity);
   return (
     <div className={mainPage.commuMainContainer}>
@@ -36,6 +32,7 @@ const Content = ({ textedCommunity }) => {
           </div>
         </Link>
       ))}
+      <button>더보기</button>
     </div>
   );
 };
@@ -52,10 +49,16 @@ export const getServerSideProps = async (context) => {
   //작성한 전체 글 보기
   const client = await connectToDatabase();
   const communityCollection = client.db().collection("community");
+  // const community = await communityCollection
+  //   .find()
+  //   .sort({ $natural: -1 })
+  //   .limit(5)
+  //   .toArray();
   const community = await communityCollection
     .find()
     .sort({ $natural: -1 })
-    .limit(5)
+    .skip(skip)
+    .limit(limit)
     .toArray();
   const textedCommunity = JSON.stringify(community);
   return {

@@ -63,7 +63,10 @@ const CommuPostingForm = () => {
     };
     if (fileInput.files.length > 0) {
       for (let file of fileInput.files) {
-        const data = await requestPostToCloudinary(file, "community-uploads");
+        const data = await requestPostToCloudinary(
+          file,
+          "community-uploads"
+        ).catch((e) => console.error(e));
         //mongodb에 사진url과, 작성한 글의 id, form의 텍스트 내용들을 함께 보낸다.
         postContent.photoUrl = data.url;
         postContent.photoPublicId = data.public_id;

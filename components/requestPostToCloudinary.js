@@ -8,10 +8,13 @@ export async function requestPostToCloudinary(한장, cloudinary폴더) {
       method: "POST",
       body: formData,
     }
-  ).then((res) => res.json());
+  )
+    .then((res) => res.json())
+    .catch((e) => console.error(e));
   return data;
 }
-// export async function requestPostToCloudinary(formData, 한장, cloudinary폴더) {
+// export async function requestPostToCloudinary(한장, cloudinary폴더) {
+//   const formData = new FormData();
 //   formData.append("file", 한장);
 //   formData.append("upload_preset", cloudinary폴더);
 //   const data = await fetch(

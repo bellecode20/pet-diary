@@ -1,10 +1,12 @@
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { changeCategory, modalIsShown } from "../../store/features/modalSlice";
 import nav from "../../styles/components/uploadNav.module.scss";
-const DetailDiaryNav = () => {
+const DetailDiaryNav = ({ userId }) => {
+  const { data: session } = useSession();
   const dispatch = useDispatch();
   const router = useRouter();
   const { postId } = router.query;
@@ -29,15 +31,19 @@ const DetailDiaryNav = () => {
   };
   return (
     <div className={nav.headerNav}>
-      <button className={nav.basic}>Back</button>
-      <button
-        className={nav.basic}
-        onClick={() => {
-          setIsToggled(!isToggled);
-        }}
-      >
-        +
+      <button className={nav.basic} onClick={() => router.back()}>
+        Back
       </button>
+      {userId === session.userId && (
+        <button
+          className={nav.basic}
+          onClick={() => {
+            setIsToggled(!isToggled);
+          }}
+        >
+          +
+        </button>
+      )}
       {isToggled && (
         <div className={nav.hiddenMenu}>
           <button onClick={goUpdatingForm} className={nav.updateBtn}>
