@@ -13,7 +13,7 @@ const ErrorCloseModal = () => {
   return (
     <div className={loading.wrapper}>
       <div className={loading.modal}>
-        <img src="/logo.png" height="100px"></img>
+        <img src="/cat--error.svg" height="50%"></img>
         <p className={loading.title}>앗!</p>
         <p className={loading.content}>{contentText}</p>
         <button className={loading.button} onClick={handleClose}>

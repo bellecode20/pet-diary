@@ -46,7 +46,7 @@ const SignUpContent = () => {
       dispatch(changeContentText("아이디와 비밀번호는 7글자 이상이어야 해요"));
       dispatch(modalIsShown(true));
     } else if (data.contentStatus === "002") {
-      dispatch(changeContentText("영어나 숫자만 입력해주세요"));
+      dispatch(changeContentText("영어와 숫자만 입력해주세요"));
       dispatch(modalIsShown(true));
     } else if (data.contentStatus === "003") {
       {
@@ -64,18 +64,34 @@ const SignUpContent = () => {
     e.preventDefault();
     const enteredId = idRef.current.value;
     const enteredPw = pwRef.current.value;
+    let engAndNum = /^[A-Za-z0-9]*$/;
+    if (engAndNum.test(enteredId)) console.log(enteredId);
+    if (engAndNum.test(enteredId)) console.log("enteredId");
+    if (engAndNum.test(enteredPw)) console.log(enteredPw);
+    if (engAndNum.test(enteredPw)) console.log("enteredPw");
+    if (!engAndNum.test(enteredId) || !engAndNum.test(enteredPw)) {
+      console.log("wreogre");
+      dispatch(changeCategory("ErrorCloseModal"));
+      dispatch(changeContentText("영어와 숫자만 입력해주세요"));
+      dispatch(modalIsShown(true));
+      return;
+    }
     if (isLogin) {
       //로그인을 하는 경우이다.
       const result = await signIn("credentials", {
         redirect: false,
         userId: enteredId,
         userPw: enteredPw,
-      }).catch((e) => console.error(e));
+      }).catch((e) => {
+        console.error(e);
+      });
       console.log(result);
       if (result.error) {
         console.error(result.error);
         dispatch(modalIsShown(true));
+        dispatch(changeCategory("ErrorCloseModal"));
         dispatch(changeContentText("아이디나 비밀번호를 다시 확인해주세요"));
+        return;
       }
       //로그인에 성공하는 경우이다.
       else if (result.error === null) {
@@ -115,7 +131,6 @@ const SignUpContent = () => {
       <button className="switchBtn" onClick={switchAuthMode}>
         {!isLogin ? "로그인하기" : "계정만들기"}
       </button>
-      <p>{status === "authenticated" ? "인증됨" : "안됨"}</p>
       {/* {modal && <ModalContainer></ModalContainer>} */}
     </>
   );

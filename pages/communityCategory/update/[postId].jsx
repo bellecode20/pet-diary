@@ -74,6 +74,19 @@ const updatingCommu = ({ textedCommunity }) => {
         console.log("postResult", postResult);
         dispatch(modalIsShown(true));
       }
+    } else {
+      //사진은 수정하지 않은 경우이다.
+      let updateCommuToMongo = {
+        commuPostId: commuPost.commuPostId,
+        userId: commuPost.userId,
+        title: titleValue,
+        content: contentValue,
+        onlyText: true,
+      };
+      const postResult = await requestPostToMongodb(
+        "/api/form/updateCommu",
+        updateCommuToMongo
+      );
     }
     dispatch(changeCategory("SuccessModal"));
   };

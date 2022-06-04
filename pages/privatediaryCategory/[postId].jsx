@@ -48,7 +48,7 @@ const Post = ({ textedDiary }) => {
       </div>
       {modal && (
         <ModalContainer
-          titleText="다이어리 삭제하시겠습니까?"
+          titleText="삭제할까요?"
           yesText="삭제하기"
           yesAction={requestDelete}
         ></ModalContainer>

@@ -13,6 +13,7 @@ const deleteForUpdate = async (req, res) => {
   } else if (collectionName === "community") {
     fieldName = "commuPostId";
   }
+  console.log("deleteForupdate");
   if (userId === idOfSession) {
     //1. cloudinary에서 삭제하기 위해서는 먼저 publicid를 알아야 한다.
     const oldPost = await requestedCollection.findOne({

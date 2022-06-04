@@ -1,6 +1,5 @@
 import { getSession } from "next-auth/react";
 import { useSession } from "next-auth/react";
-import styles from "../../styles/Home.module.scss";
 import Link from "next/link";
 import { connectToDatabase } from "../../lib/db";
 import MainPage from "../layout/mainPage";
@@ -11,6 +10,7 @@ import {
   selectLoadDb,
 } from "../../store/features/loadDbSlice";
 import { useState } from "react";
+import styles from "../../styles/Home.module.scss";
 const CommuContent = ({ textedDiaries }) => {
   const [toggleLoadBtn, setToggleLoadBtn] = useState(false);
   const diaryies = JSON.parse(textedDiaries);
@@ -30,25 +30,23 @@ const CommuContent = ({ textedDiaries }) => {
     return result;
   }, []);
   const { data: session, status } = useSession();
-  console.log(session.user.userId);
   return (
     <div className={styles.mainContainer}>
-      {limitedDiaryPosts.map((diary) => (
-        <Link href={`/privatediaryCategory/${diary.postId}`}>
+      {limitedDiaryPosts.map((diary, i) => (
+        <Link href={`/privatediaryCategory/${diary.postId}`} key={i}>
           <a className={styles.dayContainer} custom-attribute={diary.postId}>
-            <div className={styles.timeLineStart}></div>
-            <div className={styles.timeLineCircle}></div>
-            <div className={styles.timeLine}></div>
-            <div className={styles.dateOfDiary}>{diary.postingDate}</div>
+            <div className={styles.dateOfDiary}>
+              <span>{diary.postingDate}</span>
+            </div>
+            <ImgPreview data={diary}></ImgPreview>
             <div className={styles.diary}>
-              <div>{diary.title}</div>
-              <ImgPreview data={diary}></ImgPreview>
+              <div className={styles.diaryTitle}>{diary.title}</div>
               <div className={styles.diaryContent}>{diary.content}</div>
             </div>
           </a>
         </Link>
       ))}
-      <button onClick={handleDiaryLoad}>
+      <button onClick={handleDiaryLoad} className={styles.loadMoreBtn}>
         {toggleLoadBtn ? "모든 글을 확인했어요" : "더보기"}
       </button>
     </div>
@@ -75,6 +73,7 @@ export const getServerSideProps = async (context) => {
     .find({
       userId: session.user.userId,
     })
+    .sort({ $natural: -1 })
     .toArray();
   const textedDiaries = JSON.stringify(diaries);
   return {

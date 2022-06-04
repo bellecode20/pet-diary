@@ -25,12 +25,6 @@
       label {
         margin: 1rem;
         cursor: pointer;
-        // display: inline-block;
-        // background-color: $primary-color;
-        // .thumbnail {
-        //   width: 100%;
-        //   height: auto;
-        // }
       }
       .whenPhoto {
         max-width: 100vw;
@@ -52,16 +46,23 @@
       display: flex;
       flex-direction: column;
       .title {
+        @include font-title-of-content;
         width: 100vw;
         height: 5vh;
         border-top: 1px solid $gray-color;
         border-bottom: 1px solid $gray-color;
         padding-left: $diary__timeLine-padding--left;
         padding-right: $diary__timeLine-padding--left;
+        display: flex;
+        // justify-content: center;
+        align-items: center;
+        // @include space-title-of-content;
       }
       .content {
+        @include font-content;
         width: 100vw;
         flex-grow: 1;
+        padding-top: 2rem;
         padding-left: $diary__timeLine-padding--left;
         padding-right: $diary__timeLine-padding--left;
         // background-color: $primary-color;

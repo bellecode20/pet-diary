@@ -46,8 +46,12 @@ const CarouselSlide = ({ data }) => {
       <div className={carousel.embla}>
         <div className={carousel.embla__viewport} ref={viewportRef}>
           <div className={carousel.embla__container}>
-            {data.map((img) => (
-              <div className={carousel.embla__slide} id={carousel.slideId}>
+            {data.map((img, i) => (
+              <div
+                className={carousel.embla__slide}
+                id={carousel.slideId}
+                key={i}
+              >
                 <Image
                   layout="fill"
                   objectFit="contain"
@@ -59,10 +63,10 @@ const CarouselSlide = ({ data }) => {
           </div>
         </div>
         <button className={carousel.embla__prev} onClick={scrollPrev}>
-          Prev
+          <Image src="/slide--left.svg" width="50" height="50"></Image>
         </button>
         <button className={carousel.embla__next} onClick={scrollNext}>
-          Next
+          <Image src="/slide--right.svg" width="50" height="50"></Image>
         </button>
         <div className={carousel.embla__dots}>
           {scrollSnaps.map((_, index) => (

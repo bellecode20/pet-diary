@@ -14,39 +14,51 @@
       padding-right: 8.2vw;
     }
     .owner {
+      @include font--gray--light;
       display: flex;
       justify-content: space-between;
     }
     .tag {
-      background-color: $main-black-color;
-      color: $white;
-      font-family: $font-familly--extraLight;
+      @include font-title-of-content;
+      @include space-title-of-content;
+      @include boxRadius;
       margin-top: 3vh;
-      padding: 0;
       margin-left: 8.2vw;
       margin-right: 8.2vw;
       border-radius: 1rem;
-      padding: 3px;
     }
     .social {
-      border-top: 2px solid black;
-      border-bottom: 2px solid black;
-      padding: 10px 8.2vw;
+      @include font-not-important;
+      margin-top: 1rem;
+      border-top: 3px solid black;
+      border-bottom: 3px solid black;
+      padding: 2px 8.2vw;
       display: flex;
       gap: 3rem;
     }
     .commentContainer {
-      border-bottom: 1px solid black;
+      @include font-not-important;
+      border-bottom: 2px solid black;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
       .commentTop {
+        font-family: establishRoomNo703OTF;
         display: flex;
         justify-content: space-between;
+        align-items: center;
         .commentDeleteBtn {
+          @include boxRadius;
           background-color: $primary-color;
+          border: 2px solid black;
         }
       }
       .commentTime {
+        @include font--gray--light;
         text-align: right;
       }
+    }
+    .content {
+      @include font-content;
     }
   }
 }
@@ -56,12 +68,14 @@
   right: 0;
   display: flex;
   padding: 0;
+  @include boxRadius;
   .commentInput {
     width: 100%;
     height: $small-input--height;
-    border: 3px solid $gray-color;
+    border-right: 4px solid black;
   }
   .commentBtn {
     background-color: $primary-color;
+    border-radius: 1rem;
   }
 }

@@ -9,55 +9,39 @@
   padding-top: 2rem;
   padding-left: $diary__timeLine-padding--left;
   padding-right: $diary__timeLine-padding--right;
-  // background-color: rgb(255, 230, 230);
   .dayContainer {
     @include font-content;
-    display: grid;
-    grid-template-columns: 13px auto;
-    grid-template-rows: 10px 13px auto;
-    column-gap: 10px;
+    @include boxRadius;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 3rem;
     cursor: pointer;
-    .timeLineStart {
-      grid-column: 1 / 2;
-      grid-row: 1 / 2;
-      width: 2px;
-      height: 100%;
-      align-self: center;
-      justify-self: center;
-      background-color: $main-black-color;
-    }
-    .timeLineCircle {
-      grid-column: 1 / 2;
-      grid-row: 2 / 3;
-      width: 10px;
-      height: 10px;
-      margin-top: 2px;
-      margin-bottom: 2px;
-      border-radius: 50%;
-      background-color: $primary-color;
-      align-self: center;
-      justify-self: center;
-    }
-    .timeLine {
-      grid-column: 1/2;
-      grid-row: 3 / 4;
-      align-self: center;
-      justify-self: center;
-      width: 2px;
-      height: 100%;
-      background-color: $main-black-color;
-    }
+    color: black;
     .dateOfDiary {
-      grid-column: 2/3;
-      grid-row: 2 / 3;
+      @include contentRadius;
+      z-index: 1;
+      position: absolute;
+      top: 2.5rem;
+      left: 2rem;
+      span {
+        background-color: $blue;
+        border-radius: 2rem;
+        border: 4px solid black;
+        padding: 0.5rem 1rem;
+      }
+      font-size: 2rem;
+      font-weight: 500;
     }
     .diary {
-      grid-column: 2/3;
-      grid-row: 3 / 4;
-      // border-left: 2px solid $main-black-color;
-      // padding-left: 3vw;
+      @include space-content;
       padding-bottom: 3vh;
+      .diaryTitle {
+        @include font-title-of-content;
+        margin-bottom: 2rem;
+      }
       .diaryContent {
+        @include font-content;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
@@ -66,20 +50,13 @@
       }
     }
   }
-  .dayContainer:hover {
-    background-color: #f9efdf;
+  .loadMoreBtn {
+    @include blockBtn;
   }
-  .addBtn {
-    background-color: $primary-color;
-    position: fixed;
-    right: 10px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    bottom: calc($tab-bar-height + 2vh);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 40px;
+  .dayContainer:hover {
+    background-color: $hover-color;
+  }
+  .loadMoreBtn:hover {
+    background-color: $hover-color;
   }
 }

@@ -5,8 +5,29 @@ const handler = async (req, res) => {
   const idOfSession = session.user.userId;
   const client = await connectToDatabase();
   const diaryCollection = client.db().collection("privateDiary");
+  console.log("updateDiary.js");
   if (req.body.userId === idOfSession) {
-    //첫번째 반복문은 텍스트 내용도 정한다.
+    // 텍스트만 수정한 경우이다.
+    if (req.body.onlyText) {
+      const result = await diaryCollection.updateOne(
+        {
+          postId: req.body.postId,
+        },
+        {
+          $set: {
+            postingDate: req.body.postingDate,
+            title: req.body.title,
+            content: req.body.content,
+          },
+        }
+      );
+      res
+        .status(200)
+        .json({ message: "Text Value that user requested is updated!" });
+      client.close();
+      return;
+    }
+    //사진도 수정한 경우이다. 이 때 첫번째 반복문은 텍스트 내용도 수정한다.
     if (req.body.forLoopIndex === 0) {
       const result = await diaryCollection.updateOne(
         {

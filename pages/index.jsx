@@ -5,7 +5,7 @@ import Link from "next/link";
 const Intro = () => {
   return (
     <div className={intro.wrapper}>
-      <img src="/logo.png" height="200px"></img>
+      <img src="/paw.svg" height="200px"></img>
       <p>고양이와 함께하는 하루하루.</p>
       <div className={intro.btns}>
         <Link href={`/settings/signup`}>

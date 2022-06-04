@@ -15,23 +15,32 @@
   }
   form {
     position: relative;
-    // margin-top: 10vw;
     padding: 5vw 10vw;
     input {
-      border: 2px solid $main-black-color;
+      border: 3px solid black;
       width: 100%;
-      border-radius: 6px;
-      margin-top: 3px;
+      border-radius: 7px;
+      margin-top: 2px;
+      margin-bottom: 1.5rem;
+      height: 3vh;
     }
     .upBtn {
       font-family: $font-familly--bold;
       height: 7vh;
       font-size: 2rem;
-      background-color: $primary-color;
+      background-color: $blue;
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
+      @include font-title;
+      // @include boxRadius;
+      border: 4px solid black;
+      border-top-right-radius: 2rem;
+      border-top-left-radius: 2rem;
+      font-family: $font-emphasis;
+      font-size: $font-regular--large;
+      background-color: $blue;
     }
   }
 }

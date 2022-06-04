@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 import MainNav from "../components/mainNav";
 import overall from "../../styles/layout/mainPage.module.scss";
 import { useRouter } from "next/router";
-
+import Image from "next/image";
 const MainPage = ({ title, main, urlToPost }) => {
   const router = useRouter();
   const goToPost = () => {
@@ -15,7 +15,12 @@ const MainPage = ({ title, main, urlToPost }) => {
       {main}
       {urlToPost && (
         <button className={overall.addBtn} onClick={goToPost}>
-          +
+          <img
+            src="/posting.png"
+            width="60%"
+            height="60%"
+            className={overall.addBtnLogo}
+          ></img>
         </button>
       )}
       <MainNav></MainNav>

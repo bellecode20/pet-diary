@@ -102,9 +102,7 @@ const CommuPostingForm = () => {
         id="postingCommu"
         onSubmit={postCommu}
       >
-        <div className={form.dateForm}>
-          <p className={form.date}>커뮤니티 글 쓰기</p>
-        </div>
+        <div className={form.dateForm}></div>
         {preview && <CarouselSlide data={preview}></CarouselSlide>}
         <div className={form.photoForm}>
           <label

@@ -4,8 +4,9 @@
   max-width: 100%;
   min-height: 30vh;
   max-height: 50vh;
-  margin: 2rem 0 1rem 0;
+  margin: 0.5rem;
   display: flex;
+  border-bottom: 4px solid black;
   .photo {
     object-position: left top;
   }

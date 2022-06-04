@@ -1,15 +1,16 @@
 import { connectToDatabase } from "../../lib/db";
 import MainPage from "../layout/mainPage";
 import Link from "next/link";
-import mainPage from "../../styles/layout/mainPage.module.scss";
 import ImgPreview from "../components/imgPreview";
 import { wrapper } from "../../store/store";
+import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectLoadDb,
   changeCommuLimit,
 } from "../../store/features/loadDbSlice";
 import { useState } from "react";
+import mainPage from "../../styles/layout/mainPage.module.scss";
 const Content = ({ textedCommunity }) => {
   const [toggleLoadBtn, setToggleLoadBtn] = useState(false);
   const communityPosts = JSON.parse(textedCommunity);
@@ -31,11 +32,11 @@ const Content = ({ textedCommunity }) => {
   }, []);
   return (
     <div className={mainPage.commuMainContainer}>
-      {limitedCommunityPosts.map((el) => (
-        <Link href={`/communityCategory/${el.commuPostId}`}>
+      {limitedCommunityPosts.map((el, i) => (
+        <Link href={`/communityCategory/${el.commuPostId}`} key={i}>
           <div className={mainPage.postContainer}>
             <p className={mainPage.isUpdated}> {el.isUpdated && "(수정됨)"}</p>
-            <p className={mainPage.tag}>{el.title}</p>
+            <p className={mainPage.title}>{el.title}</p>
             <ImgPreview data={el}></ImgPreview>
             <p className={mainPage.content}>{el.content}</p>
             <div className={mainPage.owner}>
@@ -45,17 +46,18 @@ const Content = ({ textedCommunity }) => {
               </p>
             </div>
             <div className={mainPage.social}>
-              <span className={mainPage.like}>
+              {/* <span className={mainPage.like}>
                 츄르 {el.likeIds.length >= 0 && el.likeIds.length}
-              </span>
+              </span> */}
               <span className={mainPage.comment}>
-                댓글 {el.commentIds.length >= 0 && el.commentIds.length}
+                <Image src="/comment.svg" width="30" height="30"></Image>
+                {el.commentIds.length >= 0 && el.commentIds.length}
               </span>
             </div>
           </div>
         </Link>
       ))}
-      <button onClick={handleCommuLoad}>
+      <button onClick={handleCommuLoad} className={mainPage.loadMoreBtn}>
         {toggleLoadBtn ? "모든 글을 확인했어요" : "더보기"}
       </button>
     </div>

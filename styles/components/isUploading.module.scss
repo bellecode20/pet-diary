@@ -9,6 +9,8 @@
   bottom: 0;
   background-color: $opacity-black-color;
   .modal {
+    font-family: $font-emphasis;
+    font-size: $font-regular;
     position: absolute;
     height: 30vh;
     width: 80vw;
@@ -22,37 +24,36 @@
     align-items: center;
     gap: 2vh;
     .title {
-      font-family: $font-familly--semiBold;
+      font-size: $font-regular--large;
     }
     .button {
       @include bottomFullPosition;
       @include bkBackWtFont;
       height: 20%;
-      font-family: $font-familly--light;
     }
     .LeftHalfButton {
       @include leftPosition;
       @include bkBackWtFont;
       height: 20%;
-      font-family: $font-familly--semiBold;
     }
     .RightHalfButton {
       @include rightPosition;
       @include primaryBackBkFont;
       height: 20%;
-      font-family: $font-familly--semiBold;
     }
   }
   .loadingState {
     @include font-content;
+    font-family: $font-emphasis;
+    font-size: $font-regular--large;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: white;
     background-color: black;
-    font-size: $font-regular;
     padding: 2rem;
+    border-radius: 4rem;
     text-align: center;
   }
 }

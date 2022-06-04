@@ -40,19 +40,19 @@ const SettingsContent = () => {
         <p className={settings.menuTitle}>계정 관리</p>
         <div className={settings.accountList}>
           <div className={settings.accountItem} onClick={logoutHandler}>
-            <img src="/logo.png" height="20px"></img>
-            <p>로그아웃</p>
+            {/* <img src="/bullet-point.svg" width="50px"></img> */}
+            <p>- 로그아웃</p>
           </div>
           <Link href="/settings/changePwForm" passHref>
             <a className={settings.accountItem}>
-              <img src="/logo.png" height="20px"></img>
-              <p>비밀번호 변경</p>
+              {/* <img src="/bullet-point.svg" width="50px"></img> */}
+              <p>- 비밀번호 변경</p>
             </a>
           </Link>
           <Link href="/settings/withdrawalForm">
             <div className={settings.accountItem}>
-              <img src="/logo.png" height="20px"></img>
-              <p>탈퇴하기</p>
+              {/* <img src="/bullet-point.svg" width="50px"></img> */}
+              <p>- 탈퇴하기</p>
             </div>
           </Link>
         </div>

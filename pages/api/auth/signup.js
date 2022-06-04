@@ -20,7 +20,7 @@ async function handler(req, res) {
     });
     return;
   }
-  let onlyEngAndNum = /^[A-Za-z][A-Za-z0-9]*$/;
+  let onlyEngAndNum = /^[A-Za-z0-9]*$/;
   if (!onlyEngAndNum.test(userId) || !onlyEngAndNum.test(userPw)) {
     res.status(422).json({
       message: "no",
@@ -37,13 +37,11 @@ async function handler(req, res) {
   const existingUser = await usersCollection.findOne({ userId: userId });
   const hashedPassword = await hashPassword(userPw); //비밀번호를 해쉬화한다.
   if (existingUser) {
-    res
-      .status(422)
-      .json({
-        message: "User exists already!",
-        status: 422,
-        contentStatus: "003",
-      });
+    res.status(422).json({
+      message: "User exists already!",
+      status: 422,
+      contentStatus: "003",
+    });
     client.close();
     return;
   }

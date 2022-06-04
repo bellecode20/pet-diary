@@ -1,15 +1,26 @@
-$font-familly--regular: Hahmlet-Regular;
-$font-familly--thin: Hahmlet-Thin;
-$font-familly--extraLight: Hahmlet-ExtraLight;
-$font-familly--light: Hahmlet-Light;
-$font-familly--medium: Hahmlet-Medium;
-$font-familly--semiBold: Hahmlet-SemiBold;
-$font-familly--bold: Hahmlet-Bold;
-$font-familly--extraBold: Hahmlet-ExtraBold;
-$font-familly--black: Hahmlet-Black;
+@font-face {
+  font-family: "establishRoomNo703OTF";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/establishRoomNo703OTF.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
+$font-emphasis: establishRoomNo703OTF;
+$font-familly--regular: Pretendard;
+$font-familly--thin: Pretendard;
+$font-familly--extraLight: Pretendard;
+$font-familly--light: Pretendard;
+$font-familly--medium: Pretendard;
+$font-familly--medium: Pretendard;
+$font-familly--semiBold: Pretendard;
+$font-familly--bold: Pretendard;
+$font-familly--extraBold: Pretendard;
+$font-familly--black: Pretendard;
 
 $font-small: 1.2rem;
-$font-regular--small: 1.6rem;
-$font-regular: 1.8rem;
+$font-regurlar--smaller: 1.6rem;
+$font-regular--small: 1.8rem;
+$font-regular: 2rem;
 $font-regular--large: 2.4rem;
 $font-largest: 4.4rem;

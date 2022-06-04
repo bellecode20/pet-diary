@@ -31,7 +31,7 @@ const SuccessModal = ({ children }) => {
   return (
     <div className={loading.wrapper}>
       <div className={loading.modal}>
-        <img src="/logo.png" height="100px"></img>
+        <img src="/cat--success.svg" height="50%"></img>
         <p className={loading.title}>완료!</p>
         <button className={loading.button} onClick={handleClose}>
           닫기

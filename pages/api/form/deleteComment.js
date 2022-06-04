@@ -11,7 +11,7 @@ const deleteComment = async (req, res) => {
   const thisComment = await commentCollection.findOne({
     commentPostId: req.body.commentPostId,
   });
-
+  console.log(thisComment);
   if (thisComment.userId === idOfSession) {
     const result = await commentCollection.deleteOne({
       commentPostId: req.body.commentPostId,

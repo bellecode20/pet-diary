@@ -11,7 +11,7 @@ import { changeCategory, modalIsShown } from "../../store/features/modalSlice";
 import DetailDiaryNav from "../components/detailDiaryNav";
 import CarouselSlide from "../components/carouselSlide";
 import post from "../../styles/layout/post.module.scss";
-
+import Image from "next/image";
 const CommuIndex = ({ textedCommunity, textedComments }) => {
   const modal = useSelector((state) => state.modal.isShown);
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const CommuIndex = ({ textedCommunity, textedComments }) => {
   const deleteComment = async (e) => {
     let deleteInfo = {
       commuPostId: commuPost.commuPostId,
-      commentPostId: e.target.getAttribute("data-remove"),
+      commentPostId: e.currentTarget.getAttribute("data-remove"),
     };
     const deleteResult = await requestPostToMongodb(
       "/api/form/deleteComment",
@@ -83,31 +83,36 @@ const CommuIndex = ({ textedCommunity, textedComments }) => {
           </p>
         </div>
         <div className={post.social}>
-          <span className={post.like}>
+          {/* <span className={post.like}>
             {commuPost.likeIds.length === 0 ? "츄르" : commuPost.LikeIds.length}
-          </span>
+          </span> */}
           <span className={post.comment}>
-            {commuPost.commentIds.length === 0
-              ? "댓글"
-              : `댓글 ${commuPost.commentIds.length}`}
+            {commuPost.commentIds.length === 0 ? (
+              <Image src="/comment.svg" width="30" height="30"></Image>
+            ) : (
+              <>
+                <Image src="/comment.svg" width="30" height="30"></Image>
+                {commuPost.commentIds.length}
+              </>
+            )}
           </span>
         </div>
         {/* </div> */}
-        {comments.map((el) => (
-          <div className={post.commentContainer}>
+        {comments.map((el, i) => (
+          <div className={post.commentContainer} key={i}>
             <div className={post.commentTop}>
-              <p>{el.userId}</p>
+              <p className={post.userId}>{el.userId}</p>
               {el.userId === thisUserId && (
                 <button
                   data-remove={el.commentPostId}
                   className={post.commentDeleteBtn}
                   onClick={deleteComment}
                 >
-                  삭제
+                  <Image src="/delete.svg" width="25" height="25"></Image>
                 </button>
               )}
             </div>
-            <p>{el.content}</p>
+            <p className={post.content}>{el.content}</p>
             <p className={post.commentTime}>
               {el.timestamp.month}. {el.timestamp.date}. {el.timestamp.hour}:
               {el.timestamp.minute}

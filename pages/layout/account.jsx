@@ -3,13 +3,12 @@ import sign from "../../styles/pages/signUp.module.scss";
 import ModalContainer from "../../components/ModalContainer";
 const Account = ({ main }) => {
   const modal = useSelector((state) => state.modal.isShown);
-  console.log(modal);
   return (
     <>
       <div className={sign.wrapper}>
         <img
           className={sign.logo}
-          src="/logo.png"
+          src="/cat--success.svg"
           height="100px"
           width="100px"
         ></img>

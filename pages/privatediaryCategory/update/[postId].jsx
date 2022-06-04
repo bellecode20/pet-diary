@@ -12,7 +12,7 @@ import {
   changeContentText,
   modalIsShown,
 } from "../../../store/features/modalSlice";
-
+import ModalContainer from "../../../components/ModalContainer";
 const updatingForm = ({ textedDiary }) => {
   const date = useRef();
   const title = useRef();
@@ -58,16 +58,15 @@ const updatingForm = ({ textedDiary }) => {
     const fileInput = Array.from(form.elements).find(
       ({ name }) => name === "newPhoto[]"
     );
-    if (
-      titleValue === "" ||
-      contentValue === "" ||
-      fileInput.files.length < 1
-    ) {
+    console.log(modal);
+    if (titleValue === "" || contentValue === "") {
       dispatch(changeCategory("ErrorCloseModal"));
       dispatch(changeContentText("모든 항목을 채워주세요"));
       return;
     }
     if (fileInput.files.length > 0) {
+      // return;
+      console.log("hh");
       let postInfoForUpdating = {
         userId: postInfo.userId,
         postId: postInfo.postId,
@@ -88,6 +87,7 @@ const updatingForm = ({ textedDiary }) => {
           fileInput.files[i],
           "diary-uploads"
         );
+        console.log("requestPostToCloudinary", data);
         //mongodb에 사진url과, 작성한 글의 id, form의 텍스트 내용들, 반복문을 몇번째 도는 중인지 함께 보낸다.
         let updateDiaryContent = {
           userId: postInfo.userId,
@@ -105,6 +105,21 @@ const updatingForm = ({ textedDiary }) => {
         );
         console.log("postResult", postResult);
       }
+    } else {
+      //사진은 수정하지 않은 경우이다.
+      let updateDiaryContent = {
+        userId: postInfo.userId,
+        postId: postInfo.postId,
+        postingDate: dateValue,
+        title: titleValue,
+        content: contentValue,
+        onlyText: true,
+      };
+      const postResult = await requestPostToMongodb(
+        "/api/form/updateDiary",
+        updateDiaryContent
+      );
+      console.log("postResult", postResult);
     }
     dispatch(changeCategory("SuccessModal"));
   };
@@ -133,7 +148,9 @@ const updatingForm = ({ textedDiary }) => {
           <label
             htmlFor="diary__form__photo"
             className={preview ? form.whenPhoto : form.noPhoto}
-          ></label>
+          >
+            + 사진
+          </label>
           <input
             type="file"
             multiple
@@ -163,6 +180,7 @@ const updatingForm = ({ textedDiary }) => {
           ></textarea>
         </div>
       </form>
+      {modal && <ModalContainer></ModalContainer>}
     </div>
   );
 };

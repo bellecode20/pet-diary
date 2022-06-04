@@ -7,14 +7,17 @@
   top: 0;
   left: 0;
   right: 0;
-  background-color: $main-black-color;
+  background-color: $blue;
+  // background-color: $main-black-color;
   display: flex;
   justify-content: space-between;
+  border-bottom: 4px solid black;
   .basic {
     @include nav__button--bold;
     flex-basis: 15vw;
   }
   .hiddenMenu {
+    @include font-menu;
     position: absolute;
     top: $nav--upload;
     right: 0;
@@ -23,13 +26,14 @@
     width: 10rem;
   }
   .updateBtn {
-    font-family: $font-familly--light;
-    color: $white;
-    background-color: $main-black-color;
+    border-left: 4px solid black;
+    border-right: 4px solid black;
+    border-radius: 3px;
   }
   .deleteBtn {
-    font-family: $font-familly--light;
     background-color: $primary-color;
+    border: 4px solid black;
+    border-radius: 3px;
   }
   :hover {
     background-color: $white;

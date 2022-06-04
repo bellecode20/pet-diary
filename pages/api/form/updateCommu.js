@@ -6,7 +6,27 @@ const handler = async (req, res) => {
   const client = await connectToDatabase();
   const commuCollection = client.db().collection("community");
   if (req.body.userId === idOfSession) {
-    //첫번째 반복문은 텍스트 내용도 정한다.
+    // 텍스트만 수정한 경우이다.
+    if (req.body.onlyText) {
+      const result = await commuCollection.updateOne(
+        {
+          commuPostId: req.body.commuPostId,
+        },
+        {
+          $set: {
+            title: req.body.title,
+            content: req.body.content,
+            isUpdated: "YES",
+          },
+        }
+      );
+      res
+        .status(200)
+        .json({ message: "Text Value that user requested is updated!" });
+      client.close();
+      return;
+    }
+    //사진은 수정한 경우이다. 이 때 첫번째 반복문은 텍스트 내용도 수정한다.
     if (req.body.forLoopIndex === 0) {
       console.log(`req.body.forLoopIndex if`);
       console.log(req.body.forLoopIndex);
@@ -32,7 +52,7 @@ const handler = async (req, res) => {
     } else {
       console.log(`req.body.forLoopIndex else`);
       console.log(req.body.forLoopIndex);
-      //첫번째 반복문이 아니라면 사진만 배열에 추가한다.
+      //첫번째 반복문이 아니라면 텍스트는 수정하지 않고 사진만 배열에 추가한다.
       const result = await commuCollection.updateOne(
         {
           commuPostId: req.body.commuPostId,

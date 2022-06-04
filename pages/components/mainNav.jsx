@@ -5,19 +5,17 @@ const MainNav = () => {
     <div className={navi.tabBar}>
       <Link href="/communityCategory" passHref>
         <a className={navi.menu}>
-          <img src="/diary_cat_01.jpg" className={navi.menuLogo}></img>
-          <p>커뮤니티</p>
+          <img src="/community.svg" className={navi.menuLogo}></img>
         </a>
       </Link>
       <Link href="/privatediaryCategory" passHref>
         <a className={navi.menu}>
-          <img src="/diary_cat_01.jpg" className={navi.menuBigLogo}></img>
+          <img src="/paw.svg" className={navi.menuBigLogo}></img>
         </a>
       </Link>
       <Link href="/settings" passHref>
         <a className={navi.menu}>
-          <img src="/diary_cat_01.jpg" className={navi.menuLogo}></img>
-          <p>설정</p>
+          <img src="/setting.svg" className={navi.menuLogo}></img>
         </a>
       </Link>
     </div>
