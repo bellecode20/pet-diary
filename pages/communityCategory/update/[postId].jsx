@@ -13,7 +13,7 @@ import {
   changeContentText,
 } from "../../../store/features/modalSlice";
 import CarouselSlide from "../../components/carouselSlide";
-const updatingCommu = ({ textedCommunity }) => {
+const UpdatingCommu = ({ textedCommunity }) => {
   const commuPost = JSON.parse(textedCommunity);
   const [titleValue, setTitleValue] = useState(commuPost.title);
   const [contentValue, setContentValue] = useState(commuPost.content);
@@ -180,4 +180,4 @@ export const getServerSideProps = async (context) => {
     props: { textedCommunity },
   };
 };
-export default updatingCommu;
+export default UpdatingCommu;

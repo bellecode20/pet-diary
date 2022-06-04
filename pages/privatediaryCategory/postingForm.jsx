@@ -12,7 +12,7 @@ import {
   changeCategory,
   modalIsShown,
 } from "../../store/features/modalSlice";
-const postingForm = () => {
+const PostingForm = () => {
   const date = useRef();
   const title = useRef();
   const content = useRef();
@@ -151,4 +151,4 @@ const postingForm = () => {
   );
 };
 
-export default postingForm;
+export default PostingForm;

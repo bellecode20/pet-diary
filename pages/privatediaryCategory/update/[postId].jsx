@@ -13,7 +13,7 @@ import {
   modalIsShown,
 } from "../../../store/features/modalSlice";
 import ModalContainer from "../../../components/ModalContainer";
-const updatingForm = ({ textedDiary }) => {
+const UpdatingForm = ({ textedDiary }) => {
   const date = useRef();
   const title = useRef();
   const content = useRef();
@@ -197,4 +197,4 @@ export const getServerSideProps = async (context) => {
     props: { textedDiary },
   };
 };
-export default updatingForm;
+export default UpdatingForm;
