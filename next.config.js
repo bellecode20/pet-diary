@@ -5,6 +5,8 @@ const nextConfig = {
 };
 module.exports = {
   images: {
+    loader: "akamai",
+    path: "",
     domains: ["res.cloudinary.com"],
   },
   nextConfig,
