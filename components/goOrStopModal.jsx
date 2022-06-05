@@ -1,8 +1,6 @@
 import loading from "../styles/components/isUploading.module.scss";
 import { useDispatch } from "react-redux";
 import { modalIsShown } from "../store/features/modalSlice";
-import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
 
 const GoOrStopModal = ({ titleText, yesText, yesAction }) => {
   const dispatch = useDispatch();
