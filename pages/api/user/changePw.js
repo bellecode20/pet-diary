@@ -9,7 +9,9 @@ const handler = async (req, res) => {
   //2. 인증된 유저인지.
   const session = await getSession({ req: req });
   if (!session) {
-    res.status(401).json({ message: "Not authenticated!" });
+    res
+      .status(401)
+      .json({ message: "Not authenticated!", contentStatus: "005" });
     return;
   }
   //아이디 찾기
@@ -20,14 +22,16 @@ const handler = async (req, res) => {
   const userCollection = client.db().collection("users");
   const user = await userCollection.findOne({ userId: userId });
   if (!user) {
-    res.status(404).json({ message: "User not found." });
+    res.status(404).json({ message: "User not found.", contentStatus: "006" });
     client.close();
     return;
   }
   const currentPwInDb = user.userPw;
   const pwsAreEqual = await verifyPassword(oldPw, currentPwInDb);
   if (!pwsAreEqual) {
-    res.status(403).json({ message: "Invalid password." });
+    res
+      .status(403)
+      .json({ message: "Invalid password.", contentStatus: "007" });
     client.close();
     return;
   }
@@ -37,6 +41,6 @@ const handler = async (req, res) => {
     { $set: { userPw: hashedPassword } }
   );
   client.close();
-  res.status(200).json({ message: "Pw updated!" });
+  res.status(200).json({ message: "Pw updated!", contentStatus: "200" });
 };
 export default handler;

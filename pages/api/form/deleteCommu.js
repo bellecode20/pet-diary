@@ -24,7 +24,7 @@ const deleteCommu = async (req, res) => {
       thisCommu.photoPublicId,
       { resource_type: "image" },
       (result, error) => {
-        console.log(result, error);
+        return console.log(result, error);
       }
     );
   }
