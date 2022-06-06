@@ -35,5 +35,5 @@ yarn-error.log*
 *.tsbuildinfo
 
 #custom
-/lib/db.js
 .env
+.env.local

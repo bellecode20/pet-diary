@@ -22,20 +22,6 @@ const SettingsContent = () => {
         <p className={settings.menuTitle}>아이디</p>
         <p className={settings.idOfUser}>{session.user.userId}</p>
       </div>
-      {/* <div className={settings.history}>
-        <div>
-          <img src="/logo.png" height="50px"></img>
-          <p>작성 댓글</p>
-        </div>
-        <div>
-          <img src="/logo.png" height="50px"></img>
-          <p>작성 게시글</p>
-        </div>
-        <div>
-          <img src="/logo.png" height="50px"></img>
-          <p>츄르 목록</p>
-        </div>
-      </div> */}
       <div className={settings.account}>
         <p className={settings.menuTitle}>계정 관리</p>
         <div className={settings.accountList}>
