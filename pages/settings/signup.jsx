@@ -3,20 +3,18 @@ import { useRef, useState } from "react";
 import { getSession, signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Account from "../layout/account";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   modalIsShown,
   changeCategory,
   changeContentText,
 } from "../../store/features/modalSlice";
-import ModalContainer from "../../components/ModalContainer";
 const SignUpContent = () => {
   const [isLogin, setIsLogin] = useState(true);
   const idRef = useRef();
   const pwRef = useRef();
   const router = useRouter();
   const dispatch = useDispatch();
-  // const modal = useSelector((state) => state.modal.isShown);
   dispatch(changeCategory("ErrorCloseModal"));
   const { data: session, status } = useSession();
   const switchAuthMode = () => {
@@ -65,12 +63,7 @@ const SignUpContent = () => {
     const enteredId = idRef.current.value;
     const enteredPw = pwRef.current.value;
     let engAndNum = /^[A-Za-z0-9]*$/;
-    if (engAndNum.test(enteredId)) console.log(enteredId);
-    if (engAndNum.test(enteredId)) console.log("enteredId");
-    if (engAndNum.test(enteredPw)) console.log(enteredPw);
-    if (engAndNum.test(enteredPw)) console.log("enteredPw");
     if (!engAndNum.test(enteredId) || !engAndNum.test(enteredPw)) {
-      console.log("wreogre");
       dispatch(changeCategory("ErrorCloseModal"));
       dispatch(changeContentText("영어와 숫자만 입력해주세요"));
       dispatch(modalIsShown(true));
@@ -85,7 +78,6 @@ const SignUpContent = () => {
       }).catch((e) => {
         console.error(e);
       });
-      console.log(result);
       if (result.error) {
         console.error(result.error);
         dispatch(modalIsShown(true));

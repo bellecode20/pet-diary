@@ -34,7 +34,6 @@ const CommuIndex = ({ textedCommunity, textedComments }) => {
       "/api/form/deleteComment",
       deleteInfo
     );
-    console.log("deleteComment", deleteResult);
     dispatch(modalIsShown(true));
     dispatch(changeCategory("LoadingModal"));
     forceReload();
@@ -49,7 +48,6 @@ const CommuIndex = ({ textedCommunity, textedComments }) => {
       deleteInfo
     );
     dispatch(changeCategory("SuccessModal"));
-    console.log("deleteCommu", deleteResult);
   };
   const submitComments = async (e) => {
     e.preventDefault();

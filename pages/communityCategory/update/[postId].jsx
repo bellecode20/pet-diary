@@ -71,7 +71,6 @@ const UpdatingCommu = ({ textedCommunity }) => {
           "/api/form/updateCommu",
           updateCommuToMongo
         );
-        console.log("postResult", postResult);
         dispatch(modalIsShown(true));
       }
     } else {

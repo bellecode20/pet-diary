@@ -19,14 +19,11 @@ const Post = ({ textedDiary }) => {
       postId: privateDiary.postId,
       photoPublicId: privateDiary.photoPublicId,
     };
-    console.log(postInfo);
     const result = await requestPostToMongodb(
       "../api/form/deleteDiary",
       postInfo
     );
     dispatch(changeCategory("SuccessModal"));
-    console.log(`result`);
-    console.log(result);
   };
 
   return (

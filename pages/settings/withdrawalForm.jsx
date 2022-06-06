@@ -13,10 +13,7 @@ import {
 import ModalContainer from "../../components/ModalContainer";
 const WithDrawalFormContent = () => {
   const modal = useSelector((state) => state.modal.isShown);
-  console.log(modal);
   const oldPwRef = useRef();
-  const newPwRef = useRef();
-  const router = useRouter();
   const dispatch = useDispatch();
   dispatch(changeCategory("ErrorCloseModal"));
   async function requestWithdrawal(enteredOldPw) {
@@ -48,8 +45,6 @@ const WithDrawalFormContent = () => {
           changeContentText("유저를 찾을 수 없어요. 로그인을 다시 해주세요")
         );
       } else if (data.contentStatus === "007") {
-        console.log("007");
-        console.log(modal);
         dispatch(modalIsShown(true));
         dispatch(changeContentText("비밀번호가 일치하지 않아요"));
       } else if (data.contentStatus === "008") {
@@ -58,8 +53,6 @@ const WithDrawalFormContent = () => {
         signOut();
       }
     }
-    console.log(`data withdrawal`);
-    console.log(data);
   }
   async function submitHandler(e) {
     e.preventDefault();

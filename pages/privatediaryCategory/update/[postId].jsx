@@ -58,15 +58,12 @@ const UpdatingForm = ({ textedDiary }) => {
     const fileInput = Array.from(form.elements).find(
       ({ name }) => name === "newPhoto[]"
     );
-    console.log(modal);
     if (titleValue === "" || contentValue === "") {
       dispatch(changeCategory("ErrorCloseModal"));
       dispatch(changeContentText("모든 항목을 채워주세요"));
       return;
     }
     if (fileInput.files.length > 0) {
-      // return;
-      console.log("hh");
       let postInfoForUpdating = {
         userId: postInfo.userId,
         postId: postInfo.postId,
@@ -87,7 +84,6 @@ const UpdatingForm = ({ textedDiary }) => {
           fileInput.files[i],
           "diary-uploads"
         );
-        console.log("requestPostToCloudinary", data);
         //mongodb에 사진url과, 작성한 글의 id, form의 텍스트 내용들, 반복문을 몇번째 도는 중인지 함께 보낸다.
         let updateDiaryContent = {
           userId: postInfo.userId,
@@ -103,7 +99,6 @@ const UpdatingForm = ({ textedDiary }) => {
           "/api/form/updateDiary",
           updateDiaryContent
         );
-        console.log("postResult", postResult);
       }
     } else {
       //사진은 수정하지 않은 경우이다.
@@ -119,7 +114,6 @@ const UpdatingForm = ({ textedDiary }) => {
         "/api/form/updateDiary",
         updateDiaryContent
       );
-      console.log("postResult", postResult);
     }
     dispatch(changeCategory("SuccessModal"));
   };

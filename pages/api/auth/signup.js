@@ -1,5 +1,5 @@
 import { hashPassword } from "../../../lib/auth";
-import { MongoClient } from "mongodb";
+import { connectToDatabase } from "../../../lib/db";
 async function handler(req, res) {
   if (req.method !== "POST") {
     return;
@@ -29,9 +29,7 @@ async function handler(req, res) {
     });
     return;
   }
-  const client = await MongoClient.connect(
-    "mongodb+srv://admin:miny9501@cluster0.roklt.mongodb.net/diary?retryWrites=true&w=majority"
-  );
+  const client = await connectToDatabase();
   const db = client.db();
   const usersCollection = db.collection("users");
   const existingUser = await usersCollection.findOne({ userId: userId });

@@ -61,7 +61,6 @@ const PostingForm = () => {
       enteredContent === "" ||
       fileInput.files.length < 1
     ) {
-      console.log("nono");
       dispatch(changeCategory("ErrorCloseModal"));
       dispatch(changeContentText("모든 항목을 채워주세요"));
       return;
@@ -83,7 +82,6 @@ const PostingForm = () => {
           "/api/form/postDiary",
           postContent
         );
-        console.log("data", data);
       }
     } else {
       const postResult = await requestPostToMongodb(

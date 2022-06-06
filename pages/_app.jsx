@@ -1,5 +1,4 @@
 import "../styles/globals.scss";
-// import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import { store, wrapper } from "../store/store";
 import { Provider } from "react-redux";
@@ -15,16 +14,5 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
     </SessionProvider>
   );
 }
-// export default MyApp;
 
 export default wrapper.withRedux(MyApp);
-
-// import "../styles/globals.scss";
-// import type { AppProps } from "next/app";
-// import { SessionProvider } from "next-auth/react";
-
-// function MyApp({ Component, pageProps }: AppProps) {
-//   return <Component {...pageProps} />;
-// }
-
-// export default MyApp;

@@ -1,11 +1,9 @@
 import sign from "../../styles/pages/signUp.module.scss";
-import { useRef, useState } from "react";
-import { signIn, getSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import { useRef } from "react";
 import Account from "../layout/account";
 import ModalContainer from "../../components/ModalContainer";
 import { useSelector, useDispatch } from "react-redux";
-import { changeCategory, modalIsShown } from "../../store/features/modalSlice";
+import { modalIsShown } from "../../store/features/modalSlice";
 const ChangePwFormContent = () => {
   const dispatch = useDispatch();
   const modal = useSelector((state) => state.modal.isShown);
@@ -24,7 +22,6 @@ const ChangePwFormContent = () => {
       },
     });
     const data = await response.json();
-    console.log(data);
   }
   async function submitHandler(e) {
     e.preventDefault();
@@ -32,9 +29,6 @@ const ChangePwFormContent = () => {
     const enteredNewPw = newPwRef.current.value;
     const result = await changePw(enteredOldPw, enteredNewPw);
     dispatch(modalIsShown(true));
-    // dispatch(changeCategory("SuccessModal"));
-    console.log(`result`);
-    console.log(result);
   }
   return (
     <>
