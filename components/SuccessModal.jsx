@@ -31,7 +31,11 @@ const SuccessModal = ({ children }) => {
   return (
     <div className={loading.wrapper}>
       <div className={loading.modal}>
-        <img src="/cat--success.svg" height="50%"></img>
+        <img
+          src="/cat--success.svg"
+          height="50%"
+          alt="기뻐하는 고양이 일러스트"
+        ></img>
         <p className={loading.title}>완료!</p>
         <button className={loading.button} onClick={handleClose}>
           닫기

@@ -53,20 +53,31 @@ const CarouselSlide = ({ data }) => {
                 key={i}
               >
                 <Image
+                  src={img}
+                  alt="선택한 사진의 썸네일"
                   layout="fill"
                   objectFit="contain"
                   className={carousel.embla__slide__img}
-                  src={img}
                 ></Image>
               </div>
             ))}
           </div>
         </div>
         <button className={carousel.embla__prev} onClick={scrollPrev}>
-          <Image src="/slide--left.svg" width="50" height="50"></Image>
+          <Image
+            src="/slide--left.svg"
+            alt="이전 썸네일 보기 버튼"
+            width="50"
+            height="50"
+          ></Image>
         </button>
         <button className={carousel.embla__next} onClick={scrollNext}>
-          <Image src="/slide--right.svg" width="50" height="50"></Image>
+          <Image
+            src="/slide--right.svg"
+            alt="다음 썸네일 보기 버튼"
+            width="50"
+            height="50"
+          ></Image>
         </button>
         <div className={carousel.embla__dots}>
           {scrollSnaps.map((_, index) => (

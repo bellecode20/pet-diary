@@ -1,4 +1,4 @@
-import { getSession, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { connectToDatabase } from "../../lib/db";
 import { useRef } from "react";
@@ -81,12 +81,14 @@ const CommuIndex = ({ textedCommunity, textedComments }) => {
           </p>
         </div>
         <div className={post.social}>
-          {/* <span className={post.like}>
-            {commuPost.likeIds.length === 0 ? "츄르" : commuPost.LikeIds.length}
-          </span> */}
           <span className={post.comment}>
             {commuPost.commentIds.length === 0 ? (
-              <Image src="/comment.svg" width="30" height="30"></Image>
+              <Image
+                src="/comment.svg"
+                alt="풍선모양의 댓글 로고"
+                width="30"
+                height="30"
+              ></Image>
             ) : (
               <>
                 <Image src="/comment.svg" width="30" height="30"></Image>
@@ -95,7 +97,6 @@ const CommuIndex = ({ textedCommunity, textedComments }) => {
             )}
           </span>
         </div>
-        {/* </div> */}
         {comments.map((el, i) => (
           <div className={post.commentContainer} key={i}>
             <div className={post.commentTop}>
@@ -106,7 +107,12 @@ const CommuIndex = ({ textedCommunity, textedComments }) => {
                   className={post.commentDeleteBtn}
                   onClick={deleteComment}
                 >
-                  <Image src="/delete.svg" width="25" height="25"></Image>
+                  <Image
+                    src="/delete.svg"
+                    alt="삭제 버튼"
+                    width="25"
+                    height="25"
+                  ></Image>
                 </button>
               )}
             </div>

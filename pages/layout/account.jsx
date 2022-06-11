@@ -11,6 +11,7 @@ const Account = ({ main }) => {
           src="/cat--success.svg"
           height="100px"
           width="100px"
+          alt="기뻐하는 고양이 일러스트"
         ></img>
         {main}
       </div>

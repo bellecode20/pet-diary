@@ -12,15 +12,17 @@ const MainPage = ({ title, main, urlToPost }) => {
   return (
     <div className={overall.wrapper}>
       <div className={overall.header}>{title}</div>
-      {main}
+      <div className={overall.mainContainer}>{main}</div>
       {urlToPost && (
         <button className={overall.addBtn} onClick={goToPost}>
-          <img
-            src="/posting.png"
-            width="60%"
-            height="60%"
-            className={overall.addBtnLogo}
-          ></img>
+          <div className={overall.imageContainer}>
+            <Image
+              src="/posting.png"
+              alt="글 쓰기 버튼"
+              layout="fill"
+              className={overall.addBtnLogo}
+            ></Image>
+          </div>
         </button>
       )}
       <MainNav></MainNav>

@@ -11,7 +11,7 @@ const GoOrStopModal = ({ titleText, yesText, yesAction }) => {
   return (
     <div className={loading.wrapper}>
       <div className={loading.modal}>
-        <img src="/paw.svg" height="100px"></img>
+        <img src="/paw.svg" height="100px" alt="고양이 발바닥 일러스트"></img>
         <p className={loading.title}>{titleText}</p>
         <p>다시는 되돌릴 수 없어요</p>
         <button className={loading.LeftHalfButton} onClick={handleClose}>

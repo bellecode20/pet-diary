@@ -1,6 +1,6 @@
 import sign from "../../styles/pages/signUp.module.scss";
 import { useRef, useState } from "react";
-import { getSession, signIn, useSession } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import Account from "../layout/account";
 import { useDispatch } from "react-redux";
@@ -16,7 +16,6 @@ const SignUpContent = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   dispatch(changeCategory("ErrorCloseModal"));
-  const { data: session, status } = useSession();
   const switchAuthMode = () => {
     setIsLogin((prevState) => !prevState);
     idRef.current.value = "";
@@ -114,16 +113,15 @@ const SignUpContent = () => {
         </div>
         <div>
           <label htmlFor="userPw">Password</label>
-          <input type="text" required id="userPw" ref={pwRef}></input>
+          <input type="password" required id="userPw" ref={pwRef}></input>
         </div>
         <button className={sign.upBtn} form="signUp">
           확인
         </button>
       </form>
-      <button className="switchBtn" onClick={switchAuthMode}>
+      <button className={sign.switchBtn} onClick={switchAuthMode}>
         {!isLogin ? "로그인하기" : "계정만들기"}
       </button>
-      {/* {modal && <ModalContainer></ModalContainer>} */}
     </>
   );
 };

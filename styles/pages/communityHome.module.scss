@@ -1,0 +1,63 @@
+@import "abstracts/variables.module.scss";
+@import "abstracts/mixins.module.scss";
+.postContainer {
+  @include boxRadius;
+  margin-bottom: 1vh;
+  font-size: $font-regular--small;
+  .isUpdated {
+    @include font--gray--light;
+  }
+  .title {
+    @include font-title-of-content;
+    @include space-title-of-content;
+    border-bottom: 4px solid black;
+  }
+  .content {
+    @include space-content;
+    @include font-content;
+    margin-bottom: 0.5rem;
+  }
+  .owner {
+    @include font--gray--light;
+    @include space-owner;
+    display: flex;
+    justify-content: space-between;
+    font-size: $font-small;
+    margin: 1rem 0 0.5rem 0;
+  }
+  .social {
+    @include font-not-important;
+    @include space-comment;
+    border-top: 2px solid $gray-light-color;
+    display: flex;
+    min-height: 3rem;
+    height: 2vh;
+    span {
+      color: $opacity-black-color;
+      height: 100%;
+      min-width: 3rem;
+      width: 8vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+  }
+  .commentContainer {
+    @include font--gray--light;
+    border-bottom: 1px solid black;
+    .commentTop {
+      display: flex;
+      justify-content: space-between;
+      .commentDeleteBtn {
+        background-color: $primary-color;
+      }
+    }
+    .commentTime {
+      text-align: right;
+    }
+  }
+}
+.postContainer:hover {
+  background-color: $hover-color;
+}

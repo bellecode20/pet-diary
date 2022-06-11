@@ -115,7 +115,7 @@ const CommuPostingForm = () => {
             type="file"
             multiple
             id="commu__form__photo"
-            accept="image/png, image/jpeg"
+            // accept="image/png, image/jpeg"
             style={{ display: "none" }}
             name="photo[]"
             onChange={checkThisImg}

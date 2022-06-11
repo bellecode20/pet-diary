@@ -10,6 +10,7 @@ import {
   changeCommuLimit,
 } from "../../store/features/loadDbSlice";
 import { useState } from "react";
+import communityHome from "../../styles/pages/communityHome.module.scss";
 import mainPage from "../../styles/layout/mainPage.module.scss";
 const Content = ({ textedCommunity }) => {
   const [toggleLoadBtn, setToggleLoadBtn] = useState(false);
@@ -31,26 +32,31 @@ const Content = ({ textedCommunity }) => {
     return result;
   }, []);
   return (
-    <div className={mainPage.commuMainContainer}>
+    <>
       {limitedCommunityPosts.map((el, i) => (
         <Link href={`/communityCategory/${el.commuPostId}`} key={i}>
-          <div className={mainPage.postContainer}>
-            <p className={mainPage.isUpdated}> {el.isUpdated && "(수정됨)"}</p>
-            <p className={mainPage.title}>{el.title}</p>
+          <div className={communityHome.postContainer}>
+            <p className={communityHome.isUpdated}>
+              {" "}
+              {el.isUpdated && "(수정됨)"}
+            </p>
+            <p className={communityHome.title}>{el.title}</p>
             <ImgPreview data={el}></ImgPreview>
-            <p className={mainPage.content}>{el.content}</p>
-            <div className={mainPage.owner}>
-              <p className={mainPage.name}>{el.userId}</p>
-              <p className={mainPage.date}>
+            <p className={communityHome.content}>{el.content}</p>
+            <div className={communityHome.owner}>
+              <p className={communityHome.name}>{el.userId}</p>
+              <p className={communityHome.date}>
                 {el.timestamp.month}. {el.timestamp.date}.
               </p>
             </div>
-            <div className={mainPage.social}>
-              {/* <span className={mainPage.like}>
-                츄르 {el.likeIds.length >= 0 && el.likeIds.length}
-              </span> */}
-              <span className={mainPage.comment}>
-                <Image src="/comment.svg" width="30" height="30"></Image>
+            <div className={communityHome.social}>
+              <span className={communityHome.comment}>
+                <Image
+                  alt="풍선 모양의 댓글 로고"
+                  src="/comment.svg"
+                  width="30"
+                  height="30"
+                ></Image>
                 {el.commentIds.length >= 0 && el.commentIds.length}
               </span>
             </div>
@@ -60,7 +66,7 @@ const Content = ({ textedCommunity }) => {
       <button onClick={handleCommuLoad} className={mainPage.loadMoreBtn}>
         {toggleLoadBtn ? "모든 글을 확인했어요" : "더보기"}
       </button>
-    </div>
+    </>
   );
 };
 const Index = ({ textedCommunity }) => {

@@ -12,6 +12,7 @@
     font-family: $font-emphasis;
     font-size: $font-regular;
     position: absolute;
+    min-height: 40rem;
     height: 30vh;
     width: 80vw;
     top: 30%;
@@ -22,9 +23,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2vh;
+    gap: 4rem;
     .title {
       font-size: $font-regular--large;
+      text-align: center;
+      padding-bottom: 1rem;
+    }
+    .content {
+      text-align: center;
     }
     .button {
       @include bottomFullPosition;

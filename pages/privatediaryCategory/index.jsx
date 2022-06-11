@@ -31,7 +31,8 @@ const CommuContent = ({ textedDiaries }) => {
   }, []);
   const { data: session, status } = useSession();
   return (
-    <div className={styles.mainContainer}>
+    // <div className={styles.mainContainer}>
+    <>
       {limitedDiaryPosts.map((diary, i) => (
         <Link href={`/privatediaryCategory/${diary.postId}`} key={i}>
           <a className={styles.dayContainer} custom-attribute={diary.postId}>
@@ -49,7 +50,8 @@ const CommuContent = ({ textedDiaries }) => {
       <button onClick={handleDiaryLoad} className={styles.loadMoreBtn}>
         {toggleLoadBtn ? "모든 글을 확인했어요" : "더보기"}
       </button>
-    </div>
+      {/* //</div> */}
+    </>
   );
 };
 

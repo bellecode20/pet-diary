@@ -7,11 +7,13 @@ import { requestPostToCloudinary } from "../../components/requestPostToCloudinar
 import form from "../../styles/pages/formOfPosting.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import CarouselSlide from "../components/carouselSlide";
+import { makeTimestamp } from "../../components/makeTimestamp";
 import {
   changeContentText,
   changeCategory,
   modalIsShown,
 } from "../../store/features/modalSlice";
+const timeStamp = makeTimestamp();
 const PostingForm = () => {
   const date = useRef();
   const title = useRef();
@@ -105,6 +107,7 @@ const PostingForm = () => {
           <input
             id="diary__form__date"
             type="date"
+            defaultValue={`${timeStamp.year}-${timeStamp.month}-${timeStamp.date}`}
             ref={date}
             className={form.date}
           />
@@ -121,7 +124,7 @@ const PostingForm = () => {
             type="file"
             multiple
             id="diary__form__photo"
-            accept="image/png, image/jpeg"
+            // accept="image/png, image/jpeg"
             style={{ display: "none" }}
             name="photo[]"
             onChange={checkThisImg}
