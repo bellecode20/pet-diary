@@ -1,5 +1,4 @@
 import CarouselSlide from "../components/carouselSlide";
-import { getSession } from "next-auth/react";
 import { connectToDatabase } from "../../lib/db";
 import DetailDiaryNav from "../components/detailDiaryNav";
 import form from "../../styles/pages/formOfPosting.module.scss";
@@ -25,7 +24,6 @@ const Post = ({ textedDiary }) => {
     );
     dispatch(changeCategory("SuccessModal"));
   };
-
   return (
     <div className={form.wrapper}>
       <DetailDiaryNav userId={privateDiary.userId}></DetailDiaryNav>

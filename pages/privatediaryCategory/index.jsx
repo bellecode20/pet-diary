@@ -1,5 +1,4 @@
 import { getSession } from "next-auth/react";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { connectToDatabase } from "../../lib/db";
 import MainPage from "../layout/mainPage";
@@ -11,6 +10,7 @@ import {
 } from "../../store/features/loadDbSlice";
 import { useState } from "react";
 import styles from "../../styles/Home.module.scss";
+import mainPage from "../../styles/layout/mainPage.module.scss";
 const CommuContent = ({ textedDiaries }) => {
   const [toggleLoadBtn, setToggleLoadBtn] = useState(false);
   const diaryies = JSON.parse(textedDiaries);
@@ -29,9 +29,7 @@ const CommuContent = ({ textedDiaries }) => {
     }
     return result;
   }, []);
-  const { data: session, status } = useSession();
   return (
-    // <div className={styles.mainContainer}>
     <>
       {limitedDiaryPosts.map((diary, i) => (
         <Link href={`/privatediaryCategory/${diary.postId}`} key={i}>
@@ -47,10 +45,9 @@ const CommuContent = ({ textedDiaries }) => {
           </a>
         </Link>
       ))}
-      <button onClick={handleDiaryLoad} className={styles.loadMoreBtn}>
+      <button onClick={handleDiaryLoad} className={mainPage.loadMoreBtn}>
         {toggleLoadBtn ? "모든 글을 확인했어요" : "더보기"}
       </button>
-      {/* //</div> */}
     </>
   );
 };

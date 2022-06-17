@@ -29,11 +29,7 @@ const UpdatingCommu = ({ textedCommunity }) => {
     const fileInput = Array.from(form.elements).find(
       ({ name }) => name === "newCommuPhoto[]"
     );
-    if (
-      titleValue === "" ||
-      contentValue === "" ||
-      fileInput.files.length < 1
-    ) {
+    if (titleValue === "" || contentValue === "") {
       dispatch(changeCategory("ErrorCloseModal"));
       dispatch(changeContentText("모든 항목을 채워주세요"));
       return;

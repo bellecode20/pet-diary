@@ -1,14 +1,5 @@
 @import "abstracts/variables.module.scss";
 @import "abstracts/mixins.module.scss";
-
-// .mainContainer {
-//   height: 100vh;
-//   max-height: calc(100vh - $header-height - $tab-bar-height);
-//   //height: 100vh와 max-height이렇게 설정한다. 그래서 메인컨테이너에 스크롤 안생겼다.
-//   overflow-y: auto;
-//   padding-top: 2rem;
-//   padding-left: $diary__timeLine-padding--left;
-//   padding-right: $diary__timeLine-padding--right;
 .dayContainer {
   @include font-content;
   @include boxRadius;
@@ -27,14 +18,14 @@
     span {
       background-color: $blue;
       border-radius: 2rem;
-      border: 4px solid black;
+      border: $border--normal;
       padding: 0.5rem 1rem;
     }
     font-size: 2rem;
     font-weight: 500;
   }
   .diary {
-    @include space-content;
+    padding: $padding--content;
     padding-bottom: 3vh;
     .diaryTitle {
       @include font-title-of-content;
@@ -50,13 +41,6 @@
     }
   }
 }
-.loadMoreBtn {
-  @include blockBtn;
-}
 .dayContainer:hover {
   background-color: $hover-color;
 }
-.loadMoreBtn:hover {
-  background-color: $hover-color;
-}
-// }

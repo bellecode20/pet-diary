@@ -20,8 +20,8 @@
     }
     .tag {
       @include font-title-of-content;
-      @include space-title-of-content;
       @include boxRadius;
+      padding: $padding--title-of-content;
       margin-top: 3vh;
       margin-left: 8.2vw;
       margin-right: 8.2vw;

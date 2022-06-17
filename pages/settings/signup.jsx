@@ -38,7 +38,6 @@ const SignUpContent = () => {
       dispatch(changeContentText("오류가 발생했어요. 다시 시도해주세요"));
       dispatch(modalIsShown(true));
     });
-
     if (data.contentStatus === "001") {
       dispatch(changeContentText("아이디와 비밀번호는 7글자 이상이어야 해요"));
       dispatch(modalIsShown(true));
@@ -52,6 +51,7 @@ const SignUpContent = () => {
       }
     } else if (data.contentStatus === "004") {
       {
+        dispatch(changeCategory("SuccessModal"));
         dispatch(changeContentText("가입을 완료했어요"));
         dispatch(modalIsShown(true));
       }
@@ -102,7 +102,7 @@ const SignUpContent = () => {
       <p className={sign.title}>{isLogin ? "로그인" : "가입하기"}</p>
       <form id="signUp" onSubmit={submitHandler}>
         <div>
-          <label htmlFor="userId">Id</label>
+          <label htmlFor="userId">ID</label>
           <input
             type="text"
             required
@@ -115,13 +115,18 @@ const SignUpContent = () => {
           <label htmlFor="userPw">Password</label>
           <input type="password" required id="userPw" ref={pwRef}></input>
         </div>
-        <button className={sign.upBtn} form="signUp">
-          확인
+        <button className={sign.okayBtn} form="signUp">
+          {!isLogin ? "Sign up" : "Login"}
         </button>
       </form>
-      <button className={sign.switchBtn} onClick={switchAuthMode}>
-        {!isLogin ? "로그인하기" : "계정만들기"}
-      </button>
+      <div className={sign.switchContainer}>
+        <p className={sign.titleOfswitchBtn}>
+          {!isLogin ? "이미 계정이 있으신가요?" : "처음 오셨나요?"}
+        </p>
+        <button className={sign.switchBtn} onClick={switchAuthMode}>
+          {!isLogin ? "로그인하기" : "계정만들기"}
+        </button>
+      </div>
     </>
   );
 };

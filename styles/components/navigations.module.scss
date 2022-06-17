@@ -1,13 +1,14 @@
 @import "../abstracts/variables.module.scss";
 @import "../base/typography.module.scss";
 @import "../abstracts/mixins.module.scss";
+@import "../abstracts/responsive.scss";
 .tabBar {
   height: $tab-bar-height;
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
-  border: 3px solid black;
+  border: $border--normal;
   border-radius: 8px 8px 0 0;
   color: $white;
   display: flex;
@@ -29,5 +30,10 @@
   #bigMenu {
     flex-basis: 20%;
     margin: 0px;
+  }
+}
+@include medium-viewport {
+  .tabBar {
+    height: $mobile-tab-bar-height;
   }
 }

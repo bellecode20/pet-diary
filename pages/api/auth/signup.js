@@ -1,11 +1,8 @@
 import { hashPassword } from "../../../lib/auth";
 import { connectToDatabase } from "../../../lib/db";
 async function handler(req, res) {
-  if (req.method !== "POST") {
-    return;
-  }
-  const data = req.body;
-  const { userId, userPw } = data; // 요청에서 담은 유저 정보를 destructure한다.
+  const { userId, userPw } = req.body;
+  if (req.method !== "POST") return;
   if (
     !userId ||
     !userPw ||
@@ -30,14 +27,14 @@ async function handler(req, res) {
     return;
   }
   const client = await connectToDatabase();
-  const db = client.db();
-  const usersCollection = db.collection("users");
+  const db = await client.db();
+  const usersCollection = await db.collection("users");
   const existingUser = await usersCollection.findOne({ userId: userId });
   const hashedPassword = await hashPassword(userPw); //비밀번호를 해쉬화한다.
   if (existingUser) {
     res.status(422).json({
       message: "User exists already!",
-      status: 422,
+      // status: 422,
       contentStatus: "003",
     });
     client.close();
@@ -47,7 +44,9 @@ async function handler(req, res) {
     userId: userId,
     userPw: hashedPassword,
   });
-  res.status(201).json({ message: "Created user!", status: 201 });
+  res
+    .status(201)
+    .json({ message: "Created user!", status: 201, contentStatus: "004" });
   client.close();
 }
 export default handler;

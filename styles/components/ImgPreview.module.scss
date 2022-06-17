@@ -1,3 +1,4 @@
+@import "../abstracts/variables.module.scss";
 .container {
   position: relative;
   min-width: 20rem;
@@ -6,7 +7,7 @@
   max-height: 50vh;
   margin: 0.5rem;
   display: flex;
-  border-bottom: 4px solid black;
+  border-bottom: $border--normal;
   .photo {
     object-position: left top;
   }

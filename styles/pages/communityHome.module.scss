@@ -1,50 +1,75 @@
 @import "abstracts/variables.module.scss";
 @import "abstracts/mixins.module.scss";
+@import "abstracts/_responsive.scss";
 .postContainer {
   @include boxRadius;
-  margin-bottom: 1vh;
+  margin-bottom: 2vh;
   font-size: $font-regular--small;
   .isUpdated {
-    @include font--gray--light;
+    // @include font--gray--light;
+    font-size: 1rem;
+    font-weight: 300;
+    color: $gray-light-color;
+    letter-spacing: -1px;
   }
   .title {
     @include font-title-of-content;
-    @include space-title-of-content;
-    border-bottom: 4px solid black;
+    padding: $padding--title-of-content;
+    border-bottom: $border--normal;
+    @include medium-viewport {
+      padding: $mobile-padding--title-of-content;
+    }
   }
   .content {
-    @include space-content;
     @include font-content;
-    margin-bottom: 0.5rem;
+    margin: $padding--content;
+    // margin-bottom: 0.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    // height: 8rem; //padding 높이도 포함했다.
+    min-height: 5rem;
+    @include medium-viewport {
+      margin: $mobile-padding--content;
+    }
   }
   .owner {
     @include font--gray--light;
-    @include space-owner;
+    padding: $padding--owner;
     display: flex;
     justify-content: space-between;
     font-size: $font-small;
     margin: 1rem 0 0.5rem 0;
+    @include medium-viewport {
+      padding: $mobile-padding--owner;
+    }
   }
   .social {
-    @include font-not-important;
-    @include space-comment;
+    @include font--gray--light;
     border-top: 2px solid $gray-light-color;
     display: flex;
-    min-height: 3rem;
     height: 2vh;
-    span {
-      color: $opacity-black-color;
-      height: 100%;
+    min-height: 3rem;
+    display: flex;
+    align-items: center;
+    @include medium-viewport {
+      padding-left: 1rem;
+    }
+    .comment {
+      position: relative;
+      width: 2vh;
       min-width: 3rem;
-      width: 8vw;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
+      height: 100%; //이걸 추가해야 부모에 flex 쓸 수 잇었음
+      max-height: 80%;
+    }
+    p {
+      font-size: 0.5rem;
     }
   }
   .commentContainer {
-    @include font--gray--light;
+    // @include font--gray--light;
     border-bottom: 1px solid black;
     .commentTop {
       display: flex;

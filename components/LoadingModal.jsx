@@ -1,7 +1,4 @@
 import loading from "../styles/components/isUploading.module.scss";
-import { useDispatch } from "react-redux";
-import { changeCategory, modalIsShown } from "../store/features/modalSlice";
-import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 
 const LoadingModal = () => {

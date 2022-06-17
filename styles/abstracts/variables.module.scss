@@ -1,9 +1,11 @@
 // scale
 $tab-bar-height: 6vh;
-// $header-height: 11vh;
-$header-height: 15vh;
+$header-height: 11vh;
 $nav--upload: 5.5vh;
 $small-input--height: 100px;
+//mobile scale
+$mobile-header-height: 10vh;
+$mobile-tab-bar-height: 8vh;
 //color
 $main-color: #ffffff;
 $main-black-color: #21252b;
@@ -19,3 +21,18 @@ $hover-color: #d0d0d07d;
 //padding
 $diary__timeLine-padding--left: 12vw;
 $diary__timeLine-padding--right: 7vw;
+$padding--content: 3rem 4rem;
+$padding--title-of-content: 2rem;
+$padding--owner: 1rem 4rem;
+
+//mobile padding
+$mobile-diary__timeLine-padding--left: 8vw;
+$mobile-padding--content: 1rem 2rem;
+$mobile-padding--title-of-content: 1rem 2rem;
+$mobile-padding--owner: 1rem 2rem;
+
+//breakpoint
+$screen-md-max: 768px;
+
+//border
+$border--normal: 2px solid black;

@@ -1,0 +1,6 @@
+$screen-medium-max: 768px;
+@mixin medium-viewport {
+  @media (max-width: $screen-medium-max) {
+    @content;
+  }
+}

@@ -26,6 +26,7 @@ const SuccessModal = ({ children }) => {
     e.preventDefault();
     dispatch(modalIsShown(false));
     dispatch(changeCategory(""));
+    if (thisUrl.includes("/signup")) return;
     router.replace(makeNextUrl());
   };
   return (
