@@ -45,6 +45,18 @@
   .loadMoreBtn:hover {
     background-color: $hover-color;
   }
+  .noLoadPosts {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    .description {
+      text-align: center;
+      font-weight: 500;
+      letter-spacing: -1px;
+      font-size: $mobile-font-small;
+    }
+  }
   .addBtn {
     background-color: white;
     border-left: 5px solid black;

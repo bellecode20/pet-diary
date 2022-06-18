@@ -70,6 +70,22 @@
   margin: 0 auto;
   padding: 1rem;
 }
+@mixin largeBtn {
+  letter-spacing: 2px;
+  color: white;
+  height: 9vh;
+  // height: 7vh;
+  max-height: 7rem;
+  // max-height: 8rem;
+  background-color: black;
+  width: 100%;
+  border: 4px solid black;
+  border-radius: 4rem;
+  font-size: $font-regular--large;
+  @include medium-viewport {
+    max-height: 6.5rem;
+  }
+}
 
 //border
 @mixin boxRadius {

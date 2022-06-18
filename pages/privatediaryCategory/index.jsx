@@ -11,6 +11,7 @@ import {
 import { useState } from "react";
 import styles from "../../styles/Home.module.scss";
 import mainPage from "../../styles/layout/mainPage.module.scss";
+import Image from "next/image";
 const CommuContent = ({ textedDiaries }) => {
   const [toggleLoadBtn, setToggleLoadBtn] = useState(false);
   const diaryies = JSON.parse(textedDiaries);
@@ -45,9 +46,16 @@ const CommuContent = ({ textedDiaries }) => {
           </a>
         </Link>
       ))}
-      <button onClick={handleDiaryLoad} className={mainPage.loadMoreBtn}>
-        {toggleLoadBtn ? "모든 글을 확인했어요" : "더보기"}
-      </button>
+      {limitedDiaryPosts.length > 0 ? (
+        <button onClick={handleDiaryLoad} className={mainPage.loadMoreBtn}>
+          {toggleLoadBtn ? "모든 글을 확인했어요" : "더보기"}
+        </button>
+      ) : (
+        <div className={mainPage.noLoadPosts}>
+          <p className={mainPage.description}>일기를 써보라냥</p>
+          <Image src="/cat--with-book.jpeg" width="200" height="200"></Image>
+        </div>
+      )}
     </>
   );
 };
@@ -66,6 +74,7 @@ export const getServerSideProps = async (context) => {
   //context로 받아온 것을 getSession으로 꺼내준다. 만약 유저가 인증되었다면 쿠키가 존재한다.
   const session = await getSession({ req: context.req });
   //작성한 전체 글 보기
+  if (!session) return { props: { session } };
   const client = await connectToDatabase();
   const diaryCollection = client.db().collection("privateDiary");
   const diaries = await diaryCollection

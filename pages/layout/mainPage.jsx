@@ -16,12 +16,7 @@ const MainPage = ({ title, main, urlToPost }) => {
       {urlToPost && (
         <button className={overall.addBtn} onClick={goToPost}>
           <div className={overall.imageContainer}>
-            <Image
-              src="/posting.png"
-              alt="글 쓰기 버튼"
-              layout="fill"
-              className={overall.addBtnLogo}
-            ></Image>
+            <Image src="/posting.png" alt="글 쓰기 버튼" layout="fill"></Image>
           </div>
         </button>
       )}

@@ -2,6 +2,7 @@
 @import "abstracts/mixins.module.scss";
 
 .wrapper {
+  z-index: 200;
   position: fixed;
   left: 0;
   right: 0;
@@ -48,18 +49,18 @@
       height: 20%;
     }
   }
-  .loadingState {
-    @include font-content;
-    font-family: $font-emphasis;
-    font-size: $font-regular--large;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    background-color: black;
-    padding: 2rem;
-    border-radius: 4rem;
-    text-align: center;
-  }
+}
+.loadingState {
+  @include font-content;
+  font-family: $font-emphasis;
+  font-size: $font-regular--large;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  background-color: black;
+  padding: 2rem;
+  border-radius: 4rem;
+  text-align: center;
 }

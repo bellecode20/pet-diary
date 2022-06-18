@@ -36,9 +36,6 @@ const Content = ({ textedCommunity }) => {
       {limitedCommunityPosts.map((el, i) => (
         <Link href={`/communityCategory/${el.commuPostId}`} key={i}>
           <div className={communityHome.postContainer}>
-            {/* <p className={communityHome.isUpdated}>
-              {el.isUpdated && "(수정됨)"}
-            </p> */}
             <p className={communityHome.title}>{el.title}</p>
             <ImgPreview data={el}></ImgPreview>
             <p className={communityHome.content}>
@@ -63,9 +60,6 @@ const Content = ({ textedCommunity }) => {
                 ></Image>
               </div>
               <p>{el.commentIds.length >= 0 && el.commentIds.length}</p>
-              {/* <p className={communityHome.isUpdated}>
-                {el.isUpdated && "(수정됨)"}
-              </p> */}
             </div>
           </div>
         </Link>

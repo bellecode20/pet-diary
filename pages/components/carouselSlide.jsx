@@ -2,7 +2,6 @@ import React, { useEffect, useCallback, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
 import carousel from "../../styles/components/carouselSlide.module.scss";
-import { format } from "path";
 const CarouselSlide = ({ data }) => {
   const [viewportRef, embla] = useEmblaCarousel({
     containScroll: "keepSnaps",

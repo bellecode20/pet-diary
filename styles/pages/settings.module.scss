@@ -1,39 +1,44 @@
 @import "abstracts/variables.module.scss";
 @import "abstracts/mixins.module.scss";
+@import "abstracts/_responsive.scss";
 .mainContainer {
+  position: relative;
   height: 100vh;
-  max-height: calc(100vh - $header-height - $tab-bar-height);
+  max-height: 100%;
   overflow-y: auto;
-  padding-top: 2rem;
-  padding: 2rem $diary__timeLine-padding--left;
+  padding: 2rem;
   font-size: $font-regular--small;
   .menuTitle {
     font-family: $font-emphasis;
     font-size: $font-regular;
     padding-bottom: 1rem;
   }
-  .profile {
-    .idOfUser {
-    }
-  }
   .history {
     display: flex;
     justify-content: center;
     padding-top: 3rem;
+  }
+  .idOfUser {
+    @include medium-viewport {
+      font-size: $mobile-font-regurlar--smaller;
+    }
   }
   .account {
     padding-top: 3rem;
     .accountList {
       cursor: pointer;
       :hover {
-        background-color: $opacity-main-color;
+        background-color: $opacity-blue;
       }
       display: flex;
       flex-direction: column;
       .accountItem {
         display: flex;
-        padding: 3px 0;
+        padding: 0.5rem 0;
         color: $main-black-color;
+      }
+      @include medium-viewport {
+        font-size: $mobile-font-regurlar--smaller;
       }
     }
   }

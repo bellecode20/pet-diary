@@ -10,6 +10,10 @@ import {
 } from "../../store/features/modalSlice";
 const ChangePwFormContent = () => {
   const dispatch = useDispatch();
+  const cancelWithdraw = (e) => {
+    e.preventDefault();
+    router.replace("/privatediaryCategory");
+  };
   const modal = useSelector((state) => state.modal.isShown);
   const oldPwRef = useRef();
   const newPwRef = useRef();
@@ -26,8 +30,8 @@ const ChangePwFormContent = () => {
       },
     });
     const data = await response.json();
-    dispatch(changeCategory("ErrorCloseModal"));
     dispatch(modalIsShown(true));
+    dispatch(changeCategory("ErrorCloseModal"));
     if (data.contentStatus === "005") {
       dispatch(changeContentText("로그인을 다시 해주세요"));
     } else if (data.contentStatus === "006") {
@@ -35,7 +39,6 @@ const ChangePwFormContent = () => {
         changeContentText("유저를 찾을 수 없어요. 로그인을 다시 해주세요")
       );
     } else if (data.contentStatus === "007") {
-      dispatch(modalIsShown(true));
       dispatch(changeContentText("비밀번호가 일치하지 않아요"));
     } else if (data.contentStatus === "200") {
       dispatch(changeCategory("SuccessModal"));
@@ -52,7 +55,9 @@ const ChangePwFormContent = () => {
       <p className={sign.title}>비밀번호 변경</p>
       <form id="changePw" onSubmit={submitHandler}>
         <div>
-          <label htmlFor="oldPw">기존 비밀번호</label>
+          <label htmlFor="oldPw" className={sign.label}>
+            기존 비밀번호
+          </label>
           <input
             type="text"
             required
@@ -62,11 +67,16 @@ const ChangePwFormContent = () => {
           ></input>
         </div>
         <div>
-          <label htmlFor="newPw">새로운 비밀번호</label>
+          <label htmlFor="newPw" className={sign.label}>
+            새로운 비밀번호
+          </label>
           <input type="text" required id="newPw" ref={newPwRef}></input>
         </div>
         <button className={sign.upBtn} form="changePw">
           확인
+        </button>
+        <button className={sign.cancelBtn} onClick={cancelWithdraw}>
+          취소
         </button>
       </form>
       {modal && <ModalContainer></ModalContainer>}

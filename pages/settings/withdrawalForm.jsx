@@ -10,12 +10,15 @@ import {
   changeCategory,
   changeContentText,
 } from "../../store/features/modalSlice";
-import ModalContainer from "../../components/ModalContainer";
 const WithDrawalFormContent = () => {
-  const modal = useSelector((state) => state.modal.isShown);
+  const router = useRouter();
   const oldPwRef = useRef();
   const dispatch = useDispatch();
   dispatch(changeCategory("ErrorCloseModal"));
+  const cancelWithdraw = (e) => {
+    e.preventDefault();
+    router.replace("/privatediaryCategory");
+  };
   async function requestWithdrawal(enteredOldPw) {
     let oldAndNewPws = {
       oldPw: enteredOldPw,
@@ -61,12 +64,18 @@ const WithDrawalFormContent = () => {
   }
   return (
     <>
-      <p className={sign.title}>탈퇴하기</p>
-      <p>비밀번호를 입력해주세요</p>
-      <p>이전에 작성했던 커뮤니티 글과 댓글은 삭제되지 않습니다.</p>
+      <div className={sign.title}>
+        <p>탈퇴하기</p>
+        <div className={sign.description}>
+          <p>비밀번호를 입력해주세요.</p>
+          <p>작성한 커뮤니티 글과 댓글은 삭제되지 않아요!</p>
+        </div>
+      </div>
       <form id="withdrawal" onSubmit={submitHandler}>
         <div>
-          <label htmlFor="oldPw">기존 비밀번호</label>
+          <label htmlFor="oldPw" className={sign.label}>
+            기존 비밀번호
+          </label>
           <input
             type="text"
             required
@@ -75,7 +84,10 @@ const WithDrawalFormContent = () => {
             className={sign.idInput}
           ></input>
         </div>
-        <button className={sign.upBtn} form="withdrawal">
+        <button className={sign.upBtn} onClick={cancelWithdraw}>
+          취소
+        </button>
+        <button className={sign.cancelBtn} form="withdrawal">
           탈퇴하기
         </button>
       </form>

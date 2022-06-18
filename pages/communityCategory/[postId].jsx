@@ -36,6 +36,7 @@ const CommuIndex = ({ textedCommunity, textedComments }) => {
     );
     dispatch(modalIsShown(true));
     dispatch(changeCategory("LoadingModal"));
+    dispatch(modalIsShown(false));
     forceReload();
   };
   const deleteCommu = async (e) => {
@@ -65,6 +66,7 @@ const CommuIndex = ({ textedCommunity, textedComments }) => {
     );
     dispatch(modalIsShown(true));
     dispatch(changeCategory("LoadingModal"));
+    dispatch(modalIsShown(false));
     forceReload();
   };
   return (

@@ -1,9 +1,10 @@
 @import "abstracts/variables.module.scss";
 @import "abstracts/mixins.module.scss";
+@import "abstracts/_responsive.scss";
 .embla {
   position: relative;
-  padding-left: $diary__timeLine-padding--left;
-  padding-right: $diary__timeLine-padding--left;
+  padding-left: 60px;
+  padding-right: 60px;
   width: 100vw;
   .embla__viewport {
     overflow: hidden;
@@ -20,6 +21,10 @@
         min-width: 50%;
         max-width: 100%;
         height: 390px;
+        @include medium-viewport {
+          height: 50vh;
+          max-height: 250px;
+        }
       }
     }
   }
@@ -28,12 +33,18 @@
     top: 50%;
     left: 3rem;
     transform: translateY(-50%);
+    @include medium-viewport {
+      left: 0;
+    }
   }
   .embla__next {
     position: absolute;
     top: 50%;
     right: 3rem;
     transform: translateY(-50%);
+    @include medium-viewport {
+      right: 0;
+    }
   }
   .embla__dots {
     display: flex;

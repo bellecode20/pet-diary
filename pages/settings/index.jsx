@@ -9,11 +9,11 @@ const SettingsContent = () => {
   const { data: session, status } = useSession();
   const modal = useSelector((state) => state.modal.isShown);
   const dispatch = useDispatch();
-  dispatch(modalIsShown(false));
   const logoutHandler = () => {
-    signOut({ redirect: false, callbackUrl: "/settings/signup" });
     dispatch(modalIsShown(true));
-    dispatch(changeCategory("SuccessModal"));
+    dispatch(changeCategory("LoadingModal"));
+    signOut({ redirect: false, callbackUrl: "/settings/signup" });
+    dispatch(modalIsShown(false));
   };
   return (
     <div className={settings.mainContainer}>

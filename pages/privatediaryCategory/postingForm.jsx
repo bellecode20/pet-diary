@@ -30,6 +30,7 @@ const PostingForm = () => {
     }
   };
   const dispatch = useDispatch();
+  // dispatch(modalIsShown(false));
   const modal = useSelector((state) => state.modal.isShown);
   useEffect(() => {
     //인풋에서 첨부할 사진을 선택하고나면, 그 사진을 스트링데이터로 변환시켜 preview state에 담는다.
