@@ -100,9 +100,8 @@ const UpdatingCommu = ({ textedCommunity }) => {
     if (image) {
       for (let x of image) {
         const reader = new FileReader();
-        reader.onloadend = () => {
-          const url = reader.result;
-          setPreview((preview) => [...preview, url]);
+        reader.onloadend = (e) => {
+          setPreview((preview) => [...preview, e.target.result]);
         };
         reader.readAsDataURL(x);
       }

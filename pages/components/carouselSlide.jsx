@@ -3,6 +3,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
 import carousel from "../../styles/components/carouselSlide.module.scss";
 const CarouselSlide = ({ data }) => {
+  console.log(data);
   const [viewportRef, embla] = useEmblaCarousel({
     containScroll: "keepSnaps",
   });
@@ -39,6 +40,7 @@ const CarouselSlide = ({ data }) => {
       setScrollSnaps(embla.scrollSnapList());
       embla.on("select", onSelect);
     }
+    console.log(data);
   }, [embla, setScrollSnaps, onSelect, data]);
   return (
     <>
