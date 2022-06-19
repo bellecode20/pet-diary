@@ -12,8 +12,6 @@ const handler = async (req, res) => {
     { commuPostId: commuPostId },
     { $push: { commentIds: commentPostId } }
   );
-  console.log(idOfSession);
-
   const result = await commentsCollection.insertOne({
     commuPostId: commuPostId,
     commentPostId: commentPostId,

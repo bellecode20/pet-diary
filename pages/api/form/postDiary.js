@@ -4,8 +4,6 @@ const handler = async (req, res) => {
   const client = await connectToDatabase();
   const { postId, photoUrl, postingDate, title, content, photoPublicId } =
     req.body;
-  console.log("postID", postId);
-  console.log("photoUrl", photoUrl);
   const session = await getSession({ req });
   const idOfSession = session.user.userId;
   const diaryCollection = client.db().collection("privateDiary");

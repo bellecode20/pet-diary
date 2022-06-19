@@ -1,5 +1,6 @@
 @import "abstracts/variables.module.scss";
 @import "abstracts/mixins.module.scss";
+@import "abstracts/_responsive.scss";
 .dayContainer {
   @include font-content;
   @include boxRadius;
@@ -15,14 +16,21 @@
     position: absolute;
     top: 2.5rem;
     left: 2rem;
+    font-size: 2rem;
+    font-weight: 500;
+    @include medium-viewport {
+      top: 1.5rem;
+      left: 1rem;
+    }
     span {
       background-color: $blue;
       border-radius: 2rem;
       border: $border--normal;
       padding: 0.5rem 1rem;
     }
-    font-size: 2rem;
-    font-weight: 500;
+    @include medium-viewport {
+      font-size: 1.4rem;
+    }
   }
   .diary {
     padding: $padding--content;

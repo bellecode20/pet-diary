@@ -125,7 +125,7 @@ const PostingForm = () => {
             type="file"
             multiple
             id="diary__form__photo"
-            // accept="image/png, image/jpeg"
+            accept="image/png, image/jpeg"
             style={{ display: "none" }}
             name="photo[]"
             onChange={checkThisImg}

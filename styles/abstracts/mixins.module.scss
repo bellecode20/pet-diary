@@ -2,36 +2,29 @@
 
 //font
 @mixin font-title {
-  // font-family: $font-familly--bold;
   font-family: $font-emphasis;
   font-size: 4rem;
 }
 @mixin font-menu {
   font-family: $font-emphasis;
   font-size: $font-regular--small;
-  // color: $white;
 }
 @mixin font-title-of-content {
-  font-family: $font-familly--regular;
   font-size: $font-regular--small;
   line-height: 2rem;
   font-weight: 700;
 }
 @mixin font-content {
-  font-family: $font-familly--regular;
   font-size: $font-regurlar--smaller;
   line-height: 2rem;
 }
 @mixin font-not-important {
-  font-family: $font-familly--regular;
   font-size: $font-regular--small;
 }
 @mixin font--gray--light {
   font-family: $font-emphasis;
-  // font-family: $font-familly--extraLight;
   font-size: $font-regular--small;
   color: $gray-color;
-  // letter-spacing: -1px;
 }
 
 //position
@@ -74,9 +67,7 @@
   letter-spacing: 2px;
   color: white;
   height: 9vh;
-  // height: 7vh;
   max-height: 7rem;
-  // max-height: 8rem;
   background-color: black;
   width: 100%;
   border: 4px solid black;

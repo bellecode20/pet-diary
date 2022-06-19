@@ -28,8 +28,6 @@ const handler = async (req, res) => {
     }
     //사진은 수정한 경우이다. 이 때 첫번째 반복문은 텍스트 내용도 수정한다.
     if (req.body.forLoopIndex === 0) {
-      console.log(`req.body.forLoopIndex if`);
-      console.log(req.body.forLoopIndex);
       const result = await commuCollection.updateOne(
         {
           commuPostId: req.body.commuPostId,
@@ -50,8 +48,6 @@ const handler = async (req, res) => {
       client.close();
       return;
     } else {
-      console.log(`req.body.forLoopIndex else`);
-      console.log(req.body.forLoopIndex);
       //첫번째 반복문이 아니라면 텍스트는 수정하지 않고 사진만 배열에 추가한다.
       const result = await commuCollection.updateOne(
         {

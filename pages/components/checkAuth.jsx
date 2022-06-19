@@ -5,7 +5,6 @@ import loading from "../../styles/components/isUploading.module.scss";
 const CheckAuth = ({ children }) => {
   const { data: session, status } = useSession();
   const router = useRouter();
-  console.log(status);
   if (router.asPath.includes("signup") && status === "unauthenticated") {
     return [children];
   }

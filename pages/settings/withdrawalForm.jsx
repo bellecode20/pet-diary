@@ -35,7 +35,6 @@ const WithDrawalFormContent = () => {
       console.error(e);
     });
     if (data.error) {
-      console.error(data.error);
       dispatch(modalIsShown(true));
       dispatch(changeContentText("오류가 발생했어요. 다시 시도해주세요"));
     }
@@ -77,7 +76,7 @@ const WithDrawalFormContent = () => {
             기존 비밀번호
           </label>
           <input
-            type="text"
+            type="password"
             required
             id="oldPw"
             ref={oldPwRef}

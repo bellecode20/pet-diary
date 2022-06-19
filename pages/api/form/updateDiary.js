@@ -5,7 +5,6 @@ const handler = async (req, res) => {
   const idOfSession = session.user.userId;
   const client = await connectToDatabase();
   const diaryCollection = client.db().collection("privateDiary");
-  console.log("updateDiary.js");
   if (req.body.userId === idOfSession) {
     // 텍스트만 수정한 경우이다.
     if (req.body.onlyText) {
@@ -49,8 +48,6 @@ const handler = async (req, res) => {
       client.close();
       return;
     } else {
-      console.log(`req.body.forLoopIndex else`);
-      console.log(req.body.forLoopIndex);
       //첫번째 반복문이 아니라면 사진만 배열에 추가한다.
       const result = await diaryCollection.updateOne(
         {

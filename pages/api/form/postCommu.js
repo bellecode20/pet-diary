@@ -11,8 +11,6 @@ const handler = async (req, res) => {
   const existingPost = await communityCollection.findOne({
     commuPostId: postId,
   });
-  console.log(idOfSession);
-  console.log(req.body);
   //만약 지금 업로드중인 글이라면 새로운 문서를 만드는 대신 photourl을 추가한다.
   if (existingPost) {
     const result = await communityCollection.updateOne(

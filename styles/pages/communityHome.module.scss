@@ -6,7 +6,6 @@
   margin-bottom: 2vh;
   font-size: $font-regular--small;
   .isUpdated {
-    // @include font--gray--light;
     font-size: 1rem;
     font-weight: 300;
     color: $gray-light-color;
@@ -23,13 +22,11 @@
   .content {
     @include font-content;
     margin: $padding--content;
-    // margin-bottom: 0.5rem;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
-    // height: 8rem; //padding 높이도 포함했다.
     min-height: 5rem;
     @include medium-viewport {
       margin: $mobile-padding--content;
@@ -65,11 +62,10 @@
       max-height: 80%;
     }
     p {
-      font-size: 0.5rem;
+      font-size: $mobile-font-small;
     }
   }
   .commentContainer {
-    // @include font--gray--light;
     border-bottom: 1px solid black;
     .commentTop {
       display: flex;

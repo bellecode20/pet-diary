@@ -8,7 +8,9 @@ import {
   changeCategory,
   changeContentText,
 } from "../../store/features/modalSlice";
+import { useRouter } from "next/router";
 const ChangePwFormContent = () => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const cancelWithdraw = (e) => {
     e.preventDefault();
@@ -59,7 +61,7 @@ const ChangePwFormContent = () => {
             기존 비밀번호
           </label>
           <input
-            type="text"
+            type="password"
             required
             id="oldPw"
             ref={oldPwRef}

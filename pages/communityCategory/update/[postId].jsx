@@ -119,9 +119,9 @@ const UpdatingCommu = ({ textedCommunity }) => {
         id="updatingCommu"
         onSubmit={updateCommu}
       >
-        <div className={form.dateForm}>
+        {/* <div className={form.dateForm}>
           <p className={form.date}>커뮤니티 글 쓰기</p>
-        </div>
+        </div> */}
         {preview && <CarouselSlide data={preview}></CarouselSlide>}
         <div className={form.photoForm}>
           <label
