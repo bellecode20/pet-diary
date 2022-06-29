@@ -13,14 +13,15 @@
 ![메인-커뮤글상세까지+다이어리글 없음](https://user-images.githubusercontent.com/94767408/174482301-ac63afd7-6ccf-4281-9ee8-eb7d202a2c9e.gif)
 
 ## Technologies
-- React.js, Next.js
-- MongoDB
-- Redux, Redux toolkit
+- React.js, Next.js, SCSS
+- Redux, Redux Toolkit
+- DB: MongoDB, Cloudinary
 
 ## What did I do
-- Node.js, Next.js의 Api routes를 이용한 CRUD 작업
+- Next.js의 Api routes를 이용한 API개발
 - Redux, Redux toolkit을 이용한 상태관리
-- DB(MongoDB, Cloudinary)에 데이터 저장
+- DB(MongoDB, Cloudinary)에 사진과 텍스트 데이터 관리
+- SSR, CSR를 적절히 활용한 렌더링
 - 회원가입, 로그인, 로그아웃
 - Figma툴을 이용한 기획 및 디자인, 개발
 
