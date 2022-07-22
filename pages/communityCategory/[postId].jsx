@@ -11,6 +11,7 @@ import { changeCategory, modalIsShown } from "../../store/features/modalSlice";
 import DetailDiaryNav from "../components/detailDiaryNav";
 import CarouselSlide from "../components/carouselSlide";
 import post from "../../styles/layout/post.module.scss";
+import communityHome from "../../styles/pages/communityHome.module.scss";
 import Image from "next/image";
 const CommuIndex = ({ textedCommunity, textedComments }) => {
   const modal = useSelector((state) => state.modal.isShown);
@@ -70,66 +71,88 @@ const CommuIndex = ({ textedCommunity, textedComments }) => {
     forceReload();
   };
   return (
-    <div className={post.wrapper}>
+    // <div className={communityHome.wrapper}>
+    <div
+      className={
+        modal ? communityHome.wrapper + " noScroll" : communityHome.wrapper
+      }
+    >
       <DetailDiaryNav userId={commuPost.userId}></DetailDiaryNav>
-      <div className={post.mainContainer}>
-        <p className={post.tag}>{commuPost.title}</p>
-        <CarouselSlide data={commuPost.photo}></CarouselSlide>
-        <p className={post.content}>{commuPost.content}</p>
-        <div className={post.owner}>
-          <p className={post.name}>{commuPost.userId}</p>
-          <p className={post.date}>
-            {commuPost.timestamp.month}. {commuPost.timestamp.date}
+      <div className={communityHome.mainContainer}>
+        <div className={communityHome.mainContent}>
+          <div className={communityHome.title}>{commuPost.title}</div>
+          <CarouselSlide data={commuPost.photo}></CarouselSlide>
+          <p className={communityHome.content}>
+            <span className={communityHome.name}>{commuPost.userId}</span>
+            {commuPost.content}
+            <span className={communityHome.isUpdated}>
+              {commuPost.isUpdated && "(수정됨)"}
+            </span>
           </p>
-        </div>
-        <div className={post.social}>
-          <span className={post.comment}>
-            {commuPost.commentIds.length === 0 ? (
-              <Image
-                src="/comment.svg"
-                alt="풍선모양의 댓글 로고"
-                width="30"
-                height="30"
-              ></Image>
-            ) : (
-              <>
-                <Image src="/comment.svg" width="30" height="30"></Image>
-                {commuPost.commentIds.length}
-              </>
-            )}
-          </span>
-        </div>
-        {comments.map((el, i) => (
-          <div className={post.commentContainer} key={i}>
-            <div className={post.commentTop}>
-              <p className={post.userId}>{el.userId}</p>
-              {el.userId === thisUserId && (
-                <button
-                  data-remove={el.commentPostId}
-                  className={post.commentDeleteBtn}
-                  onClick={deleteComment}
-                >
-                  <Image
-                    src="/delete.svg"
-                    alt="삭제 버튼"
-                    width="25"
-                    height="25"
-                  ></Image>
-                </button>
-              )}
+          <div className={communityHome.social}>
+            <div className={communityHome.commentLogoContainer}>
+              <div className={communityHome.comment}>
+                <Image
+                  src="/comment.png"
+                  alt="풍선모양의 댓글 로고"
+                  layout="fill"
+                ></Image>
+              </div>
+              <p>
+                {commuPost.commentIds.length > 0 && commuPost.commentIds.length}
+              </p>
             </div>
-            <p className={post.content}>{el.content}</p>
-            <p className={post.commentTime}>
-              {el.timestamp.month}. {el.timestamp.date}. {el.timestamp.hour}:
-              {el.timestamp.minute}
-            </p>
+            <form
+              className={communityHome.commentForm}
+              onSubmit={submitComments}
+            >
+              <input
+                type="text"
+                className={communityHome.commentInput}
+                ref={comment}
+                placeholder="댓글 달기..."
+              ></input>
+              <button className={communityHome.commentBtn}>게시</button>
+            </form>
           </div>
-        ))}
+          {comments.map((el, i) => (
+            <div className={communityHome.commentContainer} key={i}>
+              <div className={communityHome.commentTop}>
+                <p className={communityHome.userId}>{el.userId}</p>
+                {el.userId === thisUserId && (
+                  <button
+                    data-remove={el.commentPostId}
+                    className={communityHome.commentDeleteBtn}
+                    onClick={deleteComment}
+                  >
+                    <Image
+                      src="/delete.svg"
+                      alt="삭제 버튼"
+                      layout="fill"
+                    ></Image>
+                  </button>
+                )}
+              </div>
+              <p className={communityHome.commentText}>{el.content}</p>
+              <p className={communityHome.commentTime}>
+                {el.timestamp.month}. {el.timestamp.date}. {el.timestamp.hour}:
+                {el.timestamp.minute}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
-      <form className={post.commentForm} onSubmit={submitComments}>
-        <input type="text" className={post.commentInput} ref={comment}></input>
-        <button className={post.commentBtn}>send</button>
-      </form>
+      {/* <form className={post.commentForm} onSubmit={submitComments}>
+        <input
+          type="text"
+          className={post.commentInput}
+          ref={comment}
+          placeholder="댓글을 남겨보세요"
+        ></input>
+        <button className={post.commentBtn}>
+          <Image src="/plus.png" alt="삭제 버튼" width="20" height="20"></Image>
+        </button>
+      </form> */}
       {modal && (
         <ModalContainer
           titleText="정말 삭제할까요?"

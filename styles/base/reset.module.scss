@@ -88,6 +88,7 @@ video {
   padding: 0;
   border: 0;
   font-size: 100%;
+  color: #262626;
   font: inherit;
   vertical-align: baseline;
   box-sizing: border-box;
@@ -97,7 +98,9 @@ video {
 :focus {
   outline: 0;
 }
-
+:focus-visible {
+  outline: 3px solid #82d1f1 !important;
+}
 /* HTML5 display-role reset for older browsers */
 article,
 aside,
@@ -211,9 +214,9 @@ html {
  * Address `outline` inconsistency between Chrome and other browsers.
  */
 
-a:focus {
-  outline: thin dotted;
-}
+// a:focus {
+//   outline: thin dotted;
+// }
 
 /**
  * Improve readability when focused and also mouse hovered in all browsers.
@@ -284,7 +287,6 @@ button,
 input,
 select,
 textarea {
-  font-family: establishRoomNo703OTF;
   font-size: 100%; /* 1 */
   margin: 0; /* 2 */
   vertical-align: baseline; /* 3 */
@@ -294,6 +296,7 @@ textarea {
   box-sizing: border-box;
 }
 button {
+  font-family: JGaegujaengyi-Bold-KO;
   border: 0;
   outline: 0;
 }

@@ -1,12 +1,27 @@
 @font-face {
-  font-family: "establishRoomNo703OTF";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/establishRoomNo703OTF.woff")
-    format("woff");
+  font-family: "JGaegujaengyi-Bold-KO";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/JGaegujaengyi-Bold-KO.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "JGaegujaengyi-Medium-KO";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/JGaegujaengyi-Medium-KO.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "JGaegujaengyi-Light-KO";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/JGaegujaengyi-Light-KO.woff2")
+    format("woff2");
   font-weight: normal;
   font-style: normal;
 }
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
-$font-emphasis: establishRoomNo703OTF;
+// $font-emphasis: JGaegujaengyi-Bold-KO;
+$font-emphasis: JGaegujaengyi-Bold-KO;
 
 $font-small: 1.2rem;
 $font-regurlar--smaller: 1.6rem;

@@ -1,31 +1,38 @@
 // scale
 $tab-bar-height: 6vh;
-$header-height: 11vh;
-$nav--upload: 5.5vh;
-$small-input--height: 100px;
+$header-height: 6rem;
+$post-width: 47rem;
+// $header-height: 11vh;
+$nav--upload: 7vh;
+$small-input--height: 5vh;
+$responsive-full-height: var(--responsive-full-height);
 //mobile scale
-$mobile-header-height: 10vh;
-$mobile-tab-bar-height: 8vh;
+$mobile-header-height: 5.5rem;
+// $mobile-header-height: 10vh;
+$mobile-tab-bar-height: 7vh;
 //color
 $main-color: #ffffff;
-$main-black-color: #21252b;
+$main-black-color: #262626;
 $white: #ffffff;
-$blue: #82d1f1;
-$opacity-blue: #82d1f161;
+// $blue: #82d1f1;
+$blue: #0095f6;
+$opacity-blue: #bbe0fc;
+// $opacity-blue: #82d1f161;
 $primary-color: #fae451;
 $gray-color: #979797;
 $gray-light-color: #c5c5c5;
+$gray-background: #fafafa;
+$gray-darker: #dbdbdb;
 $opacity-main-color: #fbf0de;
 $opacity-black-color: #191818dc;
 $hover-color: #d0d0d07d;
 
 //padding
-$diary__timeLine-padding--left: 12vw;
+$diary__timeLine-padding--left: 30vw;
 $diary__timeLine-padding--right: 7vw;
-$padding--content: 3rem 4rem;
-$padding--title-of-content: 2rem;
-$padding--owner: 1rem 4rem;
-
+// $padding--content: 3rem 4rem;
+$padding--content: 1.6rem;
+$padding--title-of-content: 8px 4px 8px 15px;
 //mobile padding
 $mobile-diary__timeLine-padding--left: 8vw;
 $mobile-padding--content: 1rem 2rem;
@@ -36,4 +43,4 @@ $mobile-padding--owner: 1rem 2rem;
 $screen-md-max: 768px;
 
 //border
-$border--normal: 2px solid black;
+$border--normal: 1px solid $gray-darker;

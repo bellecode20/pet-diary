@@ -1,6 +1,5 @@
 import UploadNav from "../../components/uploadNav";
-import form from "../../../styles/pages/formOfPosting.module.scss";
-import { getSession, useSession } from "next-auth/react";
+import communityHome from "../../../styles/pages/communityHome.module.scss";
 import { connectToDatabase } from "../../../lib/db";
 import { useEffect, useRef, useState } from "react";
 import { requestPostToMongodb } from "../../../components/requestPostToMongodb";
@@ -13,6 +12,8 @@ import {
   changeContentText,
 } from "../../../store/features/modalSlice";
 import CarouselSlide from "../../components/carouselSlide";
+import Image from "next/image";
+import SaveBtn from "../../components/saveBtn";
 const UpdatingCommu = ({ textedCommunity }) => {
   const commuPost = JSON.parse(textedCommunity);
   const [titleValue, setTitleValue] = useState(commuPost.title);
@@ -111,50 +112,59 @@ const UpdatingCommu = ({ textedCommunity }) => {
   }, [image]);
 
   return (
-    <div className={form.wrapper}>
+    <div
+      className={
+        modal ? communityHome.wrapper + " noScroll" : communityHome.wrapper
+      }
+    >
       <UploadNav formId="updatingCommu"></UploadNav>
       <form
-        className={form.mainContainer}
+        className={communityHome.mainContainer}
         encType="multipart/form-data"
         id="updatingCommu"
         onSubmit={updateCommu}
       >
-        {/* <div className={form.dateForm}>
-          <p className={form.date}>커뮤니티 글 쓰기</p>
-        </div> */}
-        {preview && <CarouselSlide data={preview}></CarouselSlide>}
-        <div className={form.photoForm}>
-          <label
-            htmlFor="updateCommu__form__photo"
-            // className={form.noPhoto}
-            className={preview ? form.whenPhoto : form.noPhoto}
-          >
-            + 사진
-          </label>
-          <input
-            type="file"
-            multiple
-            id="updateCommu__form__photo"
-            accept="image/png, image/jpeg"
-            style={{ display: "none" }}
-            name="newCommuPhoto[]"
-            onChange={checkThisImg}
-            title="시각장애인리더기"
-          />
-        </div>
-        <div className={form.textContainer}>
+        <div className={communityHome.mainContent}>
           <input
             type="text"
-            className={form.title}
+            className={communityHome.title}
             value={titleValue}
             onChange={(e) => setTitleValue(e.target.value)}
           />
+          {preview && <CarouselSlide data={preview}></CarouselSlide>}
+          <div className={communityHome.photoForm}>
+            <label
+              htmlFor="updateCommu__form__photo"
+              className={
+                preview ? communityHome.whenPhoto : communityHome.noPhoto
+              }
+            >
+              <div className={communityHome.imageContainer}>
+                <Image
+                  src="/camera--black.png"
+                  layout="fill"
+                  alt="사진 추가하기"
+                ></Image>
+              </div>
+            </label>
+            <input
+              type="file"
+              multiple
+              id="updateCommu__form__photo"
+              accept="image/png, image/jpeg"
+              style={{ display: "none" }}
+              name="newCommuPhoto[]"
+              onChange={checkThisImg}
+              title="시각장애인리더기"
+            />
+          </div>
           <textarea
-            className={form.content}
+            className={communityHome.content}
             value={contentValue}
             onChange={(e) => setContentValue(e.target.value)}
           ></textarea>
         </div>
+        <SaveBtn></SaveBtn>
       </form>
       {modal && <ModalContainer></ModalContainer>}
     </div>

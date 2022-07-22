@@ -1,18 +1,19 @@
-import { getSession } from "next-auth/react";
-import UploadNav from "../../components/uploadNav";
-import form from "../../../styles/pages/formOfPosting.module.scss";
 import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Image from "next/image";
 import { connectToDatabase } from "../../../lib/db";
 import { requestPostToCloudinary } from "../../../components/requestPostToCloudinary";
 import { requestPostToMongodb } from "../../../components/requestPostToMongodb";
 import CarouselSlide from "../../components/carouselSlide";
-import { useDispatch, useSelector } from "react-redux";
 import {
   changeCategory,
   changeContentText,
   modalIsShown,
 } from "../../../store/features/modalSlice";
+import UploadNav from "../../components/uploadNav";
 import ModalContainer from "../../../components/ModalContainer";
+import SaveBtn from "../../components/saveBtn";
+import form from "../../../styles/pages/formOfPosting.module.scss";
 const UpdatingForm = ({ textedDiary }) => {
   const date = useRef();
   const title = useRef();
@@ -117,7 +118,7 @@ const UpdatingForm = ({ textedDiary }) => {
     dispatch(changeCategory("SuccessModal"));
   };
   return (
-    <div className={form.wrapper}>
+    <div className={modal ? form.wrapper + " noScroll" : form.wrapper}>
       <UploadNav formId="updateDiary"></UploadNav>
       <form
         className={form.mainContainer}
@@ -125,53 +126,65 @@ const UpdatingForm = ({ textedDiary }) => {
         id="updateDiary"
         onSubmit={postDiary}
       >
-        <div className={form.dateForm}>
-          <label htmlFor="diary__form__date"></label>
-          <input
-            id="diary__form__date"
-            type="date"
-            ref={date}
-            className={form.date}
-            value={dateValue}
-            onChange={(e) => setDateValue(e.target.value)}
-          />
-        </div>
-        {preview && <CarouselSlide data={preview}></CarouselSlide>}
-        <div className={form.photoForm}>
-          <label
-            htmlFor="diary__form__photo"
-            className={preview ? form.whenPhoto : form.noPhoto}
+        <div className={form.mainContent}>
+          <div className={form.dateForm}>
+            <label htmlFor="diary__form__date"></label>
+            <input
+              id="diary__form__date"
+              type="date"
+              ref={date}
+              className={form.date}
+              value={dateValue}
+              onChange={(e) => setDateValue(e.target.value)}
+            />
+          </div>
+          {preview && <CarouselSlide data={preview}></CarouselSlide>}
+          <div
+            className={form.photoForm + " " + (preview ? null : form.makeFull)}
           >
-            + 사진
-          </label>
-          <input
-            type="file"
-            multiple
-            id="diary__form__photo"
-            accept="image/png, image/jpeg"
-            style={{ display: "none" }}
-            name="newPhoto[]"
-            onChange={checkThisImg}
-            title="시각장애인리더기"
-          />
+            {/* <div className={form.photoForm}> */}
+            <label
+              htmlFor="diary__form__photo"
+              className={preview ? form.whenPhoto : form.noPhoto}
+            >
+              <div className={form.imageContainer}>
+                <Image
+                  src="/camera--black.png"
+                  layout="fill"
+                  alt="사진 추가하기"
+                ></Image>
+              </div>
+            </label>
+            <input
+              type="file"
+              multiple
+              id="diary__form__photo"
+              accept="image/png, image/jpeg"
+              style={{ display: "none" }}
+              name="newPhoto[]"
+              onChange={checkThisImg}
+              title="시각장애인리더기"
+            />
+          </div>
+          <div className={form.textContainer}>
+            <input
+              type="text"
+              id={form.diary__form__title}
+              className={form.title}
+              ref={title}
+              value={titleValue}
+              onChange={(e) => setTitleValue(e.target.value)}
+            />
+            <textarea
+              id={form.diary__form__content}
+              className={form.content}
+              ref={content}
+              value={contentValue}
+              onChange={(e) => setContentValue(e.target.value)}
+            ></textarea>
+          </div>
         </div>
-        <div className={form.textContainer}>
-          <input
-            type="text"
-            id={form.diary__form__title}
-            className={form.title}
-            ref={title}
-            value={titleValue}
-            onChange={(e) => setTitleValue(e.target.value)}
-          />
-          <textarea
-            id={form.diary__form__content}
-            className={form.content}
-            ref={content}
-            value={contentValue}
-            onChange={(e) => setContentValue(e.target.value)}
-          ></textarea>
-        </div>
+        <SaveBtn></SaveBtn>
       </form>
       {modal && <ModalContainer></ModalContainer>}
     </div>

@@ -1,6 +1,5 @@
 import Image from "next/image";
 import intro from "../styles/pages/intro.module.scss";
-import sign from "../styles/pages/signUp.module.scss";
 import Link from "next/link";
 const Intro = () => {
   return (
@@ -14,7 +13,7 @@ const Intro = () => {
       </div>
       <p>고양이와 함께하는 하루하루.</p>
       <Link href={`/settings/signup`}>
-        <button className={intro.loginBtn}>시작하기</button>
+        <button className={intro.loginBtn}>Continue</button>
       </Link>
     </div>
   );

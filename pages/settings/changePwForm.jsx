@@ -56,23 +56,32 @@ const ChangePwFormContent = () => {
     <>
       <p className={sign.title}>비밀번호 변경</p>
       <form id="changePw" onSubmit={submitHandler}>
-        <div>
-          <label htmlFor="oldPw" className={sign.label}>
+        <div className={sign.inputContainer}>
+          {/* <label htmlFor="oldPw" className={sign.label}>
             기존 비밀번호
-          </label>
+          </label> */}
           <input
             type="password"
             required
             id="oldPw"
             ref={oldPwRef}
+            title="기존 비밀번호"
+            placeholder="기존 비밀번호"
             className={sign.idInput}
           ></input>
-        </div>
-        <div>
-          <label htmlFor="newPw" className={sign.label}>
+          {/* </div>
+        <div> */}
+          {/* <label htmlFor="newPw" className={sign.label}>
             새로운 비밀번호
-          </label>
-          <input type="text" required id="newPw" ref={newPwRef}></input>
+          </label> */}
+          <input
+            type="password"
+            required
+            id="newPw"
+            ref={newPwRef}
+            title="새로운 비밀번호"
+            placeholder="새로운 비밀번호"
+          ></input>
         </div>
         <button className={sign.upBtn} form="changePw">
           확인
@@ -81,7 +90,7 @@ const ChangePwFormContent = () => {
           취소
         </button>
       </form>
-      {modal && <ModalContainer></ModalContainer>}
+      {/* {modal && <ModalContainer></ModalContainer>} */}
     </>
   );
 };

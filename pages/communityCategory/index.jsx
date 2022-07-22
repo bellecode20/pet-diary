@@ -35,31 +35,33 @@ const Content = ({ textedCommunity }) => {
     <>
       {limitedCommunityPosts.map((el, i) => (
         <Link href={`/communityCategory/${el.commuPostId}`} key={i}>
-          <div className={communityHome.postContainer}>
+          <div className={communityHome.mainContent} tabIndex="0">
             <p className={communityHome.title}>{el.title}</p>
             <ImgPreview data={el}></ImgPreview>
             <p className={communityHome.content}>
-              <p className={communityHome.isUpdated}>
-                {el.isUpdated && "(수정됨)"}
-              </p>
+              <span className={communityHome.name}>{el.userId}</span>
               {el.content}
+              <span className={communityHome.isUpdated}>
+                {el.isUpdated && "(수정됨)"}
+              </span>
             </p>
             <div className={communityHome.owner}>
-              <p className={communityHome.name}>{el.userId}</p>
+              <p className={communityHome.name}>{""}</p>
               <p className={communityHome.date}>
                 {el.timestamp.month}. {el.timestamp.date}.
               </p>
             </div>
             <div className={communityHome.social}>
-              <div className={communityHome.comment}>
-                <Image
-                  alt="풍선 모양의 댓글 로고"
-                  src="/comment.svg"
-                  layout="fill"
-                  objectFit="scale-down"
-                ></Image>
+              <div className={communityHome.commentLogoContainer}>
+                <div className={communityHome.comment}>
+                  <Image
+                    alt="풍선 모양의 댓글 로고"
+                    src="/comment.png"
+                    layout="fill"
+                  ></Image>
+                </div>
+                <p>{el.commentIds.length >= 0 && el.commentIds.length}</p>
               </div>
-              <p>{el.commentIds.length >= 0 && el.commentIds.length}</p>
             </div>
           </div>
         </Link>
@@ -73,7 +75,6 @@ const Content = ({ textedCommunity }) => {
 const Index = ({ textedCommunity }) => {
   return (
     <MainPage
-      title={"Community"}
       main={<Content textedCommunity={textedCommunity}></Content>}
       urlToPost={"/communityCategory/commuPostingForm"}
     ></MainPage>

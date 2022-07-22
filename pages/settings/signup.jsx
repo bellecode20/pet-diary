@@ -10,7 +10,7 @@ import {
   changeContentText,
 } from "../../store/features/modalSlice";
 const SignUpContent = () => {
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
   const idRef = useRef();
   const pwRef = useRef();
   const router = useRouter();
@@ -59,6 +59,14 @@ const SignUpContent = () => {
         dispatch(modalIsShown(true));
         dispatch(changeCategory("SuccessModal"));
         dispatch(changeContentText("가입을 완료했어요"));
+        //가입에 성공한 경우 로그인을 한다.
+        const loginResult = await signIn("credentials", {
+          redirect: false,
+          userId: enteredId,
+          userPw: enteredPw,
+        }).catch((e) => {
+          console.error(e);
+        });
       }
     }
   }
@@ -110,23 +118,24 @@ const SignUpContent = () => {
     <>
       <p className={sign.title}>{isLogin ? "로그인" : "가입하기"}</p>
       <form id="signUp" onSubmit={submitHandler}>
-        <div>
-          <label htmlFor="userId" className={sign.label}>
-            ID
-          </label>
+        <div className={sign.inputContainer}>
           <input
             type="text"
             required
             id="userId"
             ref={idRef}
+            title="아이디"
             className={sign.idInput}
+            placeholder="아이디"
           ></input>
-        </div>
-        <div>
-          <label htmlFor="userPw" className={sign.label}>
-            Password
-          </label>
-          <input type="password" required id="userPw" ref={pwRef}></input>
+          <input
+            type="password"
+            required
+            id="userPw"
+            ref={pwRef}
+            title="비밀번호"
+            placeholder="비밀번호"
+          ></input>
         </div>
         <button className={sign.upBtn} form="signUp">
           {!isLogin ? "Sign up" : "Login"}
@@ -134,10 +143,10 @@ const SignUpContent = () => {
       </form>
       <div className={sign.switchContainer}>
         <p className={sign.titleOfswitchBtn}>
-          {!isLogin ? "이미 계정이 있으신가요?" : "처음 오셨나요?"}
+          {!isLogin ? "이미 계정이 있으신가요?" : "계정이 없으신가요?"}
         </p>
         <button className={sign.switchBtn} onClick={switchAuthMode}>
-          {!isLogin ? "로그인하기" : "계정만들기"}
+          {!isLogin ? "로그인" : "가입하기"}
         </button>
       </div>
     </>

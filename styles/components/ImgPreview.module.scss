@@ -3,14 +3,10 @@
   position: relative;
   min-width: 20rem;
   max-width: 100%;
-  min-height: 30vh;
+  min-height: 40rem;
   max-height: 50vh;
-  margin: 0.5rem;
   display: flex;
-  border-bottom: $border--normal;
   .photo {
-    border-top-left-radius: 1rem;
-    border-top-right-radius: 1rem;
     object-position: left top;
   }
 }

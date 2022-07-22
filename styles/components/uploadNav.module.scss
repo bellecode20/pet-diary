@@ -1,43 +1,74 @@
 @import "abstracts/variables.module.scss";
 @import "abstracts/mixins.module.scss";
+@import "abstracts/_responsive.scss";
 @import "buttons.module.scss";
 .headerNav {
   position: fixed;
   z-index: 100;
-  height: $nav--upload;
+  height: $header-height;
   top: 0;
   left: 0;
   right: 0;
-  background-color: $blue;
+  background-color: $white;
   display: flex;
   justify-content: space-between;
-  border-bottom: 4px solid black;
+  border-bottom: 1px solid $gray-darker;
+  align-items: center;
   .basic {
-    @include nav__button--bold;
-    flex-basis: 15vw;
+    //@include nav__button--bold;
+    border-radius: 3px;
+    width: $header-height;
+    height: $header-height;
+    // background-color: $primary-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    div {
+      position: relative;
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+  .basic:hover {
+    @include hoverAnimation;
+    background-color: $hover-color;
+    color: $main-black-color;
   }
   .hiddenMenu {
     @include font-menu;
     position: absolute;
-    top: $nav--upload;
+    top: $header-height;
+    // top: $nav--upload;
     right: 0;
     display: flex;
     flex-direction: column;
-    width: 10rem;
+    // width: 10rem;
+    background-color: white;
+    border-left: 1px solid $gray-darker;
+    border-right: 1px solid $gray-darker;
+    border-radius: 3px;
+    border: 1px solid $gray-darker;
+    > * {
+      width: $header-height;
+      height: calc($header-height / 2);
+      @include small-viewport {
+        height: 3.5rem;
+        width: 8rem;
+      }
+    }
+    > *:hover {
+      @include hoverAnimation;
+      background-color: $hover-color;
+    }
   }
   .updateBtn {
-    background-color: white;
-    border-left: 4px solid black;
-    border-right: 4px solid black;
-    border-radius: 3px;
+    // background-color: white;
+    // border-left: 1px solid $gray-darker;
+    // border-right: 1px solid $gray-darker;
+    // border-radius: 3px;
+    border-bottom: 1px solid $gray-darker;
   }
-  .deleteBtn {
+  .deleteBtn:hover {
     background-color: $primary-color;
-    border: 4px solid black;
-    border-radius: 3px;
-  }
-  :hover {
-    background-color: $white;
-    color: $main-black-color;
   }
 }

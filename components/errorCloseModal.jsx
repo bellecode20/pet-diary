@@ -17,16 +17,15 @@ const ErrorCloseModal = () => {
         <div className={loading.imgContainer}>
           <Image
             src="/cat--error.svg"
-            width="150"
-            height="150"
+            layout="fill"
             alt="슬퍼하는 고양이 일러스트"
           ></Image>
         </div>
-        <div>
+        <div className={loading.textContainer}>
           <p className={loading.title}>앗!</p>
           <p className={loading.content}>{contentText}</p>
         </div>
-        <button className={loading.button} onClick={handleClose}>
+        <button className={loading.button} onClick={handleClose} tabIndex="1">
           닫기
         </button>
       </div>

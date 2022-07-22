@@ -8,15 +8,38 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 10vh;
+  bottom: 20vh;
+  // animation: transitionIn 300ms;
+  align-items: center;
+  .mainContainer {
+    @include mainContainer;
+    width: 40rem;
+    @include medium-viewport {
+      width: 30rem;
+    }
+    @include small-viewport {
+      width: 80%;
+      padding: 0;
+    }
+  }
+  @keyframes transitionIn {
+    0% {
+      transform: translateX(40%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
   .title {
     @include font-title;
-    padding: 40vh 10vw 6.5rem 10vw;
+    // padding: 40vh 10vw 6.5rem 10vw;
     @include medium-viewport {
       font-size: $mobile-font-largest;
     }
     .description {
-      @include font-not-important;
+      // @include font-not-important;
+      font-family: "Pretendard";
+      font-size: 1.6rem;
       padding-top: 1rem;
       color: $gray-color;
       @include medium-viewport {
@@ -24,69 +47,78 @@
       }
     }
   }
-  .logo {
-    position: fixed;
-    right: 0;
-    top: 0;
-  }
+  // .logo {
+  //   // position: fixed;
+  //   // right: 0;
+  //   // top: 0;
+  // }
   form {
     position: relative;
-    padding: 5vw 10vw;
+    display: flex;
+    flex-direction: column;
     @include medium-viewport {
       font-size: $mobile-font-regular;
     }
-    .label {
-      font-weight: 500;
-      letter-spacing: -1px;
-      @include medium-viewport {
-        font-size: $mobile-font-small;
-      }
+    .inputContainer {
+      margin-bottom: 1rem;
+      margin-top: 0.5rem;
     }
     input {
-      font-size: 2rem;
+      font-size: 1.6rem;
+      letter-spacing: -0.5px;
       width: 100%;
-      border-radius: 7px;
-      margin-top: 2px;
-      margin-bottom: 1.5rem;
+      border-radius: 3px;
+      margin-top: 0.5rem;
       height: 4vh;
       min-height: 4rem;
-      background-color: #20353d1b;
+      padding: 0 1rem;
+      background-color: $gray-background;
+      border: 1px solid $gray-darker;
     }
-    .upBtn {
-      @include largeBtn;
-      margin-bottom: 0.5rem;
+    .upBtn,
+    .cancelBtn {
+      // @include largeBtn;
+      border-radius: 3px;
+      // margin-top: 1.3rem;
+      margin-top: 0.5rem;
+      // margin-bottom: 2.5rem;
+      height: 3.5vh;
+      min-height: 3rem;
+      padding: 0;
+      background-color: $blue;
+      color: $white;
+      font-family: "JGaegujaengyi-Medium-KO";
       @include medium-viewport {
         font-size: $mobile-font-regular;
       }
     }
     .cancelBtn {
-      @include largeBtn;
-      background-color: $gray-light-color;
-      border: none;
-      @include medium-viewport {
-        font-size: $mobile-font-regular;
-      }
+      background-color: $gray-darker;
     }
   }
   .switchContainer {
     font-family: "Pretendard";
-    font-weight: 600;
+    letter-spacing: -0.3px;
     color: $gray-color;
     border-top: 1px solid $gray-light-color;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 8vh;
+    // height: 8vh;
+    margin-top: 3vh;
+    padding: 1rem;
     @include medium-viewport {
       font-size: 1.6rem;
     }
     .switchBtn {
-      font-family: $font-emphasis;
-      color: #66b9da;
-      padding: 1rem 2rem;
-    }
-    .switchBtn:hover {
-      background-color: $gray-light-color;
+      // font-family: JGaegujaengyi-Medium-KO;
+      font-family: "Pretendard";
+      font-weight: 300;
+      font-size: 1.8rem;
+      // color: #66b9da;
+      color: $blue;
+      padding: 1rem 1rem;
+      border-radius: 3px;
     }
   }
 }

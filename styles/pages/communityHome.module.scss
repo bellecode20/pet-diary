@@ -1,10 +1,35 @@
 @import "abstracts/variables.module.scss";
 @import "abstracts/mixins.module.scss";
 @import "abstracts/_responsive.scss";
-.postContainer {
+.wrapper {
+  @include wrapperWithHeaderPadd;
+  padding-bottom: 3rem;
+  padding-top: calc($header-height + 3rem);
+  @include small-viewport {
+    padding-bottom: 0;
+    padding-top: $header-height;
+  }
+}
+.mainContainer {
+  @include mainContainer;
+}
+.mainContent {
   @include boxRadius;
+  @include mainContent;
   margin-bottom: 2vh;
   font-size: $font-regular--small;
+  background-color: $white;
+  display: flex;
+  flex-direction: column;
+  // animation: fadeIn 500ms;
+  // @keyframes fadeIn {
+  //   0% {
+  //     opacity: 0;
+  //   }
+  //   100% {
+  //     opacity: 1;
+  //   }
+  // }
   .isUpdated {
     font-size: 1rem;
     font-weight: 300;
@@ -19,25 +44,78 @@
       padding: $mobile-padding--title-of-content;
     }
   }
+  .photoForm {
+    align-self: center;
+    background-color: $gray-background;
+    border-radius: 3px;
+    margin-bottom: 1rem;
+    .whenPhoto {
+      cursor: pointer;
+      .imageContainer {
+        position: relative;
+        width: 3.5rem;
+        height: 3.5rem;
+        box-sizing: border-box;
+        @include medium-viewport {
+          width: 3rem;
+          height: 3rem;
+        }
+      }
+    }
+    .noPhoto {
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .imageContainer {
+        position: relative;
+        width: 7rem;
+        height: 7rem;
+        box-sizing: border-box;
+      }
+    }
+  }
+  .makeFull {
+    width: 100%;
+    height: 47rem;
+    margin: 0;
+  }
   .content {
     @include font-content;
-    margin: $padding--content;
+    padding: $padding--content;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     min-height: 5rem;
+    .name {
+      font-weight: 600;
+      padding-right: 5px;
+      font-size: 1.4rem;
+    }
     @include medium-viewport {
-      margin: $mobile-padding--content;
+      padding: $mobile-padding--content;
+    }
+  }
+  textarea.content {
+    border-top: 1px solid $gray-darker;
+    min-height: 30rem;
+    overflow-y: auto;
+    @include small-viewport {
+      min-height: 25rem;
     }
   }
   .owner {
     @include font--gray--light;
-    padding: $padding--owner;
+    font-weight: 600;
+    padding: $padding--content;
     display: flex;
     justify-content: space-between;
     font-size: $font-small;
+    font-size: 1.4rem;
     margin: 1rem 0 0.5rem 0;
     @include medium-viewport {
       padding: $mobile-padding--owner;
@@ -45,40 +123,94 @@
   }
   .social {
     @include font--gray--light;
-    border-top: 2px solid $gray-light-color;
+    border-top: $border--normal;
+    // border-bottom: $border--normal;
     display: flex;
-    height: 2vh;
-    min-height: 3rem;
-    display: flex;
-    align-items: center;
+    padding-left: 1rem;
+    height: 4rem;
     @include medium-viewport {
-      padding-left: 1rem;
+      padding-left: 1.6rem;
     }
-    .comment {
-      position: relative;
-      width: 2vh;
-      min-width: 3rem;
-      height: 100%; //이걸 추가해야 부모에 flex 쓸 수 잇었음
-      max-height: 80%;
-    }
-    p {
-      font-size: $mobile-font-small;
-    }
-  }
-  .commentContainer {
-    border-bottom: 1px solid black;
-    .commentTop {
+    .commentLogoContainer {
       display: flex;
-      justify-content: space-between;
-      .commentDeleteBtn {
-        background-color: $primary-color;
+      align-items: center;
+      padding-right: 1rem;
+      .comment {
+        position: relative;
+        width: 2.5rem;
+        height: 2.5rem;
+      }
+      p {
+        font-size: $mobile-font-small;
       }
     }
+    .commentForm {
+      width: 100%;
+      display: flex;
+      .commentInput {
+        flex: 1;
+      }
+      .commentBtn {
+        color: #25b2e9;
+        font-family: "Pretendard";
+        font-weight: 600;
+        height: 4rem;
+        width: 4rem;
+        font-size: 1.2rem;
+      }
+    }
+  }
+  // .commentContainer {
+  //   // border-bottom: 1px solid black;
+  //   border-top: 1px solid red;
+  //   .commentTop {
+  //     display: flex;
+  //     justify-content: space-between;
+  //     .commentDeleteBtn {
+  //       background-color: $primary-color;
+  //     }
+  //   }
+  //   .commentTime {
+  //     text-align: right;
+  //   }
+  // }
+  .commentContainer {
+    // position: relative;
+    // @include font-not-important;
+    border-top: 1px solid $gray-darker;
+    padding: $padding--title-of-content;
+    @include medium-viewport {
+      padding: $mobile-padding--title-of-content;
+    }
+    .commentTop {
+      font-family: JGaegujaengyi-Bold-KO;
+      letter-spacing: -2px;
+      position: relative;
+      .userId {
+        padding-bottom: 3px;
+      }
+      .commentDeleteBtn {
+        border-radius: 1rem;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 2.5rem;
+        height: 2.5rem;
+        background-color: $hover-color;
+      }
+    }
+    .commentText {
+      padding-bottom: 2px;
+      font-size: 1.2rem;
+    }
     .commentTime {
-      text-align: right;
+      @include font--gray--light;
+      // text-align: right;
+      font-family: JGaegujaengyi-Medium-KO;
+      font-size: 1.2rem;
     }
   }
 }
-.postContainer:hover {
-  background-color: $hover-color;
-}
+// .mainContent:hover {
+//   @include hoverAnimation;
+// }

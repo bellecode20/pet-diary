@@ -1,18 +1,20 @@
-import UploadNav from "../components/uploadNav";
-import ModalContainer from "../../components/ModalContainer";
-import { makeId } from "../../components/makeId";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { requestPostToMongodb } from "../../components/requestPostToMongodb";
-import { requestPostToCloudinary } from "../../components/requestPostToCloudinary";
-import form from "../../styles/pages/formOfPosting.module.scss";
 import { useDispatch, useSelector } from "react-redux";
-import CarouselSlide from "../components/carouselSlide";
-import { makeTimestamp } from "../../components/makeTimestamp";
 import {
   changeContentText,
   changeCategory,
   modalIsShown,
 } from "../../store/features/modalSlice";
+import UploadNav from "../components/uploadNav";
+import SaveBtn from "../components/saveBtn";
+import ModalContainer from "../../components/ModalContainer";
+import { makeId } from "../../components/makeId";
+import { requestPostToMongodb } from "../../components/requestPostToMongodb";
+import { requestPostToCloudinary } from "../../components/requestPostToCloudinary";
+import CarouselSlide from "../components/carouselSlide";
+import { makeTimestamp } from "../../components/makeTimestamp";
+import form from "../../styles/pages/formOfPosting.module.scss";
 const timeStamp = makeTimestamp();
 const PostingForm = () => {
   const date = useRef();
@@ -30,7 +32,6 @@ const PostingForm = () => {
     }
   };
   const dispatch = useDispatch();
-  // dispatch(modalIsShown(false));
   const modal = useSelector((state) => state.modal.isShown);
   useEffect(() => {
     //인풋에서 첨부할 사진을 선택하고나면, 그 사진을 스트링데이터로 변환시켜 preview state에 담는다.
@@ -95,7 +96,7 @@ const PostingForm = () => {
     dispatch(changeCategory("SuccessModal"));
   };
   return (
-    <div className={form.wrapper}>
+    <div className={modal ? form.wrapper + " noScroll" : form.wrapper}>
       <UploadNav formId="posting"></UploadNav>
       <form
         className={form.mainContainer}
@@ -103,50 +104,62 @@ const PostingForm = () => {
         id="posting"
         onSubmit={postDiary}
       >
-        <div className={form.dateForm}>
-          <label htmlFor="diary__form__date"></label>
-          <input
-            id="diary__form__date"
-            type="date"
-            defaultValue={`${timeStamp.year}-${timeStamp.month}-${timeStamp.date}`}
-            ref={date}
-            className={form.date}
-          />
-        </div>
-        {preview && <CarouselSlide data={preview}></CarouselSlide>}
-        <div className={form.photoForm}>
-          <label
-            htmlFor="diary__form__photo"
-            className={image ? form.whenPhoto : form.border} //사진 선택하면 테두리 없어진다.
+        <div className={form.mainContent}>
+          <div className={form.dateForm}>
+            <label htmlFor="diary__form__date"></label>
+            <input
+              id="diary__form__date"
+              type="date"
+              defaultValue={`${timeStamp.year}-${timeStamp.month}-${timeStamp.date}`}
+              ref={date}
+              className={form.date}
+            />
+          </div>
+          {preview && <CarouselSlide data={preview}></CarouselSlide>}
+          <div
+            className={form.photoForm + " " + (preview ? null : form.makeFull)}
           >
-            + 사진
-          </label>
-          <input
-            type="file"
-            multiple
-            id="diary__form__photo"
-            accept="image/png, image/jpeg"
-            style={{ display: "none" }}
-            name="photo[]"
-            onChange={checkThisImg}
-            title="시각장애인리더기"
-          />
+            {/* <div className={form.photoForm}> */}
+            <label
+              htmlFor="diary__form__photo"
+              className={image ? form.whenPhoto : form.noPhoto} //사진 선택하면 테두리 없어진다.
+            >
+              <div className={form.imageContainer}>
+                <Image
+                  src="/camera--black.png"
+                  layout="fill"
+                  alt="사진 추가하기"
+                ></Image>
+              </div>
+            </label>
+            <input
+              type="file"
+              multiple
+              id="diary__form__photo"
+              accept="image/png, image/jpeg"
+              style={{ display: "none" }}
+              name="photo[]"
+              onChange={checkThisImg}
+              title="시각장애인리더기"
+            />
+          </div>
+          <div className={form.textContainer}>
+            <input
+              type="text"
+              id={form.diary__form__title}
+              className={form.title}
+              placeholder="제목을 작성해주세요"
+              ref={title}
+            />
+            <textarea
+              id={form.diary__form__content}
+              className={form.content}
+              placeholder="일기를 작성해주세요"
+              ref={content}
+            ></textarea>
+          </div>
         </div>
-        <div className={form.textContainer}>
-          <input
-            type="text"
-            id={form.diary__form__title}
-            className={form.title}
-            placeholder="스프와의 첫 만남"
-            ref={title}
-          />
-          <textarea
-            id={form.diary__form__content}
-            className={form.content}
-            placeholder="오늘은 스프가 집에 처음 왔다."
-            ref={content}
-          ></textarea>
-        </div>
+        <SaveBtn></SaveBtn>
       </form>
       {modal && <ModalContainer></ModalContainer>}
     </div>

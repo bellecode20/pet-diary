@@ -2,87 +2,96 @@
 @import "abstracts/mixins.module.scss";
 @import "abstracts/_responsive.scss";
 .wrapper {
-  padding-top: $header-height;
-  padding-bottom: $tab-bar-height;
+  padding-top: calc($header-height + 3.2rem);
+  display: flex;
+  flex-direction: column;
+  background-color: $gray-background;
+  min-height: 100%;
   @include medium-viewport {
-    padding-top: $mobile-header-height;
-    padding-bottom: $mobile-tab-bar-height;
+    padding-top: calc($mobile-header-height + 2rem);
   }
-  .header {
-    @include font-title;
-    z-index: 100;
-    background-color: $main-color;
-    height: $header-height;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    align-items: center;
-    padding-left: $diary__timeLine-padding--left;
-    @include medium-viewport {
-      font-size: 2rem;
-      height: $mobile-header-height;
-      padding-left: $mobile-diary__timeLine-padding--left;
-    }
+  @include small-viewport {
+    padding-top: $mobile-header-height;
   }
   .mainContainer {
-    height: 100vh;
-    max-height: calc(100vh - $header-height - $tab-bar-height);
-    //height: 100vh와 max-height이렇게 설정한다. 그래서 메인컨테이너에 스크롤 안생겼다.
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 0 $diary__timeLine-padding--left 0 $diary__timeLine-padding--left;
+    align-self: center;
+    width: $post-width;
+    margin-bottom: $tab-bar-height;
+    position: relative;
+    // animation: transitionIn 300ms;
+    // @keyframes transitionIn {
+    //   0% {
+    //     transform: translateX(40%);
+    //   }
+    //   100% {
+    //     transform: translateX(0);
+    //   }
+    // }
     @include medium-viewport {
-      max-height: calc(100vh - $mobile-header-height - $mobile-tab-bar-height);
       padding: 0 $mobile-diary__timeLine-padding--left 0
         $mobile-diary__timeLine-padding--left;
     }
-  }
-  .loadMoreBtn {
-    @include blockBtn;
-  }
-  .loadMoreBtn:hover {
-    background-color: $hover-color;
-  }
-  .noLoadPosts {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    .description {
-      text-align: center;
-      font-weight: 500;
-      letter-spacing: -1px;
-      font-size: $mobile-font-small;
+    @include small-viewport {
+      width: 100%;
+      padding: 0;
+    }
+    .loadMoreBtn {
+      border-radius: 1rem;
+      @include blockBtn;
+    }
+    .loadMoreBtn:hover {
+      background-color: $hover-color;
+      @include hoverAnimation;
+    }
+    .noLoadPosts {
+      // position: absolute;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      .description {
+        text-align: center;
+        font-weight: 500;
+        letter-spacing: -1px;
+        font-size: $mobile-font-small;
+      }
     }
   }
   .addBtn {
     background-color: white;
-    border-left: 5px solid black;
-    border: 4px solid black;
-    box-shadow: 5px 3px black;
+    border: 2px solid $main-black-color;
+    background-color: $blue;
+    width: 6rem;
+    height: 6rem;
     position: fixed;
-    bottom: 6.5vh;
-    right: 4.8vw;
-    width: 8vh;
-    height: 8vh;
-    border-radius: 30%;
-    bottom: calc($tab-bar-height + 2vh);
+    bottom: 5rem;
+    left: calc($post-width + (100% - 47rem) / 2 + 3rem);
+    border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: background 200ms;
+    @include medium-viewport {
+      width: 5rem;
+      height: 5rem;
+      left: calc(100% - $mobile-diary__timeLine-padding--left * 2);
+    }
+    @include small-viewport {
+      left: calc(100% - $mobile-diary__timeLine-padding--left * 2 - 0.5rem);
+    }
     .imageContainer {
       position: relative;
-      width: 100%;
-      height: 100%;
+      width: 2.5rem;
+      height: 2.5rem;
       box-sizing: border-box;
-    }
-    @include medium-viewport {
-      bottom: calc($mobile-tab-bar-height + 2vh);
+      @include medium-viewport {
+        width: 2rem;
+        height: 2rem;
+      }
     }
   }
   .addBtn:hover {
     background-color: $primary-color;
+    transition: background 200ms;
   }
 }

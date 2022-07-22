@@ -9,24 +9,33 @@
   flex-direction: column;
   margin-bottom: 3rem;
   cursor: pointer;
-  color: black;
+  // color: black;
+  background-color: $white;
   .dateOfDiary {
-    @include contentRadius;
+    // @include contentRadius;
     z-index: 1;
     position: absolute;
     top: 2.5rem;
     left: 2rem;
-    font-size: 2rem;
-    font-weight: 500;
+    top: 1.6rem;
+    left: 1rem;
+    // font-size: 2rem;
+    // font-weight: 500;
+    @include font-title-of-content;
+    font-family: "JGaegujaengyi-Light-KO";
+    letter-spacing: -2px;
     @include medium-viewport {
       top: 1.5rem;
       left: 1rem;
     }
     span {
-      background-color: $blue;
-      border-radius: 2rem;
-      border: $border--normal;
-      padding: 0.5rem 1rem;
+      // background-color: $blue;
+      background-color: $main-black-color;
+      border-radius: 1rem;
+      // border: $border--normal;
+      // border: 3px solid $main-black-color;
+      padding: 0.6rem 1.2rem;
+      color: $white;
     }
     @include medium-viewport {
       font-size: 1.4rem;
@@ -37,7 +46,7 @@
     padding-bottom: 3vh;
     .diaryTitle {
       @include font-title-of-content;
-      margin-bottom: 2rem;
+      margin-bottom: 0.5rem;
     }
     .diaryContent {
       @include font-content;
@@ -47,8 +56,12 @@
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
     }
+    @include medium-viewport {
+      padding: $mobile-padding--content;
+      padding-bottom: 2rem;
+    }
   }
 }
 .dayContainer:hover {
-  background-color: $hover-color;
+  @include hoverAnimation;
 }

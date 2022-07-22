@@ -1,81 +1,88 @@
 @import "abstracts/variables.module.scss";
 @import "abstracts/mixins.module.scss";
+@import "abstracts/_responsive.scss";
 .wrapper {
-  padding-top: $nav--upload;
+  // 밑에는 formOfPosting에서 붙여욘거
+  padding-top: calc($header-height + 3rem);
+  padding-bottom: 3rem;
+  display: flex;
+  justify-content: center;
+  background-color: $gray-background;
+  min-height: 100%;
   padding-bottom: $small-input--height;
   .mainContainer {
-    overflow-y: auto;
-    height: 100vh;
-    max-height: calc(100vh - $nav--upload - $small-input--height);
     display: flex;
     flex-direction: column;
-    > * {
-      padding-left: 8.2vw;
-      padding-right: 8.2vw;
+    width: $post-width;
+    .mainContent {
+      border: 1px solid $gray-darker;
+      border-radius: 10px;
+      background-color: $white;
     }
-    .owner {
-      @include font--gray--light;
-      display: flex;
-      justify-content: space-between;
-    }
-    .tag {
-      @include font-title-of-content;
-      @include boxRadius;
-      padding: $padding--title-of-content;
-      margin-top: 3vh;
-      margin-left: 8.2vw;
-      margin-right: 8.2vw;
-      border-radius: 1rem;
-    }
-    .social {
-      @include font-not-important;
-      margin-top: 1rem;
-      border-top: 3px solid black;
-      border-bottom: 3px solid black;
-      padding: 2px 8.2vw;
-      display: flex;
-      gap: 3rem;
-    }
-    .commentContainer {
-      @include font-not-important;
-      border-bottom: 2px solid black;
-      margin-top: 1rem;
-      margin-bottom: 1rem;
-      .commentTop {
-        font-family: establishRoomNo703OTF;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        .commentDeleteBtn {
-          @include boxRadius;
-          background-color: $primary-color;
-          border: 2px solid black;
-        }
+    @keyframes fadeIn {
+      0% {
+        opacity: 0.1;
       }
-      .commentTime {
-        @include font--gray--light;
-        text-align: right;
+      100% {
+        opacity: 1;
       }
-    }
-    .content {
-      @include font-content;
     }
   }
 }
-.commentForm {
-  position: fixed;
-  left: 0;
-  right: 0;
-  display: flex;
-  padding: 0;
-  @include boxRadius;
-  .commentInput {
-    width: 100%;
-    height: $small-input--height;
-    border-right: 4px solid black;
-  }
-  .commentBtn {
-    background-color: $primary-color;
-    border-radius: 1rem;
-  }
-}
+// .commentContainer {
+//   // @include font-not-important;
+//   border-bottom: 1px solid $gray-darker;
+//   .commentTop {
+//     font-family: JGaegujaengyi-Bold-KO;
+//     letter-spacing: -2px;
+//     position: relative;
+//     .userId {
+//       padding-bottom: 3px;
+//     }
+//     .commentDeleteBtn {
+//       border-radius: 1rem;
+//       position: absolute;
+//       top: 0;
+//       right: 0;
+//       width: 2.5rem;
+//       height: 2.5rem;
+//       background-color: $hover-color;
+//     }
+//   }
+//   .content {
+//     padding-bottom: 2px;
+//   }
+//   .commentTime {
+//     @include font--gray--light;
+//     // text-align: right;
+//     font-family: JGaegujaengyi-Medium-KO;
+//     font-size: 1.2rem;
+//   }
+// }
+// .commentForm {
+//   // @include boxRadius;
+//   // position: fixed;
+//   // left: 1rem;
+//   // right: 1rem;
+//   // bottom: 0;
+//   // display: flex;
+//   // border: none;
+//   // background-color: #dadada61;
+//   border: 1px solid red;
+//   // .commentInput {
+//   //   width: 100%;
+//   //   height: calc($small-input--height - 1rem);
+//   //   padding: 1rem 2rem;
+//   // }
+//   .commentInput {
+//     padding: 1rem 2rem;
+//   }
+//   .commentBtn {
+//     // background-color: $primary-color;
+//     border-radius: 1rem;
+//     color: #25b2e9;
+//     width: calc($small-input--height - 1rem);
+//     font-family: "Pretendard";
+//     // height: calc($small-input--height - 1rem);
+//   }
+// }

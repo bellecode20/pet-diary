@@ -36,7 +36,11 @@ const CommuContent = ({ textedDiaries }) => {
         <Link href={`/privatediaryCategory/${diary.postId}`} key={i}>
           <a className={styles.dayContainer} custom-attribute={diary.postId}>
             <div className={styles.dateOfDiary}>
-              <span>{diary.postingDate}</span>
+              <span>
+                {diary.postingDate.substring(0, 4)}.&nbsp;
+                {diary.postingDate.substring(5, 7)}.&nbsp;
+                {diary.postingDate.substring(8, 10)}.
+              </span>
             </div>
             <ImgPreview data={diary}></ImgPreview>
             <div className={styles.diary}>
@@ -53,7 +57,7 @@ const CommuContent = ({ textedDiaries }) => {
       ) : (
         <div className={mainPage.noLoadPosts}>
           <p className={mainPage.description}>일기를 써보라냥</p>
-          <Image src="/cat--with-book.jpeg" width="200" height="200"></Image>
+          <Image src="/cat--with-book.png" width="200" height="200"></Image>
         </div>
       )}
     </>
@@ -63,7 +67,6 @@ const CommuContent = ({ textedDiaries }) => {
 const Home = ({ textedDiaries }) => {
   return (
     <MainPage
-      title={"Diary"}
       main={<CommuContent textedDiaries={textedDiaries}></CommuContent>}
       urlToPost={"/privatediaryCategory/postingForm"}
     ></MainPage>

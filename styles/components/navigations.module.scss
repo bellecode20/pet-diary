@@ -2,38 +2,54 @@
 @import "../base/typography.module.scss";
 @import "../abstracts/mixins.module.scss";
 @import "../abstracts/responsive.scss";
-.tabBar {
-  height: $tab-bar-height;
+.header {
+  @include font-title;
+  width: 100%;
+  height: $header-height;
+  color: $main-black-color;
+  // padding: 0 2rem;
+  font-size: 2.6rem;
+  letter-spacing: -3px;
+  z-index: 100;
+  background-color: $main-color;
   position: fixed;
+  top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  border: $border--normal;
-  border-radius: 8px 8px 0 0;
-  color: $white;
   display: flex;
+  align-items: center;
   justify-content: center;
-  background-color: $white;
-  .menu {
-    position: relative;
-    flex-basis: 20%;
+  border-bottom: 1px solid $gray-darker;
+  @include medium-viewport {
+    font-size: 2rem;
+    height: $mobile-header-height;
+  }
+  .headerAlign {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    color: $white;
-    margin: 1rem 0;
-    p {
-      @include font-menu;
+    min-width: $screen-medium-max;
+    padding: 0 2rem;
+    @include medium-viewport {
+      min-width: $screen-small-max;
     }
-  }
-  #bigMenu {
-    flex-basis: 20%;
-    margin: 0px;
-  }
-}
-@include medium-viewport {
-  .tabBar {
-    height: $mobile-tab-bar-height;
+    @include small-viewport {
+      font-size: 2rem;
+      min-width: 100%;
+    }
+    .tabBar_new {
+      display: flex;
+      justify-content: flex-end;
+      box-sizing: border-box;
+      .menu_new {
+        position: relative;
+        width: 3rem;
+        height: 3rem;
+        display: flex;
+        flex-direction: column;
+        color: $white;
+        border-radius: 3px;
+      }
+    }
   }
 }

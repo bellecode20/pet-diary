@@ -1,4 +1,3 @@
-import sign from "../../styles/pages/signUp.module.scss";
 import { useRef, useState } from "react";
 import { signIn, getSession } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -10,6 +9,7 @@ import {
   changeCategory,
   changeContentText,
 } from "../../store/features/modalSlice";
+import sign from "../../styles/pages/signUp.module.scss";
 const WithDrawalFormContent = () => {
   const router = useRouter();
   const oldPwRef = useRef();
@@ -66,20 +66,21 @@ const WithDrawalFormContent = () => {
       <div className={sign.title}>
         <p>탈퇴하기</p>
         <div className={sign.description}>
-          <p>비밀번호를 입력해주세요.</p>
           <p>작성한 커뮤니티 글과 댓글은 삭제되지 않아요!</p>
         </div>
       </div>
       <form id="withdrawal" onSubmit={submitHandler}>
-        <div>
-          <label htmlFor="oldPw" className={sign.label}>
+        <div className={sign.inputContainer}>
+          {/* <label htmlFor="oldPw" className={sign.label}>
             기존 비밀번호
-          </label>
+          </label> */}
           <input
             type="password"
             required
             id="oldPw"
             ref={oldPwRef}
+            title="기존 비밀번호"
+            placeholder="기존 비밀번호"
             className={sign.idInput}
           ></input>
         </div>

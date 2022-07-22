@@ -32,6 +32,7 @@ const CarouselSlide = ({ data }) => {
     },
     [embla]
   );
+  const isMultiplePhoto = data.length > 1;
   useEffect(() => {
     if (embla) {
       embla.reInit();
@@ -43,7 +44,14 @@ const CarouselSlide = ({ data }) => {
   return (
     <>
       <div className={carousel.embla}>
-        <div className={carousel.embla__viewport} ref={viewportRef}>
+        <div
+          className={
+            isMultiplePhoto
+              ? carousel.embla__viewport
+              : carousel.embla__viewport + " " + carousel.fullWidth
+          }
+          ref={viewportRef}
+        >
           <div className={carousel.embla__container}>
             {data.map((img, i) => (
               <div
@@ -62,34 +70,38 @@ const CarouselSlide = ({ data }) => {
             ))}
           </div>
         </div>
-        <button className={carousel.embla__prev} onClick={scrollPrev}>
-          <Image
-            src="/slide--left.svg"
-            alt="이전 썸네일 보기 버튼"
-            width="50"
-            height="50"
-          ></Image>
-        </button>
-        <button className={carousel.embla__next} onClick={scrollNext}>
-          <Image
-            src="/slide--right.svg"
-            alt="다음 썸네일 보기 버튼"
-            width="50"
-            height="50"
-          ></Image>
-        </button>
-        <div className={carousel.embla__dots}>
-          {scrollSnaps.map((_, index) => (
-            <button
-              key={index}
-              className={`${carousel.embla__dot} ${
-                index === selectedIndex ? `${carousel.isSelected}` : ""
-              }`}
-              type="button"
-              onClick={() => scrollTo(index)}
-            />
-          ))}
-        </div>
+        {isMultiplePhoto && (
+          <>
+            <button className={carousel.embla__prev} onClick={scrollPrev}>
+              <Image
+                src="/prev.png"
+                alt="이전 썸네일 보기 버튼"
+                width="40"
+                height="40"
+              ></Image>
+            </button>
+            <button className={carousel.embla__next} onClick={scrollNext}>
+              <Image
+                src="/next.png"
+                alt="다음 썸네일 보기 버튼"
+                width="40"
+                height="40"
+              ></Image>
+            </button>
+            <div className={carousel.embla__dots}>
+              {scrollSnaps.map((_, index) => (
+                <button
+                  key={index}
+                  className={`${carousel.embla__dot} ${
+                    index === selectedIndex ? `${carousel.isSelected}` : ""
+                  }`}
+                  type="button"
+                  onClick={() => scrollTo(index)}
+                />
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </>
   );

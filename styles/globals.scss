@@ -6,7 +6,6 @@ html {
 }
 html,
 body {
-  background-color: $main-color;
   padding: 0;
   margin: 0;
   font-family: "Pretendard", -apple-system, sans-serif;
@@ -15,10 +14,15 @@ body {
 }
 body {
   font-size: 1.8rem;
+  overflow-x: hidden;
 }
 #__next {
   height: 100%;
 }
 a {
   text-decoration: none;
+}
+.noScroll {
+  height: 100%;
+  overflow: hidden;
 }

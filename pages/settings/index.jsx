@@ -2,12 +2,10 @@ import settings from "../../styles/pages/settings.module.scss";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import MainPage from "../layout/mainPage";
-import ModalContainer from "../../components/ModalContainer";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { modalIsShown, changeCategory } from "../../store/features/modalSlice";
 const SettingsContent = () => {
   const { data: session, status } = useSession();
-  const modal = useSelector((state) => state.modal.isShown);
   const dispatch = useDispatch();
   const logoutHandler = () => {
     dispatch(modalIsShown(true));
@@ -39,18 +37,12 @@ const SettingsContent = () => {
           </Link>
         </div>
       </div>
-      {modal && <ModalContainer></ModalContainer>}
     </div>
   );
 };
 
 const Settings = () => {
-  return (
-    <MainPage
-      title="Settings"
-      main={<SettingsContent></SettingsContent>}
-    ></MainPage>
-  );
+  return <MainPage main={<SettingsContent></SettingsContent>}></MainPage>;
 };
 
 export default Settings;

@@ -1,6 +1,12 @@
 $screen-medium-max: 768px;
+$screen-small-max: 480px;
 @mixin medium-viewport {
   @media (max-width: $screen-medium-max) {
+    @content;
+  }
+}
+@mixin small-viewport {
+  @media (max-width: $screen-small-max) {
     @content;
   }
 }

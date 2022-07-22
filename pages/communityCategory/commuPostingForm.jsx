@@ -1,5 +1,5 @@
 import UploadNav from "../components/uploadNav";
-import form from "../../styles/pages/formOfPosting.module.scss";
+import communityHome from "../../styles/pages/communityHome.module.scss";
 import { makeId } from "../../components/makeId";
 import { useEffect, useRef, useState } from "react";
 import { requestPostToCloudinary } from "../../components/requestPostToCloudinary";
@@ -13,6 +13,8 @@ import {
 } from "../../store/features/modalSlice";
 import ModalContainer from "../../components/ModalContainer";
 import CarouselSlide from "../components/carouselSlide";
+import Image from "next/image";
+import SaveBtn from "../components/saveBtn";
 const CommuPostingForm = () => {
   const dispatch = useDispatch();
   const modal = useSelector((state) => state.modal.isShown);
@@ -94,47 +96,67 @@ const CommuPostingForm = () => {
     dispatch(changeCategory("SuccessModal"));
   };
   return (
-    <div className={form.wrapper}>
+    <div
+      className={
+        modal ? communityHome.wrapper : communityHome.wrapper + " " + "noScroll"
+      }
+    >
+      {/* <div className={communityHome.wrapper}> */}
       <UploadNav formId="postingCommu"></UploadNav>
       <form
-        className={form.mainContainer}
+        className={communityHome.mainContainer}
         encType="multipart/form-data"
         id="postingCommu"
         onSubmit={postCommu}
       >
-        <div className={form.dateForm}></div>
-        {preview && <CarouselSlide data={preview}></CarouselSlide>}
-        <div className={form.photoForm}>
-          <label
-            htmlFor="commu__form__photo"
-            className={preview ? form.whenPhoto : form.border} //사진 선택하면 테두리 없어진다.
-          >
-            + 사진
-          </label>
-          <input
-            type="file"
-            multiple
-            id="commu__form__photo"
-            accept="image/png, image/jpeg"
-            style={{ display: "none" }}
-            name="photo[]"
-            onChange={checkThisImg}
-            title="시각장애인리더기"
-          />
-        </div>
-        <div className={form.textContainer}>
+        <div className={communityHome.mainContent}>
           <input
             type="text"
-            className={form.title}
+            className={communityHome.title}
             placeholder="우리집 냥이 소개하기"
             ref={title}
           />
+          {preview && <CarouselSlide data={preview}></CarouselSlide>}
+          <div
+            className={
+              communityHome.photoForm +
+              " " +
+              (preview ? null : communityHome.makeFull)
+            }
+          >
+            {/* <div className={communityHome.photoForm} tabIndex="0"> */}
+            <label
+              htmlFor="commu__form__photo"
+              className={
+                preview ? communityHome.whenPhoto : communityHome.noPhoto
+              } //사진 선택하면 테두리 없어진다.
+            >
+              <div className={communityHome.imageContainer}>
+                <Image
+                  src="/camera--black.png"
+                  layout="fill"
+                  alt="사진 추가하기"
+                ></Image>
+              </div>
+            </label>
+            <input
+              type="file"
+              multiple
+              id="commu__form__photo"
+              accept="image/png, image/jpeg"
+              style={{ display: "none" }}
+              name="photo[]"
+              onChange={checkThisImg}
+              title="시각장애인리더기"
+            />
+          </div>
           <textarea
-            className={form.content}
+            className={communityHome.content}
             placeholder="사람들에게 우리집 냥이를 자랑해보세요"
             ref={content}
           ></textarea>
         </div>
+        <SaveBtn></SaveBtn>
       </form>
       {modal && <ModalContainer></ModalContainer>}
     </div>
