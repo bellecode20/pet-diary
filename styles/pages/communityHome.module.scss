@@ -21,15 +21,7 @@
   background-color: $white;
   display: flex;
   flex-direction: column;
-  // animation: fadeIn 500ms;
-  // @keyframes fadeIn {
-  //   0% {
-  //     opacity: 0;
-  //   }
-  //   100% {
-  //     opacity: 1;
-  //   }
-  // }
+  max-height: 100%;
   .isUpdated {
     font-size: 1rem;
     font-weight: 300;
@@ -81,6 +73,9 @@
     width: 100%;
     height: 47rem;
     margin: 0;
+    @include small-viewport {
+      height: 35rem;
+    }
   }
   .content {
     @include font-content;
@@ -102,11 +97,8 @@
   }
   textarea.content {
     border-top: 1px solid $gray-darker;
-    min-height: 30rem;
+    flex-grow: 1;
     overflow-y: auto;
-    @include small-viewport {
-      min-height: 25rem;
-    }
   }
   .owner {
     @include font--gray--light;
@@ -114,7 +106,7 @@
     padding: $padding--content;
     display: flex;
     justify-content: space-between;
-    font-size: $font-small;
+    font-size: $font-smallest;
     font-size: 1.4rem;
     margin: 1rem 0 0.5rem 0;
     @include medium-viewport {
@@ -124,7 +116,6 @@
   .social {
     @include font--gray--light;
     border-top: $border--normal;
-    // border-bottom: $border--normal;
     display: flex;
     padding-left: 1rem;
     height: 4rem;
@@ -160,23 +151,7 @@
       }
     }
   }
-  // .commentContainer {
-  //   // border-bottom: 1px solid black;
-  //   border-top: 1px solid red;
-  //   .commentTop {
-  //     display: flex;
-  //     justify-content: space-between;
-  //     .commentDeleteBtn {
-  //       background-color: $primary-color;
-  //     }
-  //   }
-  //   .commentTime {
-  //     text-align: right;
-  //   }
-  // }
   .commentContainer {
-    // position: relative;
-    // @include font-not-important;
     border-top: 1px solid $gray-darker;
     padding: $padding--title-of-content;
     @include medium-viewport {
@@ -205,12 +180,8 @@
     }
     .commentTime {
       @include font--gray--light;
-      // text-align: right;
       font-family: JGaegujaengyi-Medium-KO;
       font-size: 1.2rem;
     }
   }
 }
-// .mainContent:hover {
-//   @include hoverAnimation;
-// }

@@ -119,7 +119,7 @@ const UpdatingForm = ({ textedDiary }) => {
   };
   return (
     <div className={modal ? form.wrapper + " noScroll" : form.wrapper}>
-      <UploadNav formId="updateDiary"></UploadNav>
+      <UploadNav></UploadNav>
       <form
         className={form.mainContainer}
         encType="multipart/form-data"
@@ -142,7 +142,6 @@ const UpdatingForm = ({ textedDiary }) => {
           <div
             className={form.photoForm + " " + (preview ? null : form.makeFull)}
           >
-            {/* <div className={form.photoForm}> */}
             <label
               htmlFor="diary__form__photo"
               className={preview ? form.whenPhoto : form.noPhoto}

@@ -1,9 +1,8 @@
-import { useRef, useState } from "react";
-import { signIn, getSession } from "next-auth/react";
+import { useRef } from "react";
 import { useRouter } from "next/router";
 import Account from "../layout/account";
 import { signOut } from "next-auth/react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   modalIsShown,
   changeCategory,
@@ -36,7 +35,7 @@ const WithDrawalFormContent = () => {
     });
     if (data.error) {
       dispatch(modalIsShown(true));
-      dispatch(changeContentText("오류가 발생했어요. 다시 시도해주세요"));
+      dispatch(changeContentText("오류가 발생했어요. 다시 시도해주세요."));
     }
     if (data.contentStatus) {
       dispatch(modalIsShown(true));
@@ -44,11 +43,11 @@ const WithDrawalFormContent = () => {
         dispatch(changeContentText("로그인을 다시 해주세요"));
       } else if (data.contentStatus === "006") {
         dispatch(
-          changeContentText("유저를 찾을 수 없어요. 로그인을 다시 해주세요")
+          changeContentText("유저를 찾을 수 없어요. 로그인을 다시 해주세요.")
         );
       } else if (data.contentStatus === "007") {
         dispatch(modalIsShown(true));
-        dispatch(changeContentText("비밀번호가 일치하지 않아요"));
+        dispatch(changeContentText("비밀번호가 일치하지 않아요."));
       } else if (data.contentStatus === "008") {
         // 탈퇴성공하면 로그아웃
         dispatch(changeContentText("탈퇴했어요ㅠㅠ"));
@@ -71,9 +70,6 @@ const WithDrawalFormContent = () => {
       </div>
       <form id="withdrawal" onSubmit={submitHandler}>
         <div className={sign.inputContainer}>
-          {/* <label htmlFor="oldPw" className={sign.label}>
-            기존 비밀번호
-          </label> */}
           <input
             type="password"
             required

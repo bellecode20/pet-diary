@@ -29,19 +29,12 @@ const Post = ({ textedDiary }) => {
       <div className={form.mainContainer}>
         <div className={form.mainContent}>
           <div className={form.dateForm}>
-            {/* <p className={form.date}>{privateDiary.postingDate}</p> */}
             <p className={form.date}>
-              {/* <p className={form.date}>{privateDiary.postingDate}</p> */}
               {privateDiary.postingDate.substring(0, 4)}.&nbsp;
               {privateDiary.postingDate.substring(5, 7)}.&nbsp;
               {privateDiary.postingDate.substring(8, 10)}.&nbsp;
             </p>
           </div>
-          {/* <div className={form.photoForm}>
-            <div className={form.whenPhoto}>
-              <CarouselSlide data={privateDiary.photo}></CarouselSlide>
-            </div>
-          </div> */}
           <CarouselSlide data={privateDiary.photo}></CarouselSlide>
           <div className={form.textContainer}>
             <p className={form.title}>{privateDiary.title}</p>

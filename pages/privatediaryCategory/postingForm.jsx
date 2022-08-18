@@ -97,7 +97,7 @@ const PostingForm = () => {
   };
   return (
     <div className={modal ? form.wrapper + " noScroll" : form.wrapper}>
-      <UploadNav formId="posting"></UploadNav>
+      <UploadNav></UploadNav>
       <form
         className={form.mainContainer}
         encType="multipart/form-data"

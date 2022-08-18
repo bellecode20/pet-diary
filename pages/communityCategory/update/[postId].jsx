@@ -117,7 +117,7 @@ const UpdatingCommu = ({ textedCommunity }) => {
         modal ? communityHome.wrapper + " noScroll" : communityHome.wrapper
       }
     >
-      <UploadNav formId="updatingCommu"></UploadNav>
+      <UploadNav></UploadNav>
       <form
         className={communityHome.mainContainer}
         encType="multipart/form-data"
@@ -166,7 +166,7 @@ const UpdatingCommu = ({ textedCommunity }) => {
         </div>
         <SaveBtn></SaveBtn>
       </form>
-      {modal && <ModalContainer></ModalContainer>}
+      {/* {modal && <ModalContainer></ModalContainer>} */}
     </div>
   );
 };

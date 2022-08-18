@@ -25,7 +25,11 @@ const ErrorCloseModal = () => {
           <p className={loading.title}>앗!</p>
           <p className={loading.content}>{contentText}</p>
         </div>
-        <button className={loading.button} onClick={handleClose} tabIndex="1">
+        <button
+          className={`${loading.yesButton} ${loading.oneButton}`}
+          onClick={handleClose}
+          tabIndex="1"
+        >
           닫기
         </button>
       </div>

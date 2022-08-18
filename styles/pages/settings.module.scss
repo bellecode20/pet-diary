@@ -3,14 +3,8 @@
 @import "abstracts/_responsive.scss";
 .mainContainer {
   padding: 0 2rem;
-  // animation: transitionIn 300ms;
-  @keyframes transitionIn {
-    0% {
-      transform: translateX(40%);
-    }
-    100% {
-      transform: translateX(0);
-    }
+  @include medium-viewport {
+    padding: 2rem 3rem;
   }
   .menuTitle {
     font-family: $font-emphasis;

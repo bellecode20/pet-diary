@@ -9,7 +9,6 @@
   left: 0;
   right: 0;
   bottom: 20vh;
-  // animation: transitionIn 300ms;
   align-items: center;
   .mainContainer {
     @include mainContainer;
@@ -32,12 +31,10 @@
   }
   .title {
     @include font-title;
-    // padding: 40vh 10vw 6.5rem 10vw;
     @include medium-viewport {
       font-size: $mobile-font-largest;
     }
     .description {
-      // @include font-not-important;
       font-family: "Pretendard";
       font-size: 1.6rem;
       padding-top: 1rem;
@@ -47,11 +44,6 @@
       }
     }
   }
-  // .logo {
-  //   // position: fixed;
-  //   // right: 0;
-  //   // top: 0;
-  // }
   form {
     position: relative;
     display: flex;
@@ -77,13 +69,9 @@
     }
     .upBtn,
     .cancelBtn {
-      // @include largeBtn;
       border-radius: 3px;
-      // margin-top: 1.3rem;
       margin-top: 0.5rem;
-      // margin-bottom: 2.5rem;
-      height: 3.5vh;
-      min-height: 3rem;
+      height: 5rem;
       padding: 0;
       background-color: $blue;
       color: $white;
@@ -104,18 +92,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    // height: 8vh;
     margin-top: 3vh;
     padding: 1rem;
     @include medium-viewport {
       font-size: 1.6rem;
     }
     .switchBtn {
-      // font-family: JGaegujaengyi-Medium-KO;
       font-family: "Pretendard";
       font-weight: 300;
       font-size: 1.8rem;
-      // color: #66b9da;
       color: $blue;
       padding: 1rem 1rem;
       border-radius: 3px;

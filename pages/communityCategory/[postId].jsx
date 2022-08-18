@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeCategory, modalIsShown } from "../../store/features/modalSlice";
 import DetailDiaryNav from "../components/detailDiaryNav";
 import CarouselSlide from "../components/carouselSlide";
-import post from "../../styles/layout/post.module.scss";
 import communityHome from "../../styles/pages/communityHome.module.scss";
 import Image from "next/image";
 const CommuIndex = ({ textedCommunity, textedComments }) => {
@@ -142,17 +141,6 @@ const CommuIndex = ({ textedCommunity, textedComments }) => {
           ))}
         </div>
       </div>
-      {/* <form className={post.commentForm} onSubmit={submitComments}>
-        <input
-          type="text"
-          className={post.commentInput}
-          ref={comment}
-          placeholder="댓글을 남겨보세요"
-        ></input>
-        <button className={post.commentBtn}>
-          <Image src="/plus.png" alt="삭제 버튼" width="20" height="20"></Image>
-        </button>
-      </form> */}
       {modal && (
         <ModalContainer
           titleText="정말 삭제할까요?"

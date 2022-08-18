@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import nav from "../../styles/components/uploadNav.module.scss";
 import overall from "../../styles/layout/mainPage.module.scss";
-const UploadNav = ({ formId }) => {
+const UploadNav = () => {
   const router = useRouter();
   const goBack = () => {
     router.back();
@@ -14,9 +14,6 @@ const UploadNav = ({ formId }) => {
           <Image src="/history.png" alt="뒤로가기 버튼" layout="fill"></Image>
         </div>
       </button>
-      {/* <button className={nav.basic} form={formId}>
-        저장
-      </button> */}
     </div>
   );
 };

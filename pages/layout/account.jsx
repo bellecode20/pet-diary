@@ -6,16 +6,7 @@ const Account = ({ main }) => {
   return (
     <>
       <div className={sign.wrapper}>
-        <div className={sign.mainContainer}>
-          {/* <img
-            className={sign.logo}
-            src="/cat--success.svg"
-            height="100"
-            width="100"
-            alt="기뻐하는 고양이 일러스트"
-          ></img> */}
-          {main}
-        </div>
+        <div className={sign.mainContainer}>{main}</div>
       </div>
       {modal && <ModalContainer></ModalContainer>}
     </>

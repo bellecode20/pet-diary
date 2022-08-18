@@ -101,7 +101,6 @@ const CommuPostingForm = () => {
         modal ? communityHome.wrapper : communityHome.wrapper + " " + "noScroll"
       }
     >
-      {/* <div className={communityHome.wrapper}> */}
       <UploadNav formId="postingCommu"></UploadNav>
       <form
         className={communityHome.mainContainer}
@@ -124,7 +123,6 @@ const CommuPostingForm = () => {
               (preview ? null : communityHome.makeFull)
             }
           >
-            {/* <div className={communityHome.photoForm} tabIndex="0"> */}
             <label
               htmlFor="commu__form__photo"
               className={
