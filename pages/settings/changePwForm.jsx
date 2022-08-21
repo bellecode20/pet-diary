@@ -1,14 +1,14 @@
 import sign from "../../styles/pages/signUp.module.scss";
 import { useRef } from "react";
 import Account from "../layout/account";
-import ModalContainer from "../../components/ModalContainer";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   modalIsShown,
   changeCategory,
   changeContentText,
 } from "../../store/features/modalSlice";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 const ChangePwFormContent = () => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -16,7 +16,6 @@ const ChangePwFormContent = () => {
     e.preventDefault();
     router.replace("/privatediaryCategory");
   };
-  const modal = useSelector((state) => state.modal.isShown);
   const oldPwRef = useRef();
   const newPwRef = useRef();
   async function changePw(enteredOldPw, enteredNewPw) {
@@ -52,6 +51,9 @@ const ChangePwFormContent = () => {
     const enteredNewPw = newPwRef.current.value;
     const result = await changePw(enteredOldPw, enteredNewPw);
   }
+  useEffect(() => {
+    oldPwRef.current.focus();
+  });
   return (
     <>
       <p className={sign.title}>비밀번호 변경</p>
@@ -82,7 +84,6 @@ const ChangePwFormContent = () => {
           취소
         </button>
       </form>
-      {/* {modal && <ModalContainer></ModalContainer>} */}
     </>
   );
 };

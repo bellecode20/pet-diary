@@ -96,10 +96,13 @@ video {
 
 /* make sure to set some focus styles for accessibility */
 :focus {
-  outline: 0;
+  outline: 1px solid #82d1f1;
+}
+button:focus {
+  outline: 2px solid #82d1f1;
 }
 :focus-visible {
-  outline: 3px solid #82d1f1 !important;
+  outline: 2px solid #82d1f1 !important;
 }
 /* HTML5 display-role reset for older browsers */
 article,

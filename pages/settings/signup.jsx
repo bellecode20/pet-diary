@@ -1,5 +1,5 @@
 import sign from "../../styles/pages/signUp.module.scss";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getSession, signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import Account from "../layout/account";
@@ -114,6 +114,9 @@ const SignUpContent = () => {
       });
     }
   }
+  useEffect(() => {
+    idRef.current.focus();
+  });
   return (
     <>
       <p className={sign.title}>{isLogin ? "로그인" : "가입하기"}</p>

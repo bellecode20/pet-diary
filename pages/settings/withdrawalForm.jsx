@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import Account from "../layout/account";
 import { signOut } from "next-auth/react";
@@ -60,6 +60,9 @@ const WithDrawalFormContent = () => {
     const enteredOldPw = oldPwRef.current.value;
     const result = await requestWithdrawal(enteredOldPw);
   }
+  useEffect(() => {
+    oldPwRef.current.focus();
+  });
   return (
     <>
       <div className={sign.title}>

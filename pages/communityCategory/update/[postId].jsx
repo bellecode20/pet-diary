@@ -166,7 +166,7 @@ const UpdatingCommu = ({ textedCommunity }) => {
         </div>
         <SaveBtn></SaveBtn>
       </form>
-      {/* {modal && <ModalContainer></ModalContainer>} */}
+      {modal && <ModalContainer></ModalContainer>}
     </div>
   );
 };

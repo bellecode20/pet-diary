@@ -2,17 +2,15 @@ import loading from "../styles/components/isUploading.module.scss";
 import { useDispatch } from "react-redux";
 import { changeCategory, modalIsShown } from "../store/features/modalSlice";
 import { useRouter } from "next/router";
-
+import { useEffect, useRef } from "react";
 const SuccessModal = () => {
   const router = useRouter();
   const thisUrl = router.asPath;
-  let nextUrl = "";
+  const focusedRef = useRef();
   const makeNextUrl = () => {
-    const wasForUpdate = thisUrl.includes("/update");
-    if (wasForUpdate) {
-      //글을 수정하는 경우라면, 수정한 글로 이동한다.
-      nextUrl = thisUrl.replace("/update", "");
-    } else if (thisUrl.includes("/communityCategory")) {
+    let nextUrl = "";
+    if (thisUrl.includes("/signup")) nextUrl = "/privatediaryCategory";
+    else if (thisUrl.includes("/communityCategory")) {
       nextUrl = "/communityCategory";
     } else if (thisUrl.includes("/privatediaryCategory")) {
       nextUrl = "/privatediaryCategory";
@@ -24,9 +22,14 @@ const SuccessModal = () => {
     e.preventDefault();
     dispatch(modalIsShown(false));
     dispatch(changeCategory(""));
-    if (thisUrl.includes("/signup")) router.replace("/privatediaryCategory");
+    const wasForUpdate = thisUrl.includes("/update");
+    // 수정을 한 경우에는 이전 페이지인 상세글 페이지로 뒤로간다. 수정했던 대로 글이 업데이트 되어있다.
+    if (wasForUpdate) return router.back();
     router.replace(makeNextUrl());
   };
+  useEffect(() => {
+    focusedRef.current.focus();
+  }, []);
   return (
     <div className={loading.wrapper}>
       <div className={loading.modal}>
@@ -43,6 +46,7 @@ const SuccessModal = () => {
         <button
           className={`${loading.yesButton} ${loading.oneButton}`}
           onClick={handleClose}
+          ref={focusedRef}
         >
           닫기
         </button>

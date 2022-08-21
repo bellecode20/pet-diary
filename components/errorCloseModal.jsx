@@ -1,11 +1,16 @@
 import loading from "../styles/components/isUploading.module.scss";
 import { useDispatch } from "react-redux";
+import { useEffect, useRef } from "react";
 import { changeCategory, modalIsShown } from "../store/features/modalSlice";
 import { useSelector } from "react-redux";
 import Image from "next/image";
 const ErrorCloseModal = () => {
   const dispatch = useDispatch();
   const contentText = useSelector((state) => state.modal.contentText);
+  const focusedRef = useRef();
+  useEffect(() => {
+    focusedRef.current.focus();
+  }, []);
   const handleClose = (e) => {
     e.preventDefault();
     dispatch(modalIsShown(false));
@@ -28,7 +33,7 @@ const ErrorCloseModal = () => {
         <button
           className={`${loading.yesButton} ${loading.oneButton}`}
           onClick={handleClose}
-          tabIndex="1"
+          ref={focusedRef}
         >
           닫기
         </button>
