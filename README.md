@@ -10,7 +10,8 @@
 
 > Link: https://pet-diary-one.vercel.app
 
-![메인-커뮤글상세까지+다이어리글 없음](https://user-images.githubusercontent.com/94767408/174482301-ac63afd7-6ccf-4281-9ee8-eb7d202a2c9e.gif)
+![main3](https://user-images.githubusercontent.com/94767408/185787498-3bcef839-5a51-4eb0-a3ca-6dae0d6eacb5.gif)
+
 
 ## Technologies
 - React.js, Next.js, SCSS
@@ -27,40 +28,40 @@
 
 ## How to use
 ### 0. 기능
-![image](https://user-images.githubusercontent.com/94767408/174484161-86a66e74-6234-49f6-a4de-ec5cfed87474.png)
+![0-main-pages](https://user-images.githubusercontent.com/94767408/185787892-9dbfcecd-ead5-41bd-905b-67cd3c83bc25.jpg)
 **하단 메뉴바를 클릭해서 탭을 변경할 수 있습니다.**
 - 커뮤니티 탭: 글을 쓰고 댓글을 달며 유저들과 소통합니다.
 - 다이어리 탭: 본인만 볼 수 있는 일기를 작성합니다.
 - 설정 탭: 계정 관리를 할 수 있습니다.
 
 ### 1. 회원가입 / 로그인
-![image](https://user-images.githubusercontent.com/94767408/174483239-6869792a-fc98-4319-9363-3d5358818f87.png)
+![1-account](https://user-images.githubusercontent.com/94767408/185787896-fd9b9190-09a8-4901-9e7a-d16bb184f5a1.jpg)
 - 첫 페이지에서는 시작하기 버튼을 눌러 진행합니다.
 - 로그인 되어 있는 경우 시작하기 버튼을 누르면 자동으로 메인페이지로 이동합니다. 
 - 예외상황에 모달창을 띄워 에러를 방지합니다. 
 너무 짧은 경우, 한글이 포함된 경우, 이미 아이디가 존재할 경우 등
 
 ### 2. 다이어리 탭
-![image](https://user-images.githubusercontent.com/94767408/174484710-3705584b-f719-4495-ba01-029969f23544.png)
+![2-diary](https://user-images.githubusercontent.com/94767408/185787901-e271102e-dfd8-4125-9e77-9306a0526c78.jpeg)
 - 작성한 글을 수정하거나 삭제할 수 있습니다.
 - 일기를 작성하지 않았다면 귀여운 일러스트가 나옵니다.
 - 일기가 여러개라면 '더보기'버튼을 눌러 렌더링할 수 있습니다.
 
 ### 3. 커뮤니티 탭
-![image](https://user-images.githubusercontent.com/94767408/174484678-41fd1da2-e062-4ea3-a688-48c4c2a4fbce.png)
+![3-community](https://user-images.githubusercontent.com/94767408/185787907-88161561-dc2d-4582-b38f-1c0f8ab6eaf3.jpeg)
 - 작성한 글을 수정하거나 삭제할 수 있습니다.
 - 댓글을 작성하거나 삭제할 수 있습니다.
 - 글을 작성한 시간이 표시됩니다.
 - '더보기'버튼을 눌러 이전 글을 렌더링할 수 있습니다.
 
 ### 4. 설정 탭
-![image](https://user-images.githubusercontent.com/94767408/174484325-64509989-1ef1-4e40-a992-d258f0637f45.png)
+![4-settings](https://user-images.githubusercontent.com/94767408/185787912-95e4bd02-8cf9-4bbb-9d2b-58e6f94229d4.jpeg)
 - 본인의 아이디를 확인할 수 있습니다.
 - 비밀번호를 변경할 수 있습니다.
 - 기존 비밀번호를 입력해 회원 탈퇴를 할 수 있습니다.
 
 ### 5. 모달 창
-![image](https://user-images.githubusercontent.com/94767408/174484287-4341e398-4e61-4220-8088-561465477899.png)
+![5-modal](https://user-images.githubusercontent.com/94767408/185787925-b83ab127-c9a3-4f0a-94fc-79c809ef8732.jpeg)
 상황에 따라 적절한 모달창을 렌더링합니다.
 - 삭제와 같은 영향력이 큰 기능은 실행 전 다시 한 번 묻습니다.
 - 작업을 수행할 때는 로딩창을 띄워 실행 중임을 알려줍니다.
