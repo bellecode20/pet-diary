@@ -1,7 +1,7 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { connectToDatabase } from "../../lib/db";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { makeId } from "../../components/makeId";
 import { requestPostToMongodb } from "../../components/requestPostToMongodb";
 import { makeTimestamp } from "../../components/makeTimestamp";
@@ -22,22 +22,22 @@ const CommuIndex = ({ textedCommunity, textedComments }) => {
   const router = useRouter();
   const { postId } = router.query;
   const comment = useRef();
-  const forceReload = () => {
-    router.reload();
-  };
+  const [updatedComments, setUpdatedComments] = useState(comments); // mongoDB에 저장되어있던 기존 댓글들을 기본값으로 설정한다.
   const deleteComment = async (e) => {
     let deleteInfo = {
       commuPostId: commuPost.commuPostId,
       commentPostId: e.currentTarget.getAttribute("data-remove"),
     };
+    // 유저에게 보여지는 댓글 state를 먼저 업데이트하고, post요청을 보낸다.
+    setUpdatedComments(
+      updatedComments.filter(
+        (el) => el.commentPostId != deleteInfo.commentPostId
+      )
+    );
     const deleteResult = await requestPostToMongodb(
       "/api/form/deleteComment",
       deleteInfo
     );
-    dispatch(modalIsShown(true));
-    dispatch(changeCategory("LoadingModal"));
-    dispatch(modalIsShown(false));
-    forceReload();
   };
   const deleteCommu = async (e) => {
     dispatch(changeCategory("LoadingModal"));
@@ -60,14 +60,13 @@ const CommuIndex = ({ textedCommunity, textedComments }) => {
       content: enteredComment,
       timestamp: makeTimestamp(),
     };
+    // 유저에게 보여지는 댓글 state를 먼저 업데이트하고, post요청을 보낸다.
+    setUpdatedComments([...updatedComments, commentInfo]);
+    comment.current.value = "";
     const postResult = await requestPostToMongodb(
       "/api/form/postComment",
       commentInfo
     );
-    dispatch(modalIsShown(true));
-    dispatch(changeCategory("LoadingModal"));
-    dispatch(modalIsShown(false));
-    forceReload();
   };
   return (
     // <div className={communityHome.wrapper}>
@@ -97,9 +96,7 @@ const CommuIndex = ({ textedCommunity, textedComments }) => {
                   layout="fill"
                 ></Image>
               </div>
-              <p>
-                {commuPost.commentIds.length > 0 && commuPost.commentIds.length}
-              </p>
+              <p>{commuPost.commentIds.length > 0 && updatedComments.length}</p>
             </div>
             <form
               className={communityHome.commentForm}
@@ -114,11 +111,15 @@ const CommuIndex = ({ textedCommunity, textedComments }) => {
               <button className={communityHome.commentBtn}>게시</button>
             </form>
           </div>
-          {comments.map((el, i) => (
+          {updatedComments.map((el, i) => (
             <div className={communityHome.commentContainer} key={i}>
               <div className={communityHome.commentTop}>
-                <p className={communityHome.userId}>{el.userId}</p>
-                {el.userId === thisUserId && (
+                <p className={communityHome.userId}>
+                  {/* el.userId가 존재하는 경우 === mongoDB에서 불러온 댓글일 때 */}
+                  {/* el.userId가 존재하지 않는 경우 === updatedComments에서 가져온 댓글일 때 */}
+                  {el.userId ? el.userId : thisUserId}
+                </p>
+                {(el.userId === thisUserId || !el.userId) && (
                   <button
                     data-remove={el.commentPostId}
                     className={communityHome.commentDeleteBtn}
