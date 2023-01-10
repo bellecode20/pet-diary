@@ -8,8 +8,6 @@
 커뮤니티 탭에서는 자유롭게 글을 게시할 수 있습니다.
 댓글로 느낀점을 공유할 수 있습니다. 
 
-> Link: https://pet-diary-one.vercel.app
-
 ![main3](https://user-images.githubusercontent.com/94767408/185787498-3bcef839-5a51-4eb0-a3ca-6dae0d6eacb5.gif)
 
 
